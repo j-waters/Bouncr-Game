@@ -1,0 +1,90 @@
+var theGame = function(game){}
+
+theGame.prototype = {
+		create: function(){
+			this.game.forceSingleUpdate = true;
+			game.stage.backgroundColor = v.backgroundColour;
+			console.log("start game")
+			
+			this.scoreText = this.game.add.text(0.5 * game.width, 0.4 * game.height, 0, {fill: v.playerColour, font:"bold Arial", fontSize: 300/1280 * game.height})
+			this.scoreText.alpha = 0.1;
+			this.scoreText.anchor.set(0.5, 0.5);
+			
+			p = new player();
+			game.add.existing(p)
+			
+			v.obstacles = game.add.group();
+						
+			this.finished = false;
+		},
+		
+		render: function(){
+			if (false){
+				game.debug.renderShadow = false
+		    	game.debug.font = '30px Courier bold'
+		    	game.debug.lineHeight = 30
+		    	this.game.debug.start(20, 40, 'red');
+		    	this.game.debug.line("FPS: " + game.time.fps);
+		    	this.game.debug.stop();
+			}
+		},
+		
+		update: function(){
+			if (v.gameEnd == false){
+				v.distance += 1;
+				v.speed += 0.00000156 * game.height
+			}
+			else {
+				if (this.finished == false){
+					if (v.mobile){AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER)}
+					this.finished = true;
+					v.plays++
+					game.stage.backgroundColor = (v.obstacleColour != "#ffffff") ? v.obstacleColour : "#000014";
+					document.body.style.backgroundColor = (v.obstacleColour != "#ffffff") ? v.obstacleColour : "#000014"
+					this.scoreText.alpha = 1;
+					this.scoreText.fill = "#ffffff"
+					this.scoreText.bringToTop()
+					
+					while (v.obstacles.children.length != 1){
+						console.log(v.obstacles.children.length)
+			    		if (v.obstacles.children[1] != v.gameEndTarget){
+			    			v.obstacles.children[1].destroy()
+			    		}
+			    		else {
+			    			v.obstacles.children.push(v.obstacles.children.shift());
+			    		}
+			    	}
+					
+					v.score = Math.ceil(v.score)
+					
+					if (v.score > v.highScore){
+						v.highScore = v.score
+					}
+					
+					save()
+
+					hight = this.game.add.text(360, 370, "top: " + v.highScore, {fill: "#ffffff", boundsAlignH: "center"})
+					hight.anchor.set(0.5, 0.5)
+					
+					playt = this.game.add.text(360, 640, "tap to play again", {fill: "#ffffff", boundsAlignH: "center"})
+					playt.anchor.set(0.5, 0.5)
+					this.game.add.tween(playt).to({ alpha: 0.5 }, 1500, null, null, null, null, true).start();
+					
+					
+					game.time.events.add(300, function(){
+						game.input.onDown.add(this.goTitle, this);
+					}, this);
+				}
+			}
+			//console.log(v.speed)
+			this.scoreText.text = v.score
+			if (Math.floor(v.distance) % 60 == 0){
+				e = new obstacle();
+				v.obstacles.add(e)
+			}
+		},
+		
+		goTitle: function(){
+			this.game.state.start("titleMenu");
+		}
+}
