@@ -22,6 +22,7 @@ function player(){
 player.prototype = Object.create(Phaser.Sprite.prototype);
 player.prototype.constructor = player;
 player.prototype.update = function() {
+	console.log("player update")
 	if (game.state.current == "theGame"){
 		var change = (v.speed * 1.1) * this.direction * (game.width/720)
 		if (this.x + change >= game.width - this.width/2){

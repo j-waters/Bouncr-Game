@@ -76,7 +76,6 @@ theGame.prototype = {
 					}, this);
 				}
 			}
-			//console.log(v.speed)
 			this.scoreText.text = v.score
 			if (Math.floor(v.distance) % 60 == 0){
 				e = new obstacle();

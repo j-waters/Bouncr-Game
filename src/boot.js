@@ -23,9 +23,9 @@ boot.prototype = {
     		v.mobile = false
     	}
     	else {
-    		//if (v.playGames) {window.plugins.playGamesServices.auth();}
+    		if (v.playGames) {window.plugins.playGamesServices.auth();}
     		this.androidScale(this.scale)
-    		v.mobile = false
+    		v.mobile = true
     	}
     	    	
     	game.time.desiredFps = 60
