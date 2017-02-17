@@ -22,7 +22,6 @@ function player(){
 player.prototype = Object.create(Phaser.Sprite.prototype);
 player.prototype.constructor = player;
 player.prototype.update = function() {
-	console.log("player update")
 	if (game.state.current == "theGame"){
 		var change = (v.speed * 1.1) * this.direction * (game.width/720)
 		if (this.x + change >= game.width - this.width/2){
@@ -310,7 +309,7 @@ function settingsOption(order, name, callBack){
 	background.ctx.fillStyle = v.playerColour;
 	background.ctx.roundRect(0, 0, width, height, 20)
 	background.ctx.fill();
-	Phaser.Sprite.call(this, game, 0.5 * game.width, (0.23 * game.height) + (0.14 * game.width) + (0.31 * game.width) * order, background);
+	Phaser.Sprite.call(this, game, 0.5 * game.width, (0.2525 * game.height) + (0.14 * game.width) + (0.31 * game.width) * order, background);
 	this.anchor.set(0.5, 0.5)
 	
 	this.width = 0.94 * game.width
@@ -327,7 +326,7 @@ function settingsOption(order, name, callBack){
     mask.beginFill("#ffffff");
     mask.drawRect(0, 0, game.width, game.height);
     mask.x = 0
-    mask.y = 0.219 * game.height
+    mask.y = 0.25 * game.height
     this.mask = mask;
 	
 	this.inputEnabled = true

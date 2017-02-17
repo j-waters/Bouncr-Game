@@ -1,5 +1,5 @@
 var v = {
-	version: "0.0.2",
+	version: "oops. I don't know.",
 	speed: 5,
 	gameWidth: 720,
 	gameHeight: 1280,

@@ -23,6 +23,7 @@ boot.prototype = {
     		v.mobile = false
     	}
     	else {
+    		cordova.getAppVersion.getVersionNumber(function(version){v.version = version + "-beta"})
     		if (v.playGames) {window.plugins.playGamesServices.auth();}
     		this.androidScale(this.scale)
     		v.mobile = true
