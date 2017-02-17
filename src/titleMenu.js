@@ -9,6 +9,7 @@ titleMenu.prototype = {
 			window.FirebasePlugin.logEvent("view_page", {page: "title_menu"});
 			window.cordova.plugins.firebase.analytics.logEvent("page_view", {page: "title_menu"});
 		}
+		resizeScreen(game.scale)
 		this.game.stage.backgroundColor = v.backgroundColour;
 		p = new player();
 		game.add.existing(p)
@@ -38,12 +39,12 @@ titleMenu.prototype = {
 	},
 	
 	startGame: function(){
-		if (game.input.position.x > 150 && game.input.position.x < 570){
+		if (game.input.position.x > 0.2 * game.width && game.input.position.x < 0.8 * game.width){
 			if (v.mobile){AdMob.hideBanner()}
 			v.distance = 0;
 			v.score = 0;
 			v.gameEnd = false;
-			v.speed = 0.0039 * game.height;
+			v.speed = 5;
 			this.game.state.start("theGame");
 		}
 	},
@@ -169,8 +170,8 @@ skins.prototype = {
 				this.scrollTween = this.game.add.tween(v).to({ scroll: 0 }, 200, Phaser.Easing.Exponential.out, true);
 				this.scrollTween.onComplete.add(function(){this.scrollTween = null}, this)
 			}
-			if (v.scroll > (this.skins.children.length - 4) * 200  && this.scrollTween == null){
-				this.scrollTween = this.game.add.tween(v).to({ scroll: (this.skins.children.length - 4) * 200 }, 200, Phaser.Easing.Exponential.out, true);
+			if (v.scroll > (0.28 * game.width * this.skins.children.length) - (game.height * 0.6) && this.scrollTween == null){
+				this.scrollTween = this.game.add.tween(v).to({ scroll: (0.28 * game.width * this.skins.children.length) - (game.height * 0.6) }, 200, Phaser.Easing.Exponential.out, true);
 				this.scrollTween.onComplete.add(function(){this.scrollTween = null}, this)
 			}
 		}

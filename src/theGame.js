@@ -32,7 +32,7 @@ theGame.prototype = {
 		update: function(){
 			if (v.gameEnd == false){
 				v.distance += 1;
-				v.speed += 0.00000156 * game.height
+				v.speed += 0.002
 			}
 			else {
 				if (this.finished == false){
@@ -63,10 +63,10 @@ theGame.prototype = {
 					
 					save()
 
-					hight = this.game.add.text(360, 370, "top: " + v.highScore, {fill: "#ffffff", boundsAlignH: "center"})
+					hight = this.game.add.text(0.5 * game.width, 0.29 * game.height, "top: " + v.highScore, {fill: "#ffffff", boundsAlignH: "center", fontSize: 0.03 * game.height})
 					hight.anchor.set(0.5, 0.5)
 					
-					playt = this.game.add.text(360, 640, "tap to play again", {fill: "#ffffff", boundsAlignH: "center"})
+					playt = this.game.add.text(0.5 * game.width, 0.5 * game.height, "tap to play again", {fill: "#ffffff", boundsAlignH: "center", fontSize: 0.03 * game.height})
 					playt.anchor.set(0.5, 0.5)
 					this.game.add.tween(playt).to({ alpha: 0.5 }, 1500, null, null, null, null, true).start();
 					

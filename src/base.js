@@ -30,7 +30,7 @@ FastClick.attach(document.body);
 //					  ( width , height , renderer , parent , state , transparent , anti alias , physicsConfig )
 
 //document.body.style.backgroundColor = "#000000"
-game = new Phaser.Game(v.gameWidth, v.gameHeight, Phaser.AUTO, "", null, null, true, null);
+game = new Phaser.Game(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio, Phaser.AUTO, "", null, null, true, null);
 
 game.state.add("Boot", boot);
 game.state.add("Pre_Preload", pre_preload);

@@ -23,7 +23,7 @@ player.prototype = Object.create(Phaser.Sprite.prototype);
 player.prototype.constructor = player;
 player.prototype.update = function() {
 	if (game.state.current == "theGame"){
-		var change = (v.speed * 1.1) * this.direction
+		var change = (v.speed * 1.1) * this.direction * (game.width/720)
 		if (this.x + change >= game.width - this.width/2){
 			this.direction *= -1;
 			this.x = game.width - this.width/2
@@ -90,7 +90,7 @@ obstacle.prototype.update = function() {
     	this.key.fill(255, 255, 255)
     }
 	
-	this.y += v.speed;
+	this.y += v.speed * (game.height/1280);
 	
 	if (this.y - this.height >= game.height){
 		this.destroy()
@@ -112,7 +112,7 @@ function hsLine(y){
 hsLine.prototype = Object.create(Phaser.Sprite.prototype);
 hsLine.prototype.constructor = hsLine;
 hsLine.prototype.update = function() {
-	this.y += v.speed;
+	this.y += v.speed * (game.height/1280);
 	if (this.y - 10 >= game.height){
 		this.destroy()
 	}
@@ -168,7 +168,7 @@ function load(){
 	v.playerColour = v.themes[v.themeOrder.toString()].player
 	v.obstacleColour = v.themes[v.themeOrder.toString()]. obstacle
 	v.backgroundColour = v.themes[v.themeOrder.toString()].background
-	//document.body.style.backgroundColor = v.backgroundColour
+	document.body.style.backgroundColor = v.backgroundColour
 }
 
 CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
@@ -195,7 +195,7 @@ function themeUnlock(order){
 	background.circle(550, 150, 25, v.themes[order.toString()].player)
 	background.rect(480, 80, 50, 25, v.themes[order.toString()].obstacle)
 	background.rect(560, 40, 60, 25, v.themes[order.toString()].obstacle)
-	Phaser.Sprite.call(this, game, 0.5 * game.width, (440/1280 * game.height) + (220/720 * game.width) * order, background);
+	Phaser.Sprite.call(this, game, 0.5 * game.width, (0.22 * game.height) + (0.14 * game.width) + (0.31 * game.width) * order, background);
 	this.anchor.set(0.5, 0.5)
 	
 	this.width = 0.94 * game.width
@@ -309,7 +309,7 @@ function settingsOption(order, name, callBack){
 	background.ctx.fillStyle = v.playerColour;
 	background.ctx.roundRect(0, 0, width, height, 20)
 	background.ctx.fill();
-	Phaser.Sprite.call(this, game, 0.5 * game.width, (470/1280 * game.height) + (220/720 * game.width) * order, background);
+	Phaser.Sprite.call(this, game, 0.5 * game.width, (0.23 * game.height) + (0.14 * game.width) + (0.31 * game.width) * order, background);
 	this.anchor.set(0.5, 0.5)
 	
 	this.width = 0.94 * game.width
@@ -326,7 +326,7 @@ function settingsOption(order, name, callBack){
     mask.beginFill("#ffffff");
     mask.drawRect(0, 0, game.width, game.height);
     mask.x = 0
-    mask.y = 0.26 * game.height
+    mask.y = 0.219 * game.height
     this.mask = mask;
 	
 	this.inputEnabled = true

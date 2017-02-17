@@ -2,7 +2,9 @@ var preload = function(game){}
 
 preload.prototype = {
 	preload: function(){ 
-        game.add.sprite(0, 0, 'splashscreen')
+        i = game.add.sprite(0, 0, 'splashscreen')
+        i.width = game.width
+        i.height = game.height
         
         game.load.image('settings/cog', 'assets/images/cog.png')
         game.load.image('settings/back', 'assets/images/back.png')

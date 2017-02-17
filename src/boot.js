@@ -3,21 +3,7 @@ var boot = function(game){
 };
 
 function androidScale(scale){
-	scale.scaleMode = Phaser.ScaleManager.RESIZE;
-	scale.fullScreenScaleMode = Phaser.ScaleManager.RESIZE;
-	scale.parentIsWindow = true;
-	scale.windowConstraints.bottom = "visual";
-	//scale.setShowAll()
-	window.addEventListener('resize', function(){game.state.start(game.state.current);})
-	//scale.minWidth = v.gameWidth/3;
-	//scale.minHeight = v.gameHeight/3;
-	//scale.maxWidth = v.gameWidth * 2.5;
-	//scale.maxHeight = v.gameHeight * 2.5;
-	scale.pageAlignHorizontally = true;
-	scale.pageAlignVertically = true;
-	scale.forceOrientation(false, true);
-	scale.updateLayout();
-	scale.refresh();
+	
 }
 
 boot.prototype = {
@@ -26,7 +12,6 @@ boot.prototype = {
     
     create: function(){
     	load()
-    	console.log(this.game.device.desktop)
     	if (this.game.device.desktop){
     		//this.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
     		//this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
@@ -39,13 +24,40 @@ boot.prototype = {
     	}
     	else {
     		//if (v.playGames) {window.plugins.playGamesServices.auth();}
-    		androidScale(this.scale)
+    		this.androidScale(this.scale)
     		v.mobile = false
     	}
-    	
+    	    	
     	game.time.desiredFps = 60
     	game.time.advancedTiming = true
     	
         this.game.state.start("Pre_Preload");
+    },
+    
+    androidScale: function(scale){
+    	scale.scaleMode = Phaser.ScaleManager.USER_SCALE;
+    	scale.fullScreenScaleMode = Phaser.ScaleManager.USER_SCALE;
+    	scale.windowConstraints.bottom = "visual";
+    	scale.windowConstraints.right = "layout";
+    	window.addEventListener('resize', function(){resizeScreen(game.scale); game.state.start(game.state.current); console.log("OTHER RESIZE")})
+    	//this.game.scale.setResizeCallback(this.resizeCallback, this);
+    	resizeScreen(scale)
+    	scale.pageAlignHorizontally = true;
+    	scale.pageAlignVertically = true;
+    	scale.forceOrientation(false, true);
+    	scale.updateLayout();
+    	scale.refresh();
+    },
+}
+
+function resizeScreen(manager){
+    var userRatio = 1;
+    if (this.game.device.pixelRatio > 1){
+    	userRatio = this.game.device.pixelRatio * 1;
     }
+    if(manager.width !== window.innerWidth*userRatio || manager.height !== window.innerHeight*userRatio){
+    	manager.setGameSize(window.innerWidth*userRatio,window.innerHeight*userRatio);
+    	manager.setUserScale(1/userRatio, 1/userRatio);
+    }
+    console.log("RESIZE", game.width, game.height)
 }
