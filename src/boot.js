@@ -2,10 +2,6 @@ var boot = function(game){
     console.log("%cStarting Bouncr", "color:white; background:red");
 };
 
-function androidScale(scale){
-	
-}
-
 boot.prototype = {
     preload: function(){
     },
@@ -13,8 +9,9 @@ boot.prototype = {
     create: function(){
     	load()
     	if (this.game.device.desktop){
-    		//this.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
-    		//this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+    		this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
+    		this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+    		this.game.scale.windowConstraints.bottom = "visual";
     		this.scale.pageAlignHorizontally = true;
     		this.scale.pageAlignVertically = true;
     		this.scale.windowConstraints.bottom = "visual";
@@ -60,5 +57,4 @@ function resizeScreen(manager){
     	manager.setGameSize(window.innerWidth*userRatio,window.innerHeight*userRatio);
     	manager.setUserScale(1/userRatio, 1/userRatio);
     }
-    console.log("RESIZE", game.width, game.height)
 }
