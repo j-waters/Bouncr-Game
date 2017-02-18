@@ -15708,6 +15708,25 @@ PIXI.Sprite.prototype._renderCanvas = function(renderSession, matrix)
         {
             var cx = this.texture.crop.x;
             var cy = this.texture.crop.y;
+            cw = Math.floor(cw)
+            ch = Math.floor(ch)
+            /*cx = Math.round(cx)
+            cy = Math.round(cy)
+            cw = Math.round(cw)
+            ch = Math.round(ch)
+            dx = Math.abs(Math.round(dx))
+            dy = Math.abs(Math.round(dy)) 
+            console.log("DRAW IMAGE ")
+            console.log(this.texture.baseTexture.source.width)
+            console.log(this.texture.baseTexture.source.height)
+            console.log(cx)
+            console.log(cy)
+            console.log(cw)
+            console.log(ch)
+            console.log(dx)
+            console.log(dy)
+            console.log(resolution)
+            console.log("END DRAW IMAGE") */
             renderSession.context.drawImage(this.texture.baseTexture.source, cx, cy, cw, ch, dx, dy, cw / resolution, ch / resolution);
         }
     }
