@@ -5,9 +5,9 @@ titleMenu.prototype = {
 		load()
 		if (v.mobile){
 			AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER)
-			window.cordova.plugins.firebase.analytics.setEnabled(true)
+			//window.cordova.plugins.firebase.analytics.setEnabled(true)
 			window.FirebasePlugin.logEvent("view_page", {page: "title_menu"});
-			window.cordova.plugins.firebase.analytics.logEvent("page_view", {page: "title_menu"});
+			//window.cordova.plugins.firebase.analytics.logEvent("page_view", {page: "title_menu"});
 		}
 		resizeScreen(game.scale)
 		this.game.stage.backgroundColor = v.backgroundColour;
@@ -193,5 +193,10 @@ challenges.prototype = {
 		titlet.anchor.set(0.5, 0.5)
 		
 		backb = new menuButton(0.07 * game.width, 0.04 * game.height, "settings/back", this.goTitle, this)
+	},
+	
+	goTitle: function(){
+		save()
+		this.game.state.start("titleMenu")
 	}
 }
