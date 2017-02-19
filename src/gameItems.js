@@ -285,6 +285,7 @@ function menuButton(x, y, key, callback, context){
 	this.anchor.set(0.5, 0.5)
 	this.width = 0.06 * game.height
 	this.height = 0.06 * game.height
+	this.input.priorityID = 1
 	
 	game.add.existing(this)
 }
