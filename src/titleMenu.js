@@ -111,7 +111,7 @@ settings.prototype = {
 				this.scrollTween = this.game.add.tween(v).to({ scroll: 0 }, 200, Phaser.Easing.Exponential.out, true);
 				this.scrollTween.onComplete.add(function(){this.scrollTween = null}, this)
 			}
-			if (v.scroll > (0) * 200  && this.scrollTween == null){
+			if (v.scroll > (0) * 200  && this.scrollTween == null  && v.scroll != 0){
 				this.scrollTween = this.game.add.tween(v).to({ scroll: (0) * 200 }, 200, Phaser.Easing.Exponential.out, true);
 				this.scrollTween.onComplete.add(function(){this.scrollTween = null}, this)
 			}
@@ -170,7 +170,7 @@ skins.prototype = {
 				this.scrollTween = this.game.add.tween(v).to({ scroll: 0 }, 200, Phaser.Easing.Exponential.out, true);
 				this.scrollTween.onComplete.add(function(){this.scrollTween = null}, this)
 			}
-			if (v.scroll > (0.28 * game.width * this.skins.children.length) - (game.height * 0.6) && this.scrollTween == null){
+			if (v.scroll > (0.28 * game.width * this.skins.children.length) - (game.height * 0.6) && this.scrollTween == null && v.scroll != 0){
 				this.scrollTween = this.game.add.tween(v).to({ scroll: (0.28 * game.width * this.skins.children.length) - (game.height * 0.6) }, 200, Phaser.Easing.Exponential.out, true);
 				this.scrollTween.onComplete.add(function(){this.scrollTween = null}, this)
 			}
@@ -191,12 +191,14 @@ challenges.prototype = {
 		
 		titlet = this.game.add.text(0.5 * game.width, 0.16 * game.height, "Challenges", {fill: v.playerColour, font: "bold Arial", fontSize: 0.1 * game.height})
 		titlet.anchor.set(0.5, 0.5)
+		while (titlet.width > 0.95 * game.width){titlet.fontSize--}
 		
 		desct = this.game.add.text(0.5 * game.width, 0.22 * game.height, "Complete challanges to unlock themes and other game modes", {fill: v.playerColour, font: "bold Arial", fontSize: 0.02 * game.height, align: 'center', wordWrap: true, wordWrapWidth: 0.9 * game.width})
 		desct.anchor.set(0.5, 0)
 		
 		challengenot = this.game.add.text(0.5 * game.width, 0.28 * game.height, "COMPLETED CHALLENGES", {fill: v.playerColour, font: "bold Arial", fontSize: 0.038 * game.height})
 		challengenot.anchor.set(0.5, 0)
+		while (challengenot.width > 0.95 * game.width){challengenot.fontSize--}
 		
 		challengeno = this.game.add.text(0.5 * game.width, 0.32 * game.height, v.completed + " / " + Object.keys(v.challenges).length, {fill: v.playerColour, font: "bold Arial", fontSize: 0.038 * game.height})
 		challengeno.anchor.set(0.5, 0)
