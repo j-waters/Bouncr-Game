@@ -10,7 +10,7 @@ function player(){
 	line.line(0, 0.004 * game.height, game.width, 0.004 * game.height, v.playerColour, 0.0016 * game.height)
 	game.add.sprite(0, 0.7 * game.height, line)
 	
-	if (game.state.current == "theGame"){
+	if (game.state.current == "theGame" || game.state.current == "newChallenge"){
 		this.direction = 1
 		game.input.onDown.add(function(){
 			this.direction *= -1
@@ -145,6 +145,9 @@ function save(){
 	storage.setItem("theme", v.themeOrder)
 	storage.setItem("plays", v.plays)
 	storage.setItem("gameService", v.playGames)
+	storage.setItem("completed", v.completed)
+	storage.setItem("progress", v.challengeProg)
+	
 	if (v.mobile){
 		window.plugins.playGamesServices.isSignedIn(function (result) {
 			if (result.isSignedIn){
@@ -164,6 +167,8 @@ function load(){
 	v.plays = storage.getItem("plays") || 0;
 	v.themeOrder = storage.getItem("theme") || 0;
 	v.playGames = storage.getItem("gameService") || true;
+	v.completed = parseInt(storage.getItem("completed")) || 0;
+	v.challengeProg = parseInt(storage.getItem("progress")) || 0;
 	
 	v.playerColour = v.themes[v.themeOrder.toString()].player
 	v.obstacleColour = v.themes[v.themeOrder.toString()]. obstacle
@@ -345,4 +350,34 @@ settingsOption.prototype = Object.create(Phaser.Sprite.prototype);
 settingsOption.prototype.constructor = settingsOption;
 settingsOption.prototype.update = function() {
 	this.y = this.startY - v.scroll
+}
+
+function challengeBubble(mod){
+	cb = game.make.bitmapData(0.8 * game.width, 0.15 * game.height)
+	cb.ctx.fillStyle = (mod == 0) ? v.playerColour : v.obstacleColour
+	cb.ctx.roundRect(0, 0, 0.8 * game.width, 0.15 * game.height, 20)
+	cb.ctx.fill();
+	
+	Phaser.Sprite.call(this, game, 0.5 * game.width + (game.width * mod), 0.4 * game.height, cb)
+	this.anchor.set(0.5, 0.5)
+	
+	if (v.completed - 1 + mod < Object.keys(v.challenges).length){
+		titlet = game.make.text(0, -0.03 * game.height, (mod == 0) ? "Challenge Completed" : "New Challenge", {fill: v.backgroundColour, font: "bold Arial", fontSize: 0.04 * game.height})
+		titlet.anchor.set(0.5, 0.5)
+		this.addChild(titlet)
+		
+		desc = game.make.text(0, 0.03 * game.height, v.challenges[(v.completed - 1 + mod).toString()].description, {fill: v.backgroundColour, font: "bold Arial", fontSize: 0.03 * game.height, align: 'center', wordWrap: true, wordWrapWidth: 0.8 * game.width})
+		desc.anchor.set(0.5, 0.5)
+		this.addChild(desc)
+	}
+	else {
+		titlet = game.make.text(0, 0, "All Challenges Completed!", {fill: v.backgroundColour, font: "bold Arial", fontSize: 0.03 * game.height})
+		titlet.anchor.set(0.5, 0.5)
+		this.addChild(titlet)
+	}
+}
+
+challengeBubble.prototype = Object.create(Phaser.Sprite.prototype);
+challengeBubble.prototype.constructor = challengeBubble;
+challengeBubble.prototype.update = function() {
 }

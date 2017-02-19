@@ -46,7 +46,6 @@ theGame.prototype = {
 					this.scoreText.bringToTop()
 					
 					while (v.obstacles.children.length != 1){
-						console.log(v.obstacles.children.length)
 			    		if (v.obstacles.children[1] != v.gameEndTarget){
 			    			v.obstacles.children[1].destroy()
 			    		}
@@ -61,6 +60,24 @@ theGame.prototype = {
 						v.highScore = v.score
 					}
 					
+					var newch = false
+					if (v.completed < Object.keys(v.challenges).length){
+						if (v.challenges[(v.completed).toString()].unlock[0] == "plays"){
+							v.challengeProg += 1
+						}
+						if (v.challenges[(v.completed).toString()].unlock[0] == "score"){
+							v.challengeProg = v.score
+						}
+						if (v.challenges[(v.completed).toString()].unlock[0] == "total"){
+							v.challengeProg += v.score
+						}
+						if (v.challengeProg >= v.challenges[(v.completed).toString()].unlock[1]){
+							v.completed += 1
+							v.challengeProg = 0
+							newch = true
+						}
+					}
+					
 					save()
 
 					hight = this.game.add.text(0.5 * game.width, 0.29 * game.height, "top: " + v.highScore, {fill: "#ffffff", boundsAlignH: "center", fontSize: 0.03 * game.height})
@@ -72,7 +89,7 @@ theGame.prototype = {
 					
 					
 					game.time.events.add(300, function(){
-						game.input.onDown.add(this.goTitle, this);
+						game.input.onDown.add((newch == false) ? this.goTitle : this.goChallenge, this);
 					}, this);
 				}
 			}
@@ -85,5 +102,9 @@ theGame.prototype = {
 		
 		goTitle: function(){
 			this.game.state.start("titleMenu");
+		},
+		
+		goChallenge: function(){
+			game.state.start("newChallenge")
 		}
 }

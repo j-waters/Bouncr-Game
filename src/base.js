@@ -22,7 +22,13 @@ var v = {
 			"2": {name: "Ice", player: "#0000ff", background: "#00ffff", obstacle: "#ffffff", unlock: ["score", 25]},
 			"3": {name: "Magma", player: "#640000", background: "#ff0000", obstacle: "#c4a460", unlock: ["plays", 25]},
 			"4": {name: "Earth", player: "#00FF00", background: "#654321", obstacle: "#228B22", unlock: ["plays", 50]},
-		}
+		},
+	completed: 0,
+	challenges: {"0": {description: "Play 5 games of classic mode", unlock: ["plays", 5]},
+				"1": {description: "Score 20 in classic mode", unlock: ["score", 20]},
+				"2": {description: "Score a total of 100 in classic mode", unlock: ["total", 100]}
+		},
+	challengeProg: 0,
 };
 
 FastClick.attach(document.body);
@@ -40,6 +46,7 @@ game.state.add("titleMenu", titleMenu);
 game.state.add("settings", settings);
 game.state.add("skins", skins);
 game.state.add("challenges", challenges);
+game.state.add("newChallenge", newChallenge);
 
 game.state.add("theGame", theGame);
 game.state.start("Boot");
