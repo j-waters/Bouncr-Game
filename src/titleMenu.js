@@ -195,10 +195,10 @@ challenges.prototype = {
 		desct = this.game.add.text(0.5 * game.width, 0.22 * game.height, "Complete challanges to unlock themes and other game modes", {fill: v.playerColour, font: "bold Arial", fontSize: 0.02 * game.height, align: 'center', wordWrap: true, wordWrapWidth: 0.9 * game.width})
 		desct.anchor.set(0.5, 0)
 		
-		challengenot = this.game.add.text(0.5 * game.width, 0.28 * game.height, "COMPLETED CHALLENGES", {fill: v.playerColour, font: "bold Arial", fontSize: 0.07 * game.width})
+		challengenot = this.game.add.text(0.5 * game.width, 0.28 * game.height, "COMPLETED CHALLENGES", {fill: v.playerColour, font: "bold Arial", fontSize: 0.038 * game.height})
 		challengenot.anchor.set(0.5, 0)
 		
-		challengeno = this.game.add.text(0.5 * game.width, 0.32 * game.height, v.completed + " / " + Object.keys(v.challenges).length, {fill: v.playerColour, font: "bold Arial", fontSize: 0.07 * game.width})
+		challengeno = this.game.add.text(0.5 * game.width, 0.32 * game.height, v.completed + " / " + Object.keys(v.challenges).length, {fill: v.playerColour, font: "bold Arial", fontSize: 0.038 * game.height})
 		challengeno.anchor.set(0.5, 0)
 		
 		cb = this.game.make.bitmapData(0.9 * game.width, 0.4 * game.height)
@@ -210,13 +210,13 @@ challenges.prototype = {
 			var percentage = v.challengeProg / v.challenges[(v.completed).toString()].unlock[1]
 			cb.ctx.strokeStyle = v.obstacleColour
 			cb.ctx.beginPath();
-			cb.ctx.lineWidth = 0.05 * game.width;
-			cb.ctx.arc(0.45 * game.width, 0.27 * game.height, 0.16 * game.width, 0, 2*Math.PI);
+			cb.ctx.lineWidth = 0.03 * game.height;
+			cb.ctx.arc(0.45 * game.width, 0.27 * game.height, 0.09 * game.height, 0, 2*Math.PI);
 			cb.ctx.stroke();
 			
 			cb.ctx.strokeStyle = v.backgroundColour
 			cb.ctx.beginPath();
-			cb.ctx.arc(0.45 * game.width, 0.27 * game.height, 0.16 * game.width, -0.5*Math.PI, 2*Math.PI * percentage -0.5*Math.PI);
+			cb.ctx.arc(0.45 * game.width, 0.27 * game.height, 0.09 * game.height, -0.5*Math.PI, 2*Math.PI * percentage -0.5*Math.PI);
 			cb.ctx.stroke();
 		}
 		
@@ -224,13 +224,13 @@ challenges.prototype = {
 		challenge.anchor.set(0.5, 0)
 		
 		if (v.completed < Object.keys(v.challenges).length){
-			thischallengeno = this.game.add.text(0.5 * game.width, 0.39 * game.height, "Challenge " + (v.completed), {fill: v.backgroundColour, font: "bold Arial", fontSize: 0.06 * game.height})
+			thischallengeno = this.game.add.text(0.5 * game.width, 0.39 * game.height, "Challenge " + (v.completed + 1), {fill: v.backgroundColour, font: "bold Arial", fontSize: 0.06 * game.height})
 			thischallengeno.anchor.set(0.5, 0)
 			
-			challengedesc = this.game.add.text(0.5 * game.width, 0.47 * game.height, v.challenges[(v.completed).toString()].description, {fill: v.backgroundColour, font: "bold Arial", fontSize: 0.05 * game.width, align: 'center', wordWrap: true, wordWrapWidth: 0.8 * game.width})
+			challengedesc = this.game.add.text(0.5 * game.width, 0.47 * game.height, v.challenges[(v.completed).toString()].description, {fill: v.backgroundColour, font: "bold Arial", fontSize: 0.03 * game.height, align: 'center', wordWrap: true, wordWrapWidth: 0.8 * game.width})
 			challengedesc.anchor.set(0.5, 0)
 			
-			challengeprog = this.game.add.text(0.5 * game.width, 0.65 * game.height, v.challengeProg, {fill: v.backgroundColour, font: "bold Arial", fontSize: 0.17 * game.width})
+			challengeprog = this.game.add.text(0.5 * game.width, 0.65 * game.height, v.challengeProg, {fill: v.backgroundColour, font: "bold Arial", fontSize: 0.09 * game.height})
 			challengeprog.anchor.set(0.5, 0.5)
 		}
 		else {
