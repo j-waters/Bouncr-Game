@@ -26,16 +26,24 @@ var v = {
 	completed: 0,
 	challenges: {"0": {description: "Play 5 games of classic mode", unlock: ["plays", 5]},
 				"1": {description: "Score 20 in classic mode", unlock: ["score", 20]},
-				"2": {description: "Score a total of 100 in classic mode", unlock: ["total", 100]}
+				"2": {description: "Score a total of 100 in classic mode", unlock: ["total", 100],},
+				"3": {description: "Get 20 points without touching the sides", unlock: ["sides", 20]},
+				"4": {description: "Score 3 points without tapping the screen", unlock: ["notouch", 2]},
+				"5": {description: "Play a game using a different theme", unlock: ["theme", 1, "any"]},
+				"6": {description: "Play 15 games of classic mode", unlock: ["plays", 15]},
+				"7": {description: "Score 40 in classic mode", unlock: ["score", 40]},
+				"8": {description: "Score a total of 200 in classic mode", unlock: ["total", 200],},
+				"9": {description: "Get 30 points without touching the sides", unlock: ["sides", 30]},
+				"10": {description: "Score 4 points without tapping the screen", unlock: ["notouch", 3]}
 		},
 	challengeProg: 0,
+	tempProg: 0,
 };
 
 FastClick.attach(document.body);
 
 //					  ( width , height , renderer , parent , state , transparent , anti alias , physicsConfig )
 
-//document.body.style.backgroundColor = "#000000"
 game = new Phaser.Game(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio, Phaser.AUTO, "", null, null, true, null);
 
 game.state.add("Boot", boot);

@@ -10,10 +10,14 @@ function player(){
 	line.line(0, 0.004 * game.height, game.width, 0.004 * game.height, v.playerColour, 0.0016 * game.height)
 	game.add.sprite(0, 0.7 * game.height, line)
 	
-	if (game.state.current == "theGame" || game.state.current == "newChallenge"){
+	if (game.state.current == "theGame"){
 		this.direction = 1
 		game.input.onDown.add(function(){
 			this.direction *= -1
+			if(v.gameEnd == false){if (v.challenges[(v.completed).toString()].unlock[0] == "notouch"){
+				if (v.tempProg > v.challengeProg){v.challengeProg = v.tempProg}
+				v.tempProg = 0
+			}}
 		}, this);
 	}
 	
@@ -24,14 +28,21 @@ player.prototype.constructor = player;
 player.prototype.update = function() {
 	if (game.state.current == "theGame"){
 		var change = (v.speed * 1.1) * this.direction * (game.width/720)
+		var side = false
 		if (this.x + change >= game.width - this.width/2){
 			this.direction *= -1;
 			this.x = game.width - this.width/2
+			side = true
 		}
 		if (this.x + change <= 0 + this.width/2){
 			this.direction *= -1;
 			this.x = 0 + this.width/2
+			side = true
 		}
+		if (side) {if (v.challenges[(v.completed).toString()].unlock[0] == "sides"){
+			if (v.tempProg > v.challengeProg){v.challengeProg = v.tempProg}
+			v.tempProg = 0
+		}}
 		this.x += change;
 	}
 }
@@ -98,6 +109,10 @@ obstacle.prototype.update = function() {
 	if (this.y >= 0.7 * game.height && this.scored == false){
 		v.score += this.points;
 		this.scored = true;
+		if (v.challenges[(v.completed).toString()].unlock[0] == "sides" || v.challenges[(v.completed).toString()].unlock[0] == "notouch"){
+			v.tempProg += this.points
+			if (v.tempProg > v.challengeProg){v.challengeProg = v.tempProg}
+		}
 	}
 }
 

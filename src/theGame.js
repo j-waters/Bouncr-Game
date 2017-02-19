@@ -61,6 +61,7 @@ theGame.prototype = {
 					}
 					
 					var newch = false
+					v.tempProg = 0
 					if (v.completed < Object.keys(v.challenges).length){
 						if (v.challenges[(v.completed).toString()].unlock[0] == "plays"){
 							v.challengeProg += 1
@@ -70,6 +71,11 @@ theGame.prototype = {
 						}
 						if (v.challenges[(v.completed).toString()].unlock[0] == "total"){
 							v.challengeProg += v.score
+						}
+						if (v.challenges[(v.completed).toString()].unlock[0] == "theme"){
+							if (v.challenges[(v.completed).toString()].unlock[2] == "any" && v.themeOrder != 0){
+								v.challengeProg += 1
+							}
 						}
 						if (v.challengeProg >= v.challenges[(v.completed).toString()].unlock[1]){
 							v.completed += 1
