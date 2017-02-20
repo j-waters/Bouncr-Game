@@ -33,6 +33,8 @@ titleMenu.prototype = {
 		leaderb = new menuButton(0.14 * game.width, 0.6 * game.height, "settings/podium", this.leaderboard, this)
 		
 		challengeb = new menuButton(0.86 * game.width, 0.6 * game.height, "settings/trophy", this.challenge, this)
+		
+		modeb = new menuButton(0.5 * game.width, 0.4 * game.height, "settings/mode", this.mode, this)
 	},
 	
 	render: function(){
@@ -63,6 +65,12 @@ titleMenu.prototype = {
 	
 	challenge: function(){
 		this.game.state.start("challenges")
+	},
+	
+	mode: function(){
+		//this.game.state.start("mode")
+		v.mode = (v.mode == "classic") ? "moving" : "classic"
+		alert("Mode switched to " + v.mode)
 	}
 }
 

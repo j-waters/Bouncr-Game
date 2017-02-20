@@ -16,6 +16,7 @@ var v = {
 	highScore: 0,
 	mobile: true,
 	scroll: 0,
+	mode: "classic",
 	themeOrder: 0,
 	themes: {"0": {name: "Default", player: "#000000", background: "#ffffff", obstacle: "#ff0000", unlock: ["score", 0]},
 			"1": {name: "Negative", player: "#ffffff", background: "#000000", obstacle: "#0000ff", unlock: ["score", 10]},

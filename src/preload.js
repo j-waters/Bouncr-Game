@@ -11,6 +11,7 @@ preload.prototype = {
         game.load.image('settings/skins', 'assets/images/skins.png')
         game.load.image('settings/podium', 'assets/images/podium.png')
         game.load.image('settings/trophy', 'assets/images/trophy.png')
+        game.load.image('settings/mode', 'assets/images/mode.png')
 	},
   	create: function(){
   		game.state.start("titleMenu")

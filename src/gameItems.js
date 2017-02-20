@@ -98,7 +98,7 @@ obstacle.prototype.update = function() {
 		v.gameEnd = true;
 		v.gameEndTarget = this
     	v.speed = 0;
-    	this.key.fill(255, 255, 255)
+    	this.key.fill(hexToRgbA(v.backgroundColour)[0], hexToRgbA(v.backgroundColour)[1], hexToRgbA(v.backgroundColour)[2])
     }
 	
 	this.y += v.speed * (game.height/1280);
@@ -114,6 +114,85 @@ obstacle.prototype.update = function() {
 			if (v.tempProg > v.challengeProg){v.challengeProg = v.tempProg}
 		}
 	}
+}
+
+
+
+function movingObstacle(){
+	width = 0.06 * game.height
+	var triangle = game.make.graphics(0, 0);
+	triangle.beginFill(parseInt(v.obstacleColour.replace(/^#/, ''), 16));
+	triangle.drawPolygon([0, 0, width/2, Math.sqrt(0.75) * width, width, 0, 0, 0])
+	triangle.endFill();
+	
+	var x = randomInt(0 + width/2, game.width - width/2);
+	
+	Phaser.Sprite.call(this, game, x, -width/2, triangle.generateTexture());
+	this.anchor.set(0.5, 0.5)
+	
+	var line = game.add.bitmapData(game.width, 0.008 * game.height);
+	line.line(0, 0.004 * game.height, game.width, 0.004 * game.height, v.obstacleColour, 0.0016 * game.height)
+	this.l = game.add.sprite(0, -0.1 * width, line)
+	game.world.sendToBack(this.l)
+	
+	this.direction = 1 + (-2 * randomInt(0, 1))
+	
+	if (v.mode == "clone"){
+		game.input.onDown.add(function(){
+			this.direction *= -1
+		}, this);
+	}
+	
+}
+
+movingObstacle.prototype = Object.create(Phaser.Sprite.prototype);
+movingObstacle.prototype.constructor = movingObstacle;
+movingObstacle.prototype.update = function() {
+		this.x1 = this.x - this.width/2
+		this.y1 = this.y - this.width/2
+		this.x2 = this.x +this.width/2
+		this.y2 = this.y - this.width/2
+		this.x3 = this.x
+		this.y3 = this.y + this.width/2
+		if (TriangleRectColliding({x1: this.x1, y1: this.y1, x2: this.x2, y2: this.y2, x3: this.x3, y3: this.y3}, {x: p.x, y:p.y, r:p.width/2})){
+			v.gameEnd = true;
+			v.gameEndTarget = this
+	    	v.speed = 0;
+			var triangle = game.make.graphics(0, 0);
+			triangle.beginFill(parseInt(v.backgroundColour.replace(/^#/, ''), 16));
+			triangle.drawPolygon([0, 0, width/2, Math.sqrt(0.75) * width, width, 0, 0, 0])
+			triangle.endFill();
+			this.loadTexture(triangle.generateTexture())
+		}
+		var change = (v.speed * 1.1) * this.direction * (game.width/720)
+		if (this.x + change >= game.width - this.width/2){
+			this.direction *= -1;
+			this.x = game.width - this.width/2
+			side = true
+		}
+		if (this.x + change <= 0 + this.width/2){
+			this.direction *= -1;
+			this.x = 0 + this.width/2
+			side = true
+		}
+		
+		this.x += change;
+		
+		this.y += v.speed * (game.height/1280);
+		
+		this.l.y = this.y -0.1 * this.width
+		
+		if (this.y - this.height >= game.height){
+			this.destroy()
+		}
+		if (this.y >= 0.7 * game.height && this.scored == false){
+			v.score += this.points;
+			this.scored = true;
+			if (v.challenges[(v.completed).toString()].unlock[0] == "sides" || v.challenges[(v.completed).toString()].unlock[0] == "notouch"){
+				v.tempProg += this.points
+				if (v.tempProg > v.challengeProg){v.challengeProg = v.tempProg}
+			}
+		}
 }
 
 function hsLine(y){
@@ -152,6 +231,17 @@ function RectCircleColliding(circle, rect){
     var dx=distX-rect.w/2;
     var dy=distY-rect.h/2;
     return (dx*dx+dy*dy<=(circle.r*circle.r));
+}
+
+function TriangleRectColliding(triangle, circle){
+	 dist = Math.sqrt(Math.pow(triangle.x1 - circle.x, 2) + Math.pow(triangle.y1 - circle.y, 2))
+	 if (dist < circle.r){ return true;}
+	 
+	 dist = Math.sqrt(Math.pow(triangle.x2 - circle.x, 2) + Math.pow(triangle.y2 - circle.y, 2))
+	 if (dist < circle.r){ return true;}
+	 
+	 dist = Math.sqrt(Math.pow(triangle.x3 - circle.x, 2) + Math.pow(triangle.y3 - circle.y, 2))
+	 if (dist < circle.r){ return true;}
 }
 
 function save(){

@@ -39,10 +39,10 @@ theGame.prototype = {
 					if (v.mobile){AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER)}
 					this.finished = true;
 					v.plays++
-					game.stage.backgroundColor = (v.obstacleColour != "#ffffff") ? v.obstacleColour : "#000014";
-					document.body.style.backgroundColor = (v.obstacleColour != "#ffffff") ? v.obstacleColour : "#000014"
+					game.stage.backgroundColor = v.obstacleColour;
+					document.body.style.backgroundColor = v.obstacleColour
 					this.scoreText.alpha = 1;
-					this.scoreText.fill = "#ffffff"
+					this.scoreText.fill = v.backgroundColour
 					this.scoreText.bringToTop()
 					
 					while (v.obstacles.children.length != 1){
@@ -86,10 +86,10 @@ theGame.prototype = {
 					
 					save()
 
-					hight = this.game.add.text(0.5 * game.width, 0.29 * game.height, "top: " + v.highScore, {fill: "#ffffff", boundsAlignH: "center", fontSize: 0.03 * game.height})
+					hight = this.game.add.text(0.5 * game.width, 0.29 * game.height, "top: " + v.highScore, {fill: v.backgroundColour, boundsAlignH: "center", fontSize: 0.03 * game.height})
 					hight.anchor.set(0.5, 0.5)
 					
-					playt = this.game.add.text(0.5 * game.width, 0.5 * game.height, "tap to play again", {fill: "#ffffff", boundsAlignH: "center", fontSize: 0.03 * game.height})
+					playt = this.game.add.text(0.5 * game.width, 0.5 * game.height, "tap to play again", {fill: v.backgroundColour, boundsAlignH: "center", fontSize: 0.03 * game.height})
 					playt.anchor.set(0.5, 0.5)
 					this.game.add.tween(playt).to({ alpha: 0.5 }, 1500, null, null, null, null, true).start();
 					
@@ -101,7 +101,8 @@ theGame.prototype = {
 			}
 			this.scoreText.text = v.score
 			if (Math.floor(v.distance) % 60 == 0){
-				e = new obstacle();
+				if (v.mode == "classic") {e = new obstacle();}
+				if (v.mode == "moving") {e = new movingObstacle();}
 				v.obstacles.add(e)
 			}
 		},
