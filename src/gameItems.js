@@ -127,6 +127,11 @@ function movingObstacle(){
 	
 	var x = randomInt(0 + width/2, game.width - width/2);
 	
+	this.points = 1
+	this.speedMod = randomInt(7, 10)/10
+	
+	this.scored = false
+	
 	Phaser.Sprite.call(this, game, x, -width/2, triangle.generateTexture());
 	this.anchor.set(0.5, 0.5)
 	
@@ -164,7 +169,7 @@ movingObstacle.prototype.update = function() {
 			triangle.endFill();
 			this.loadTexture(triangle.generateTexture())
 		}
-		var change = (v.speed * 1.1) * this.direction * (game.width/720)
+		var change = (v.speed * 1.1) * this.direction * (game.width/720) * this.speedMod
 		if (this.x + change >= game.width - this.width/2){
 			this.direction *= -1;
 			this.x = game.width - this.width/2
