@@ -12,6 +12,10 @@ preload.prototype = {
         game.load.image('settings/podium', 'assets/images/podium.png')
         game.load.image('settings/trophy', 'assets/images/trophy.png')
         game.load.image('settings/mode', 'assets/images/mode.png')
+        
+        game.load.image('mode/classic', 'assets/images/classic.png')
+        game.load.image('mode/moving', 'assets/images/moving.png')
+        game.load.image('mode/clone', 'assets/images/clone.png')
 	},
   	create: function(){
   		game.state.start("titleMenu")

@@ -21,7 +21,7 @@ titleMenu.prototype = {
 		titlet = this.game.add.text(0.5 * game.width, 0.27 * game.height, "bouncr", {fill: v.playerColour, font: "bold Arial", fontSize: 0.1 * game.height})
 		titlet.anchor.set(0.5, 0.5)
 		
-		hight = this.game.add.text(0.5 * game.width, 0.33 * game.height, "top: " + v.highScore, {fill: v.playerColour, fontSize: 0.03 * game.height})
+		hight = this.game.add.text(0.5 * game.width, 0.33 * game.height, "top: " + v.highScore[v.mode], {fill: v.playerColour, fontSize: 0.03 * game.height})
 		hight.anchor.set(0.5, 0.5)
 		
 		game.input.onDown.add(this.startGame, this);
@@ -52,10 +52,12 @@ titleMenu.prototype = {
 	},
 	
 	goSettings: function(){
+		v.scroll = 0;
 		this.game.state.start("settings")
 	},
 	
 	goSkins: function(){
+		v.scroll = 0;
 		this.game.state.start("skins")
 	},
 	
@@ -68,9 +70,8 @@ titleMenu.prototype = {
 	},
 	
 	mode: function(){
-		//this.game.state.start("mode")
-		v.mode = (v.mode == "classic") ? "moving" : "classic"
-		alert("Mode switched to " + v.mode)
+		v.scroll = 0;
+		this.game.state.start("mode")
 	}
 }
 
@@ -153,12 +154,10 @@ skins.prototype = {
 		
 		this.skins = game.add.group()
 		
-		for (i=0; i < Object.keys(v.themes).length; i++){
+		for (i=0; i < Object.keys(v.themes.length); i++){
 			sk = new themeUnlock(i)
 			this.skins.add(sk)
 		}
-		
-		v.scroll = 0;
 		
 		document.addEventListener("backbutton", function(){this.goTitle()}.bind(this));
 		
@@ -208,7 +207,7 @@ challenges.prototype = {
 		challengenot.anchor.set(0.5, 0)
 		while (challengenot.width > 0.95 * game.width){challengenot.fontSize--}
 		
-		challengeno = this.game.add.text(0.5 * game.width, 0.32 * game.height, v.completed + " / " + Object.keys(v.challenges).length, {fill: v.playerColour, font: "bold Arial", fontSize: 0.038 * game.height})
+		challengeno = this.game.add.text(0.5 * game.width, 0.32 * game.height, v.completed + " / " + v.challenges.length, {fill: v.playerColour, font: "bold Arial", fontSize: 0.038 * game.height})
 		challengeno.anchor.set(0.5, 0)
 		
 		cb = this.game.make.bitmapData(0.9 * game.width, 0.4 * game.height)
@@ -216,8 +215,8 @@ challenges.prototype = {
 		cb.ctx.strokeStyle = v.backgroundColour
 		cb.ctx.roundRect(0, 0, 0.9 * game.width, 0.4 * game.height, 20)
 		cb.ctx.fill();
-		if (v.completed < Object.keys(v.challenges).length){
-			var percentage = v.challengeProg / v.challenges[(v.completed).toString()].unlock[1]
+		if (v.completed < v.challenges.length){
+			var percentage = v.challengeProg / v.challenges[v.completed].unlock[1]
 			cb.ctx.strokeStyle = v.obstacleColour
 			cb.ctx.beginPath();
 			cb.ctx.lineWidth = 0.03 * game.height;
@@ -233,11 +232,11 @@ challenges.prototype = {
 		challenge = this.game.add.sprite(0.5 * game.width, 0.38 * game.height, cb)
 		challenge.anchor.set(0.5, 0)
 		
-		if (v.completed < Object.keys(v.challenges).length){
+		if (v.completed < v.challenges.length){
 			thischallengeno = this.game.add.text(0.5 * game.width, 0.39 * game.height, "Challenge " + (v.completed + 1), {fill: v.backgroundColour, font: "bold Arial", fontSize: 0.06 * game.height})
 			thischallengeno.anchor.set(0.5, 0)
 			
-			challengedesc = this.game.add.text(0.5 * game.width, 0.47 * game.height, v.challenges[(v.completed).toString()].description, {fill: v.backgroundColour, font: "bold Arial", fontSize: 0.03 * game.height, align: 'center', wordWrap: true, wordWrapWidth: 0.8 * game.width})
+			challengedesc = this.game.add.text(0.5 * game.width, 0.47 * game.height, v.challenges[v.completed].description, {fill: v.backgroundColour, font: "bold Arial", fontSize: 0.03 * game.height, align: 'center', wordWrap: true, wordWrapWidth: 0.8 * game.width})
 			challengedesc.anchor.set(0.5, 0)
 			
 			challengeprog = this.game.add.text(0.5 * game.width, 0.65 * game.height, v.challengeProg, {fill: v.backgroundColour, font: "bold Arial", fontSize: 0.09 * game.height})
@@ -249,6 +248,8 @@ challenges.prototype = {
 		}
 		
 		backb = new menuButton(0.07 * game.width, 0.04 * game.height, "settings/back", this.goTitle, this)
+		
+		document.addEventListener("backbutton", function(){this.goTitle()}.bind(this));
 	},
 	
 	goTitle: function(){
@@ -277,19 +278,75 @@ newChallenge.prototype = {
 		
 		var st = 1
 		
-		game.input.onDown.add(function(){
-			if (st == 1){
-				this.game.add.tween(c1).to({x: -0.5 * game.width}, 750).start()
-				this.game.add.tween(c2).to({x: 0.5 * game.width}, 750).start()
-				st += 1
+		game.time.events.add(500, function(){
+			game.input.onDown.add(function(){
+				if (st == 1){
+					this.game.add.tween(c1).to({x: -0.5 * game.width}, 750).start()
+					this.game.add.tween(c2).to({x: 0.5 * game.width}, 750).start()
+					st += 1
+				}
+				else if (st == 2){
+					t = this.game.add.tween(c2).to({x: -0.5 * game.width}, 750).start()
+					this.game.add.tween(playt).to({x: -0.5 * game.width}, 750).start()
+					t.onComplete.add(function(){
+						this.game.state.start("titleMenu")
+					})
+				}
+			}, this);
+		}, this)
+	}
+}
+
+var mode = function(game){}
+
+mode.prototype = {
+	create: function(){
+		load()
+		titlet = this.game.add.text(0.5 * game.width, 0.16 * game.height, "mode", {fill: v.playerColour, font: "bold Arial", fontSize: 0.12 * game.height})
+		titlet.anchor.set(0.5, 0.5)
+		
+		backb = new menuButton(0.07 * game.width, 0.04 * game.height, "settings/back", this.goTitle, this)
+		
+		modes = game.add.group()
+		
+		order = 0
+		
+		m = new modeOption(order, "classic")
+		modes.add(m)
+		
+		order++
+		m = new modeOption(order, "moving")
+		modes.add(m)
+		
+		order++
+		m = new modeOption(order, "clone")
+		modes.add(m)
+		
+		document.addEventListener("backbutton", function(){this.goTitle()}.bind(this));
+	},
+	
+	update: function(){
+		if (this.game.input.activePointer.isDown) {	
+			if (this.game.origDragPoint) {
+				v.scroll += this.game.origDragPoint.y - this.game.input.activePointer.position.y;	
 			}
-			else if (st == 2){
-				t = this.game.add.tween(c2).to({x: -0.5 * game.width}, 750).start()
-				this.game.add.tween(playt).to({x: -0.5 * game.width}, 750).start()
-				t.onComplete.add(function(){
-					this.game.state.start("titleMenu")
-				})
+			this.game.origDragPoint = this.game.input.activePointer.position.clone();
+		}
+		else {
+			this.game.origDragPoint = null;
+			if (v.scroll < 0 && this.scrollTween == null){
+				this.scrollTween = this.game.add.tween(v).to({ scroll: 0 }, 200, Phaser.Easing.Exponential.out, true);
+				this.scrollTween.onComplete.add(function(){this.scrollTween = null}, this)
 			}
-		}, this);
+			if (v.scroll > (0) * 200  && this.scrollTween == null  && v.scroll != 0){
+				this.scrollTween = this.game.add.tween(v).to({ scroll: (0) * 200 }, 200, Phaser.Easing.Exponential.out, true);
+				this.scrollTween.onComplete.add(function(){this.scrollTween = null}, this)
+			}
+		}
+	},
+	
+	goTitle: function(){
+		save()
+		this.game.state.start("titleMenu")
 	}
 }

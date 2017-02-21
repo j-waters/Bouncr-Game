@@ -56,37 +56,42 @@ theGame.prototype = {
 					
 					v.score = Math.ceil(v.score)
 					
-					if (v.score > v.highScore){
-						v.highScore = v.score
+					if (v.score > v.highScore[v.mode]){
+						v.highScore[v.mode] = v.score
 					}
 					
 					var newch = false
 					v.tempProg = 0
-					if (v.completed < Object.keys(v.challenges).length){
-						if (v.challenges[(v.completed).toString()].unlock[0] == "plays"){
-							v.challengeProg += 1
-						}
-						if (v.challenges[(v.completed).toString()].unlock[0] == "score"){
-							v.challengeProg = v.score
-						}
-						if (v.challenges[(v.completed).toString()].unlock[0] == "total"){
-							v.challengeProg += v.score
-						}
-						if (v.challenges[(v.completed).toString()].unlock[0] == "theme"){
-							if (v.challenges[(v.completed).toString()].unlock[2] == "any" && v.themeOrder != 0){
+					if (v.completed < v.challenges.length){
+						if (v.challenges[v.completed].mode == v.mode){
+							if (v.challenges[v.completed].unlock[0] == "plays"){
 								v.challengeProg += 1
 							}
-						}
-						if (v.challengeProg >= v.challenges[(v.completed).toString()].unlock[1]){
-							v.completed += 1
-							v.challengeProg = 0
-							newch = true
+							if (v.challenges[v.completed].unlock[0] == "score"){
+								v.challengeProg = v.score
+							}
+							if (v.challenges[v.completed].unlock[0] == "total"){
+								v.challengeProg += v.score
+							}
+							if (v.challenges[v.completed].unlock[0] == "theme"){
+								if (v.challenges[v.completed].unlock[2] == "any" && v.themeOrder != 0){
+									v.challengeProg += 1
+								}
+								if (v.challenges[v.completed].unlock[2] == v.themeOrder){
+									v.challengeProg += 1
+								}
+							}
+							if (v.challengeProg >= v.challenges[v.completed].unlock[1]){
+								v.completed += 1
+								v.challengeProg = 0
+								newch = true
+							}
 						}
 					}
 					
 					save()
 
-					hight = this.game.add.text(0.5 * game.width, 0.29 * game.height, "top: " + v.highScore, {fill: v.backgroundColour, boundsAlignH: "center", fontSize: 0.03 * game.height})
+					hight = this.game.add.text(0.5 * game.width, 0.29 * game.height, "top: " + v.highScore[v.mode], {fill: v.backgroundColour, boundsAlignH: "center", fontSize: 0.03 * game.height})
 					hight.anchor.set(0.5, 0.5)
 					
 					playt = this.game.add.text(0.5 * game.width, 0.5 * game.height, "tap to play again", {fill: v.backgroundColour, boundsAlignH: "center", fontSize: 0.03 * game.height})
@@ -102,7 +107,7 @@ theGame.prototype = {
 			this.scoreText.text = v.score
 			if (Math.floor(v.distance) % 60 == 0){
 				if (v.mode == "classic") {e = new obstacle();}
-				if (v.mode == "moving") {e = new movingObstacle();}
+				if (v.mode == "moving" || v.mode == "clone") {e = new movingObstacle();}
 				v.obstacles.add(e)
 			}
 		},

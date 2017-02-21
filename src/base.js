@@ -13,7 +13,7 @@ var v = {
 	gameEnd: false,
 	gameEndTarget: null,
 	obstacles: null,
-	highScore: 0,
+	highScore: {"classic": 0, "moving":0, "clone":0},
 	mobile: true,
 	scroll: 0,
 	mode: "classic",
@@ -24,19 +24,25 @@ var v = {
 			"3": {name: "Magma", player: "#640000", background: "#ff0000", obstacle: "#c4a460", unlock: ["plays", 25]},
 			"4": {name: "Earth", player: "#00FF00", background: "#654321", obstacle: "#228B22", unlock: ["plays", 50]},
 		},
-	completed: 0,
-	challenges: {"0": {description: "Play 5 games of classic mode", unlock: ["plays", 5]},
-				"1": {description: "Score 20 in classic mode", unlock: ["score", 20]},
-				"2": {description: "Score a total of 100 in classic mode", unlock: ["total", 100],},
-				"3": {description: "Get 20 points without touching the sides", unlock: ["sides", 20]},
-				"4": {description: "Score 3 points without tapping the screen", unlock: ["notouch", 2]},
-				"5": {description: "Play a game using a different theme", unlock: ["theme", 1, "any"]},
-				"6": {description: "Play 15 games of classic mode", unlock: ["plays", 15]},
-				"7": {description: "Score 40 in classic mode", unlock: ["score", 40]},
-				"8": {description: "Score a total of 200 in classic mode", unlock: ["total", 200],},
-				"9": {description: "Get 30 points without touching the sides", unlock: ["sides", 30]},
-				"10": {description: "Score 4 points without tapping the screen", unlock: ["notouch", 3]}
+	modes: {"classic": {unlock: ["score", 0]},
+			"moving": {unlock: ["challenge", 3]},
+			"clone": {unlock: ["challenge", 6]}
 		},
+	completed: 0,
+	challenges: [{description: "Play 5 games of classic mode", unlock: ["plays", 5], mode: "classic"},
+				{description: "Score 20 in classic mode", unlock: ["score", 20], mode: "classic"},
+				{description: "Score a total of 100 in classic mode", unlock: ["total", 100], mode: "classic"},
+				{description: "Score 10 in moving mode", unlock: ["score", 10], mode: "moving"},
+				{description: "Get 20 points without touching the sides in classic mode", unlock: ["sides", 20], mode: "classic"},
+				{description: "Score 3 points without tapping the screen in classic mode", unlock: ["notouch", 2], mode: "classic"},
+				{description: "Play a game using a different theme", unlock: ["theme", 1, "any"]},
+				{description: "Play 15 games of classic mode", unlock: ["plays", 15], mode: "classic"},
+				{description: "Score 40 in classic mode", unlock: ["score", 40], mode: "classic"},
+				{description: "Score 20 in moving mode", unlock: ["score", 10], mode: "moving"},
+				{description: "Score a total of 200 in classic mode", unlock: ["total", 200], mode: "classic"},
+				{description: "Get 30 points without touching the sides in classic mode", unlock: ["sides", 30], mode: "classic"},
+				{description: "Score 4 points without tapping the screen in classic mode", unlock: ["notouch", 3], mode: "classic"}
+		],
 	challengeProg: 0,
 	tempProg: 0,
 };
@@ -56,6 +62,7 @@ game.state.add("settings", settings);
 game.state.add("skins", skins);
 game.state.add("challenges", challenges);
 game.state.add("newChallenge", newChallenge);
+game.state.add("mode", mode);
 
 game.state.add("theGame", theGame);
 game.state.start("Boot");

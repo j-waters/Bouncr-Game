@@ -14,7 +14,7 @@ function player(){
 		this.direction = 1
 		game.input.onDown.add(function(){
 			this.direction *= -1
-			if(v.gameEnd == false){if (v.challenges[(v.completed).toString()].unlock[0] == "notouch"){
+			if(v.gameEnd == false){if (v.challenges[v.completed].unlock[0] == "notouch" && v.challenges[v.completed].mode == v.mode){
 				if (v.tempProg > v.challengeProg){v.challengeProg = v.tempProg}
 				v.tempProg = 0
 			}}
@@ -39,7 +39,7 @@ player.prototype.update = function() {
 			this.x = 0 + this.width/2
 			side = true
 		}
-		if (side) {if (v.challenges[(v.completed).toString()].unlock[0] == "sides"){
+		if (side) {if (v.challenges[v.completed].unlock[0] == "sides" && v.challenges[v.completed].mode == v.mode){
 			if (v.tempProg > v.challengeProg){v.challengeProg = v.tempProg}
 			v.tempProg = 0
 		}}
@@ -109,7 +109,7 @@ obstacle.prototype.update = function() {
 	if (this.y >= 0.7 * game.height && this.scored == false){
 		v.score += this.points;
 		this.scored = true;
-		if (v.challenges[(v.completed).toString()].unlock[0] == "sides" || v.challenges[(v.completed).toString()].unlock[0] == "notouch"){
+		if ((v.challenges[v.completed].unlock[0] == "sides" || v.challenges[v.completed].unlock[0] == "notouch") && v.challenges[v.completed].mode == v.mode){
 			v.tempProg += this.points
 			if (v.tempProg > v.challengeProg){v.challengeProg = v.tempProg}
 		}
@@ -119,20 +119,28 @@ obstacle.prototype.update = function() {
 
 
 function movingObstacle(){
-	width = 0.06 * game.height
-	var triangle = game.make.graphics(0, 0);
-	triangle.beginFill(parseInt(v.obstacleColour.replace(/^#/, ''), 16));
-	triangle.drawPolygon([0, 0, width/2, Math.sqrt(0.75) * width, width, 0, 0, 0])
-	triangle.endFill();
+	width = 0.08 * game.height
+	if (v.mode == "moving"){
+		var rend = game.make.graphics(0, 0);
+		rend.beginFill(parseInt(v.obstacleColour.replace(/^#/, ''), 16));
+		rend.drawPolygon([0, 0, width/2, Math.sqrt(0.75) * width, width, 0, 0, 0])
+		rend.endFill();
+		rend = rend.generateTexture()
+	}
+	
+	if (v.mode == "clone"){
+		var rend = game.make.bitmapData(width, width);
+		rend.circle(width/2, width/2, width/2, v.obstacleColour);
+	}
 	
 	var x = randomInt(0 + width/2, game.width - width/2);
-	
+		
 	this.points = 1
 	this.speedMod = randomInt(7, 10)/10
 	
 	this.scored = false
 	
-	Phaser.Sprite.call(this, game, x, -width/2, triangle.generateTexture());
+	Phaser.Sprite.call(this, game, x, -width/2, rend);
 	this.anchor.set(0.5, 0.5)
 	
 	var line = game.add.bitmapData(game.width, 0.008 * game.height);
@@ -153,23 +161,35 @@ function movingObstacle(){
 movingObstacle.prototype = Object.create(Phaser.Sprite.prototype);
 movingObstacle.prototype.constructor = movingObstacle;
 movingObstacle.prototype.update = function() {
-		this.x1 = this.x - this.width/2
-		this.y1 = this.y - this.width/2
-		this.x2 = this.x +this.width/2
-		this.y2 = this.y - this.width/2
-		this.x3 = this.x
-		this.y3 = this.y + this.width/2
-		if (TriangleRectColliding({x1: this.x1, y1: this.y1, x2: this.x2, y2: this.y2, x3: this.x3, y3: this.y3}, {x: p.x, y:p.y, r:p.width/2})){
+		x1 = this.x - this.width/2
+		y1 = this.y - this.width/2
+		x2 = this.x +this.width/2
+		y2 = this.y - this.width/2
+		x3 = this.x
+		y3 = this.y + this.width/2
+		trc = TriangleRectColliding({x1: x1, y1: y1, x2: x2, y2: y2, x3: x3, y3: y3}, {x: p.x, y:p.y, r:p.width/2})
+		ccc = CircleCircleColliding({x: this.x, y: this.y, r: this.width/2}, {x: p.x, y:p.y, r:p.width/2})
+		if ((v.mode == "moving" && trc) || (v.mode == "clone" && ccc)){
 			v.gameEnd = true;
 			v.gameEndTarget = this
 	    	v.speed = 0;
-			var triangle = game.make.graphics(0, 0);
-			triangle.beginFill(parseInt(v.backgroundColour.replace(/^#/, ''), 16));
-			triangle.drawPolygon([0, 0, width/2, Math.sqrt(0.75) * width, width, 0, 0, 0])
-			triangle.endFill();
-			this.loadTexture(triangle.generateTexture())
+			
+			if (v.mode == "moving"){
+				var rend = game.make.graphics(0, 0);
+				rend.beginFill(parseInt(v.backgroundColour.replace(/^#/, ''), 16));
+				rend.drawPolygon([0, 0, this.width/2, Math.sqrt(0.75) * this.width, this.width, 0, 0, 0])
+				rend.endFill();
+				rend = rend.generateTexture()
+			}
+			
+			if (v.mode == "clone"){
+				var rend = game.make.bitmapData(this.width, this.width);
+				rend.circle(this.width/2, this.width/2, this.width/2, v.backgroundColour);
+			}
+			
+			this.loadTexture(rend)
 		}
-		var change = (v.speed * 1.1) * this.direction * (game.width/720) * this.speedMod
+		var change = v.speed * this.direction * (game.width/720) * this.speedMod
 		if (this.x + change >= game.width - this.width/2){
 			this.direction *= -1;
 			this.x = game.width - this.width/2
@@ -193,7 +213,7 @@ movingObstacle.prototype.update = function() {
 		if (this.y >= 0.7 * game.height && this.scored == false){
 			v.score += this.points;
 			this.scored = true;
-			if (v.challenges[(v.completed).toString()].unlock[0] == "sides" || v.challenges[(v.completed).toString()].unlock[0] == "notouch"){
+			if ((v.challenges[v.completed].unlock[0] == "sides" || v.challenges[v.completed].unlock[0] == "notouch") && v.challenges[v.completed].mode == v.mode){
 				v.tempProg += this.points
 				if (v.tempProg > v.challengeProg){v.challengeProg = v.tempProg}
 			}
@@ -249,9 +269,16 @@ function TriangleRectColliding(triangle, circle){
 	 if (dist < circle.r){ return true;}
 }
 
+function CircleCircleColliding(circle1, circle2){
+	dist = Math.sqrt(Math.pow(circle1.x - circle2.x, 2) + Math.pow(circle1.y - circle2.y, 2))
+	if (dist < circle1.r + circle2.r){ return true;}
+}
+
 function save(){
 	var storage = window.localStorage;
-	storage.setItem("highScore", v.highScore)
+	for (i=0; i < Object.keys(v.highScore).length; i++){
+		storage.setItem("highScore" + Object.keys(v.highScore)[i], v.highScore[Object.keys(v.highScore)[i]])
+	}
 	storage.setItem("theme", v.themeOrder)
 	storage.setItem("plays", v.plays)
 	storage.setItem("gameService", v.playGames)
@@ -273,7 +300,10 @@ function save(){
 
 function load(){
 	var storage = window.localStorage;
-	v.highScore = storage.getItem("highScore") || 0;
+	//v.highScore = storage.getItem("highScore") || 0;
+	for (i=0; i < Object.keys(v.highScore).length; i++){
+		v.highScore[Object.keys(v.highScore)[i]] = storage.getItem("highScore" + Object.keys(v.highScore)[i]) || 0
+	}
 	v.plays = storage.getItem("plays") || 0;
 	v.themeOrder = storage.getItem("theme") || 0;
 	v.playGames = storage.getItem("gameService") || true;
@@ -471,12 +501,12 @@ function challengeBubble(mod){
 	Phaser.Sprite.call(this, game, 0.5 * game.width + (game.width * mod), 0.4 * game.height, cb)
 	this.anchor.set(0.5, 0.5)
 	
-	if (v.completed - 1 + mod < Object.keys(v.challenges).length){
+	if (v.completed - 1 + mod < v.challenges.length){
 		titlet = game.make.text(0, -0.03 * game.height, (mod == 0) ? "Challenge Completed" : "New Challenge", {fill: v.backgroundColour, font: "bold Arial", fontSize: 0.04 * game.height})
 		titlet.anchor.set(0.5, 0.5)
 		this.addChild(titlet)
 		
-		desc = game.make.text(0, 0.03 * game.height, v.challenges[(v.completed - 1 + mod).toString()].description, {fill: v.backgroundColour, font: "bold Arial", fontSize: 0.03 * game.height, align: 'center', wordWrap: true, wordWrapWidth: 0.8 * game.width})
+		desc = game.make.text(0, 0.03 * game.height, v.challenges[v.completed - 1 + mod].description, {fill: v.backgroundColour, font: "bold Arial", fontSize: 0.03 * game.height, align: 'center', wordWrap: true, wordWrapWidth: 0.8 * game.width})
 		desc.anchor.set(0.5, 0.5)
 		this.addChild(desc)
 	}
@@ -490,4 +520,57 @@ function challengeBubble(mod){
 challengeBubble.prototype = Object.create(Phaser.Sprite.prototype);
 challengeBubble.prototype.constructor = challengeBubble;
 challengeBubble.prototype.update = function() {
+}
+
+function modeOption(order, mode){
+	var width = 0.94 * game.width
+	var height = 0.28 * game.width
+	var background = game.make.bitmapData(width, height);
+	background.ctx.fillStyle = (v.mode == mode) ? v.obstacleColour : v.playerColour
+	background.ctx.roundRect(0, 0, width, height, 20)
+	background.ctx.fill();
+	Phaser.Sprite.call(this, game, 0.5 * game.width, (0.2525 * game.height) + (0.14 * game.width) + (0.31 * game.width) * order, background);
+	this.anchor.set(0.5, 0.5)
+	
+	this.mode = mode
+	
+	this.startY = this.y
+	
+	var name = game.make.text(-0.42 * game.width, 0, this.mode, {fill: v.backgroundColour, font: "bold Arial", fontSize: 0.07 * game.height})
+	name.anchor.set(0, 0.5)
+	while(name.width > 600 && name.fontSize > 0){name.fontSize--; name.updateText()}
+	this.addChild(name)
+	
+	
+	icon = game.make.bitmapData(70, 70);
+	icon.load("mode/" + this.mode);
+	icon.replaceRGB(254, 255, 255, 255, hexToRgbA(v.backgroundColour)[0], hexToRgbA(v.backgroundColour)[1], hexToRgbA(v.backgroundColour)[2], 255)
+	
+	i = game.make.sprite(0.3 * game.width, 0, icon)
+	i.anchor.set(0.5, 0.5)
+	i.width = i.height = 0.25 * game.width
+	this.addChild(i)
+	
+	mask = game.add.graphics(0, 0);
+    mask.beginFill("#ffffff");
+    mask.drawRect(0, 0, game.width, game.height);
+    mask.x = 0
+    mask.y = 0.25 * game.height
+    this.mask = mask;
+	
+	this.inputEnabled = true
+	this.drag = this.game.input.activePointer.position.y
+	this.events.onInputDown.add(function(){this.drag = this.game.input.activePointer.position.y}, this)
+	this.events.onInputUp.add(function(){
+		if (Math.abs(this.drag - this.game.input.activePointer.position.y) < 10){
+			v.mode = this.mode
+			game.state.start("mode")
+		}
+	}, this);
+}
+
+modeOption.prototype = Object.create(Phaser.Sprite.prototype);
+modeOption.prototype.constructor = modeOption;
+modeOption.prototype.update = function() {
+	this.y = this.startY - v.scroll
 }
