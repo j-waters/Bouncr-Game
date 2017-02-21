@@ -14,7 +14,7 @@ function player(){
 		this.direction = 1
 		game.input.onDown.add(function(){
 			this.direction *= -1
-			if(v.gameEnd == false){if (v.challenges[v.completed].unlock[0] == "notouch" && v.challenges[v.completed].mode == v.mode){
+			if(v.gameEnd == false){if (v.challenges[v.completed].unlock[0] == "notouch" && (v.challenges[v.completed].mode == v.mode || v.challenges[v.completed].mode == "")){
 				if (v.tempProg > v.challengeProg){v.challengeProg = v.tempProg}
 				v.tempProg = 0
 			}}
@@ -39,7 +39,7 @@ player.prototype.update = function() {
 			this.x = 0 + this.width/2
 			side = true
 		}
-		if (side) {if (v.challenges[v.completed].unlock[0] == "sides" && v.challenges[v.completed].mode == v.mode){
+		if (side) {if (v.challenges[v.completed].unlock[0] == "sides" && (v.challenges[v.completed].mode == v.mode || v.challenges[v.completed].mode == "")){
 			if (v.tempProg > v.challengeProg){v.challengeProg = v.tempProg}
 			v.tempProg = 0
 		}}
@@ -109,7 +109,7 @@ obstacle.prototype.update = function() {
 	if (this.y >= 0.7 * game.height && this.scored == false){
 		v.score += this.points;
 		this.scored = true;
-		if ((v.challenges[v.completed].unlock[0] == "sides" || v.challenges[v.completed].unlock[0] == "notouch") && v.challenges[v.completed].mode == v.mode){
+		if ((v.challenges[v.completed].unlock[0] == "sides" || v.challenges[v.completed].unlock[0] == "notouch") && (v.challenges[v.completed].mode == v.mode || v.challenges[v.completed].mode == "")){
 			v.tempProg += this.points
 			if (v.tempProg > v.challengeProg){v.challengeProg = v.tempProg}
 		}
@@ -213,7 +213,7 @@ movingObstacle.prototype.update = function() {
 		if (this.y >= 0.7 * game.height && this.scored == false){
 			v.score += this.points;
 			this.scored = true;
-			if ((v.challenges[v.completed].unlock[0] == "sides" || v.challenges[v.completed].unlock[0] == "notouch") && v.challenges[v.completed].mode == v.mode){
+			if ((v.challenges[v.completed].unlock[0] == "sides" || v.challenges[v.completed].unlock[0] == "notouch") && (v.challenges[v.completed].mode == v.mode || v.challenges[v.completed].mode == "")){
 				v.tempProg += this.points
 				if (v.tempProg > v.challengeProg){v.challengeProg = v.tempProg}
 			}

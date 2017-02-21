@@ -63,7 +63,7 @@ theGame.prototype = {
 					var newch = false
 					v.tempProg = 0
 					if (v.completed < v.challenges.length){
-						if (v.challenges[v.completed].mode == v.mode){
+						if (v.challenges[v.completed].mode == v.mode || v.challenges[v.completed].mode == ""){
 							if (v.challenges[v.completed].unlock[0] == "plays"){
 								v.challengeProg += 1
 							}

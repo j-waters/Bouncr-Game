@@ -35,7 +35,7 @@ var v = {
 				{description: "Score 10 in moving mode", unlock: ["score", 10], mode: "moving"},
 				{description: "Get 20 points without touching the sides in classic mode", unlock: ["sides", 20], mode: "classic"},
 				{description: "Score 3 points without tapping the screen in classic mode", unlock: ["notouch", 2], mode: "classic"},
-				{description: "Play a game using a different theme", unlock: ["theme", 1, "any"]},
+				{description: "Play a game using a different theme", unlock: ["theme", 1, "any"], mode: ""},
 				{description: "Play 15 games of classic mode", unlock: ["plays", 15], mode: "classic"},
 				{description: "Score 40 in classic mode", unlock: ["score", 40], mode: "classic"},
 				{description: "Score 20 in moving mode", unlock: ["score", 10], mode: "moving"},
