@@ -154,7 +154,8 @@ skins.prototype = {
 		
 		this.skins = game.add.group()
 		
-		for (i=0; i < Object.keys(v.themes.length); i++){
+		console.log(v.themes)
+		for (i=0; i < Object.keys(v.themes).length; i++){
 			sk = new themeUnlock(i)
 			this.skins.add(sk)
 		}
