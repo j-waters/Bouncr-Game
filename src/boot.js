@@ -8,7 +8,7 @@ boot.prototype = {
     
     create: function(){
     	load()
-    	if (this.game.device.desktop){
+    	if (this.game.device.desktop || this.game.device.iPhone){
     		this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
     		this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
     		this.game.scale.windowConstraints.bottom = "visual";
