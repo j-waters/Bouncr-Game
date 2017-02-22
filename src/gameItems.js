@@ -84,7 +84,7 @@ function obstacle(x, width, height, points){
 	
 	this.scored = false;
 	
-	if (Math.floor(v.distance) / 60 == v.highScore){
+	if (Math.floor(v.distance) / 60 == v.highScore[v.mode]){
 		hs = new hsLine(this.y)
 		v.obstacles.add(hs)
 		v.obstacles.sendToBack(hs)
@@ -149,6 +149,12 @@ function movingObstacle(){
 	game.world.sendToBack(this.l)
 	
 	this.direction = 1 + (-2 * randomInt(0, 1))
+	
+	if (Math.floor(v.distance) / 60 == v.highScore[v.mode]){
+		hs = new hsLine(this.y)
+		v.obstacles.add(hs)
+		v.obstacles.sendToBack(hs)
+	}
 	
 	if (v.mode == "clone"){
 		game.input.onDown.add(function(){
