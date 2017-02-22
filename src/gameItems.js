@@ -149,6 +149,7 @@ function movingObstacle(){
 	game.world.sendToBack(this.l)
 	
 	this.direction = 1 + (-2 * randomInt(0, 1))
+	this.direction *= 0.9
 	
 	if (Math.floor(v.distance) / 60 == v.highScore[v.mode]){
 		hs = new hsLine(this.y)
