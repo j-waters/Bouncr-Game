@@ -12,13 +12,15 @@ function player(){
 	
 	if (game.state.current == "theGame"){
 		this.direction = 1
-		game.input.onDown.add(function(){
-			this.direction *= -1
-			if(v.gameEnd == false){if (v.challenges[v.completed].unlock[0] == "notouch" && (v.challenges[v.completed].mode == v.mode || v.challenges[v.completed].mode == "")){
-				if (v.tempProg > v.challengeProg){v.challengeProg = v.tempProg}
-				v.tempProg = 0
-			}}
-		}, this);
+		if (v.mode != "patience"){
+			game.input.onDown.add(function(){
+				this.direction *= -1
+				if(v.gameEnd == false){if (v.challenges[v.completed].unlock[0] == "notouch" && (v.challenges[v.completed].mode == v.mode || v.challenges[v.completed].mode == "")){
+					if (v.tempProg > v.challengeProg){v.challengeProg = v.tempProg}
+					v.tempProg = 0
+				}}
+			}, this);
+		}
 	}
 	
 }
@@ -31,12 +33,12 @@ player.prototype.update = function() {
 		var side = false
 		if (this.x + change >= game.width - this.width/2){
 			this.direction *= -1;
-			this.x = game.width - this.width/2
+			this.x = game.width - this.width/2 - 1
 			side = true
 		}
-		if (this.x + change <= 0 + this.width/2){
+		else if (this.x + change <= 0 + this.width/2){
 			this.direction *= -1;
-			this.x = 0 + this.width/2
+			this.x = 0 + this.width/2 + 1
 			side = true
 		}
 		if (side) {if (v.challenges[v.completed].unlock[0] == "sides" && (v.challenges[v.completed].mode == v.mode || v.challenges[v.completed].mode == "")){
@@ -101,7 +103,9 @@ obstacle.prototype.update = function() {
     	this.key.fill(hexToRgbA(v.backgroundColour)[0], hexToRgbA(v.backgroundColour)[1], hexToRgbA(v.backgroundColour)[2])
     }
 	
-	this.y += v.speed * (game.height/1280);
+	if (v.mode != "patience" || (v.mode == "patience" && game.input.activePointer.isDown)){
+		this.y += v.speed * (game.height/1280);
+	}
 	
 	if (this.y - this.height >= game.height){
 		this.destroy()
@@ -118,9 +122,10 @@ obstacle.prototype.update = function() {
 
 
 
-function movingObstacle(){
+function movingObstacle(mode){
+	this.mode = mode
 	width = 0.08 * game.height
-	if (v.mode == "moving"){
+	if (this.mode == "moving"){
 		var rend = game.make.graphics(0, 0);
 		rend.beginFill(parseInt(v.obstacleColour.replace(/^#/, ''), 16));
 		rend.drawPolygon([0, 0, width/2, Math.sqrt(0.75) * width, width, 0, 0, 0])
@@ -128,7 +133,7 @@ function movingObstacle(){
 		rend = rend.generateTexture()
 	}
 	
-	if (v.mode == "clone"){
+	if (this.mode == "clone"){
 		var rend = game.make.bitmapData(width, width);
 		rend.circle(width/2, width/2, width/2, v.obstacleColour);
 	}
@@ -157,7 +162,7 @@ function movingObstacle(){
 		v.obstacles.sendToBack(hs)
 	}
 	
-	if (v.mode == "clone"){
+	if (this.mode == "clone"){
 		game.input.onDown.add(function(){
 			this.direction *= -1
 		}, this);
@@ -176,12 +181,12 @@ movingObstacle.prototype.update = function() {
 		y3 = this.y + this.width/2
 		trc = TriangleRectColliding({x1: x1, y1: y1, x2: x2, y2: y2, x3: x3, y3: y3}, {x: p.x, y:p.y, r:p.width/2})
 		ccc = CircleCircleColliding({x: this.x, y: this.y, r: this.width/2}, {x: p.x, y:p.y, r:p.width/2})
-		if ((v.mode == "moving" && trc) || (v.mode == "clone" && ccc)){
+		if ((this.mode == "moving" && trc) || (this.mode == "clone" && ccc)){
 			v.gameEnd = true;
 			v.gameEndTarget = this
 	    	v.speed = 0;
 			
-			if (v.mode == "moving"){
+			if (this.mode == "moving"){
 				var rend = game.make.graphics(0, 0);
 				rend.beginFill(parseInt(v.backgroundColour.replace(/^#/, ''), 16));
 				rend.drawPolygon([0, 0, this.width/2, Math.sqrt(0.75) * this.width, this.width, 0, 0, 0])
@@ -189,7 +194,7 @@ movingObstacle.prototype.update = function() {
 				rend = rend.generateTexture()
 			}
 			
-			if (v.mode == "clone"){
+			if (this.mode == "clone"){
 				var rend = game.make.bitmapData(this.width, this.width);
 				rend.circle(this.width/2, this.width/2, this.width/2, v.backgroundColour);
 			}
@@ -199,18 +204,20 @@ movingObstacle.prototype.update = function() {
 		var change = v.speed * this.direction * (game.width/720) * this.speedMod
 		if (this.x + change >= game.width - this.width/2){
 			this.direction *= -1;
-			this.x = game.width - this.width/2
+			this.x = game.width - this.width/2 - 1
 			side = true
 		}
 		if (this.x + change <= 0 + this.width/2){
 			this.direction *= -1;
-			this.x = 0 + this.width/2
+			this.x = 0 + this.width/2 + 1
 			side = true
 		}
 		
 		this.x += change;
 		
-		this.y += v.speed * (game.height/1280);
+		if (v.mode != "patience" || (v.mode == "patience" && game.input.activePointer.isDown)){
+			this.y += v.speed * (game.height/1280);
+		}
 		
 		this.l.y = this.y -0.1 * this.width
 		
@@ -238,7 +245,9 @@ function hsLine(y){
 hsLine.prototype = Object.create(Phaser.Sprite.prototype);
 hsLine.prototype.constructor = hsLine;
 hsLine.prototype.update = function() {
-	this.y += v.speed * (game.height/1280);
+	if (v.mode != "patience" || (v.mode == "patience" && game.input.activePointer.isDown)){
+		this.y += v.speed * (game.height/1280);
+	}
 	if (this.y - 10 >= game.height){
 		this.destroy()
 	}
@@ -274,6 +283,8 @@ function TriangleRectColliding(triangle, circle){
 	 
 	 dist = Math.sqrt(Math.pow(triangle.x3 - circle.x, 2) + Math.pow(triangle.y3 - circle.y, 2))
 	 if (dist < circle.r){ return true;}
+	 
+	 dist = Math.sqrt(Math.pow)
 }
 
 function CircleCircleColliding(circle1, circle2){
@@ -286,8 +297,10 @@ function save(){
 	for (i=0; i < Object.keys(v.highScore).length; i++){
 		storage.setItem("highScore" + Object.keys(v.highScore)[i], v.highScore[Object.keys(v.highScore)[i]])
 	}
+	for (i=0; i < Object.keys(v.plays).length; i++){
+		storage.setItem("plays" + Object.keys(v.plays)[i], v.plays[Object.keys(v.plays)[i]])
+	}
 	storage.setItem("theme", v.themeOrder)
-	storage.setItem("plays", v.plays)
 	storage.setItem("gameService", v.playGames)
 	storage.setItem("completed", v.completed)
 	storage.setItem("progress", v.challengeProg)
@@ -311,7 +324,9 @@ function load(){
 	for (i=0; i < Object.keys(v.highScore).length; i++){
 		v.highScore[Object.keys(v.highScore)[i]] = storage.getItem("highScore" + Object.keys(v.highScore)[i]) || 0
 	}
-	v.plays = storage.getItem("plays") || 0;
+	for (i=0; i < Object.keys(v.plays).length; i++){
+		v.plays[Object.keys(v.plays)[i]] = storage.getItem("plays" + Object.keys(v.plays)[i]) || 0
+	}
 	v.themeOrder = storage.getItem("theme") || 0;
 	v.playGames = storage.getItem("gameService") || true;
 	v.completed = parseInt(storage.getItem("completed")) || 0;
@@ -341,12 +356,12 @@ function themeUnlock(order){
 	var width = 680
 	var height = 200
 	var background = game.make.bitmapData(width, height);
-	background.ctx.fillStyle = (v.themes[order.toString()].background != "#ffffff") ? v.themes[order.toString()].background : "#eeeeee";
+	background.ctx.fillStyle = (v.themes[order].background != "#ffffff") ? v.themes[order].background : "#eeeeee";
 	background.ctx.roundRect(0, 0, width, height, 20)
 	background.ctx.fill();
-	background.circle(550, 150, 25, v.themes[order.toString()].player)
-	background.rect(480, 80, 50, 25, v.themes[order.toString()].obstacle)
-	background.rect(560, 40, 60, 25, v.themes[order.toString()].obstacle)
+	background.circle(550, 150, 25, v.themes[order].player)
+	background.rect(480, 80, 50, 25, v.themes[order].obstacle)
+	background.rect(560, 40, 60, 25, v.themes[order].obstacle)
 	Phaser.Sprite.call(this, game, 0.5 * game.width, (0.22 * game.height) + (0.14 * game.width) + (0.31 * game.width) * order, background);
 	this.anchor.set(0.5, 0.5)
 	
@@ -355,21 +370,21 @@ function themeUnlock(order){
 	
 	this.startY = this.y
 	
-	var name = game.make.text(-300, -25, v.themes[order.toString()].name, {fill: v.themes[order.toString()].player, font: "bold 80px Arial"})
+	var name = game.make.text(-300, -25, v.themes[order].name, {fill: v.themes[order].player, font: "bold 80px Arial"})
 	name.anchor.set(0, 0.5)
 	this.addChild(name)
 	
 	this.unlocked = false
 	
-	if (v.themes[order.toString()].unlock[0] == "score"){
-		var stext = (v.themes[order.toString()].unlock[1] > v.highScore) ? "Score " + v.themes[order.toString()].unlock[1] + " to unlock" : "Unlocked!"
+	if (v.themes[order].unlock[0] == "score"){
+		var stext = (v.themes[order].unlock[1] > v.highScore[v.themes[order].mode]) ? "Score " + v.themes[order].unlock[1] + " in " + v.themes[order].mode + " mode to unlock" : "Unlocked!"
 	}
-	else if (v.themes[order.toString()].unlock[0] == "plays"){
-		if (v.themes[order.toString()].unlock[1] - v.plays == 1){
-			var stext = "Play 1 more game to unlock"
+	else if (v.themes[order].unlock[0] == "plays"){
+		if (v.themes[order].unlock[1] - v.plays == 1){
+			var stext = "Play 1 more game in " + v.themes[order].mode + " mode to unlock"
 		}
 		else {
-			var stext = (v.themes[order.toString()].unlock[1] > v.plays) ? "Play " + (v.themes[order.toString()].unlock[1] - v.plays) + " more games to unlock" : "Unlocked!"
+			var stext = (v.themes[order].unlock[1] > v.plays[v.themes[order].mode]) ? "Play " + (v.themes[order].unlock[1] - v.plays[v.themes[order].mode]) + " more games in " + v.themes[order].mode + " mode to unlock" : "Unlocked!"
 		}
 	}
 	
@@ -377,9 +392,10 @@ function themeUnlock(order){
 		this.unlocked = true
 	}
 	
-	var score = game.make.text(-300, 80, stext, {fill: v.themes[order.toString()].player, font: "bold 40px Arial"})
-	while(score.width > 450 && score.fontSize > 0){score.fontSize--; score.updateText()}
-	score.anchor.set(0, 1)
+	var score = game.make.text(-300, 60, stext, {fill: v.themes[order].player, font: "bold 45px Arial", align: 'left', wordWrap: true, wordWrapWidth: 450})
+	score.lineSpacing = -10
+	while(score.height > 80 && score.fontSize > 0){score.fontSize--; score.updateText()}
+	score.anchor.set(0, 0.5)
 	this.addChild(score)
 	
 	mask = game.add.graphics(0, 0);
@@ -543,7 +559,7 @@ function modeOption(order, mode){
 	
 	this.startY = this.y
 	
-	var name = game.make.text(-0.42 * game.width, 0, this.mode, {fill: v.backgroundColour, font: "bold Arial", fontSize: 0.07 * game.height})
+	var name = game.make.text(-0.42 * game.width, -0.01 * game.width, this.mode, {fill: v.backgroundColour, font: "bold Arial", fontSize: 0.07 * game.height})
 	name.anchor.set(0, 0.5)
 	while(name.width > 600 && name.fontSize > 0){name.fontSize--; name.updateText()}
 	this.addChild(name)
@@ -557,6 +573,36 @@ function modeOption(order, mode){
 	i.anchor.set(0.5, 0.5)
 	i.width = i.height = 0.25 * game.width
 	this.addChild(i)
+	
+	if (v.modes[this.mode].unlock[0] == "score"){
+		var stext = (v.modes[this.mode].unlock[1] > v.highScore[v.themes[order.toString()].mode]) ? "Score " + v.modes[this.mode].unlock[1] + " to unlock" : "Unlocked!"
+	}
+	else if (v.modes[this.mode].unlock[0] == "plays"){
+		if (v.modes[this.mode].unlock[1] - v.plays == 1){
+			var stext = "Play 1 more game to unlock"
+		}
+		else {
+			var stext = (v.modes[this.mode].unlock[1] > v.plays) ? "Play " + (v.modes[this.mode].unlock[1] - v.plays) + " more games to unlock" : "Unlocked!"
+		}
+	}
+	else if (v.modes[this.mode].unlock[0] == "challenge"){
+		if (v.modes[this.mode].unlock[1] - v.completed == 1){
+			var stext = "Complete 1 more challenge to unlock"
+		}
+		else {
+			var stext = (v.modes[this.mode].unlock[1] > v.completed) ? "Complete " + (v.modes[this.mode].unlock[1] - v.complete) + " more challenges to unlock" : "Unlocked!"
+		}
+	}
+	
+	this.unlocked = false
+	if (stext == "Unlocked!") {
+		this.unlocked = true
+	}
+	
+	var score = game.make.text(-0.415 * game.width, 0.12* game.width, stext, {fill: v.backgroundColour, font: "bold Arial", fontSize: 0.031 * game.height})
+	while(score.width > 0.6 * game.width && score.fontSize > 0){score.fontSize--; score.updateText()}
+	score.anchor.set(0, 1)
+	this.addChild(score)
 	
 	mask = game.add.graphics(0, 0);
     mask.beginFill("#ffffff");

@@ -31,8 +31,10 @@ theGame.prototype = {
 		
 		update: function(){
 			if (v.gameEnd == false){
-				v.distance += 1;
-				v.speed += 0.002
+				if (v.mode != "patience" || (v.mode == "patience" && game.input.activePointer.isDown)){
+					v.distance += 1;
+					v.speed += 0.002
+				}
 			}
 			else {
 				if (this.finished == false){
@@ -107,8 +109,20 @@ theGame.prototype = {
 			this.scoreText.text = v.score
 			if (Math.floor(v.distance) % 60 == 0){
 				if (v.mode == "classic") {e = new obstacle();}
-				if (v.mode == "moving" || v.mode == "clone") {e = new movingObstacle();}
+				if (v.mode == "moving" || v.mode == "clone") {e = new movingObstacle(v.mode);}
+				if (v.mode == "patience"){
+					switch (randomInt(1, 3)) {
+						case 1:
+						case 2:
+							e = new obstacle();
+							break;
+						case 3:
+							e = new movingObstacle("moving");
+							break;
+					}
+				}
 				v.obstacles.add(e)
+				v.distance++
 			}
 		},
 		

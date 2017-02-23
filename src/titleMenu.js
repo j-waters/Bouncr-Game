@@ -154,7 +154,6 @@ skins.prototype = {
 		
 		this.skins = game.add.group()
 		
-		console.log(v.themes)
 		for (i=0; i < Object.keys(v.themes).length; i++){
 			sk = new themeUnlock(i)
 			this.skins.add(sk)
@@ -321,6 +320,10 @@ mode.prototype = {
 		
 		order++
 		m = new modeOption(order, "clone")
+		modes.add(m)
+		
+		order++
+		m = new modeOption(order, "patience")
 		modes.add(m)
 		
 		document.addEventListener("backbutton", function(){this.goTitle()}.bind(this));
