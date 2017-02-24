@@ -39,7 +39,7 @@ theGame.prototype = {
 				if (this.finished == false){
 					if (v.mobile){AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER)}
 					this.finished = true;
-					v.plays++
+					v.plays[v.mode]++
 					game.stage.backgroundColor = v.obstacleColour;
 					document.body.style.backgroundColor = v.obstacleColour
 					this.scoreText.alpha = 1;

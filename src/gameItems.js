@@ -295,16 +295,17 @@ function CircleCircleColliding(circle1, circle2){
 function save(){
 	var storage = window.localStorage;
 	for (i=0; i < Object.keys(v.highScore).length; i++){
-		storage.setItem("highScore" + Object.keys(v.highScore)[i], v.highScore[Object.keys(v.highScore)[i]])
+		storage.setItem("highScore_" + Object.keys(v.highScore)[i], v.highScore[Object.keys(v.highScore)[i]])
 	}
 	for (i=0; i < Object.keys(v.plays).length; i++){
-		storage.setItem("plays" + Object.keys(v.plays)[i], v.plays[Object.keys(v.plays)[i]])
+		console.log(v.plays[Object.keys(v.plays)[i]])
+		storage.setItem("plays_" + Object.keys(v.plays)[i], v.plays[Object.keys(v.plays)[i]])
 	}
 	storage.setItem("theme", v.themeOrder)
 	storage.setItem("gameService", v.playGames)
 	storage.setItem("completed", v.completed)
 	storage.setItem("progress", v.challengeProg)
-	
+		
 	if (v.mobile){
 		window.plugins.playGamesServices.isSignedIn(function (result) {
 			if (result.isSignedIn){
@@ -320,12 +321,11 @@ function save(){
 
 function load(){
 	var storage = window.localStorage;
-	//v.highScore = storage.getItem("highScore") || 0;
 	for (i=0; i < Object.keys(v.highScore).length; i++){
-		v.highScore[Object.keys(v.highScore)[i]] = storage.getItem("highScore" + Object.keys(v.highScore)[i]) || 0
+		v.highScore[Object.keys(v.highScore)[i]] = storage.getItem("highScore_" + Object.keys(v.highScore)[i]) || 0
 	}
 	for (i=0; i < Object.keys(v.plays).length; i++){
-		v.plays[Object.keys(v.plays)[i]] = storage.getItem("plays" + Object.keys(v.plays)[i]) || 0
+		v.plays[Object.keys(v.plays)[i]] = storage.getItem("plays_" + Object.keys(v.plays)[i]) || 0
 	}
 	v.themeOrder = storage.getItem("theme") || 0;
 	v.playGames = storage.getItem("gameService") || true;
