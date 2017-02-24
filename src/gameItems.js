@@ -575,14 +575,14 @@ function modeOption(order, mode){
 	this.addChild(i)
 	
 	if (v.modes[this.mode].unlock[0] == "score"){
-		var stext = (v.modes[this.mode].unlock[1] > v.highScore[v.themes[order.toString()].mode]) ? "Score " + v.modes[this.mode].unlock[1] + " to unlock" : "Unlocked!"
+		var stext = (v.modes[this.mode].unlock[1] > v.highScore[v.modes[this.mode].mode]) ? "Score " + v.modes[this.mode].unlock[1] + " to unlock" : ""//"Unlocked!"
 	}
 	else if (v.modes[this.mode].unlock[0] == "plays"){
 		if (v.modes[this.mode].unlock[1] - v.plays == 1){
 			var stext = "Play 1 more game to unlock"
 		}
 		else {
-			var stext = (v.modes[this.mode].unlock[1] > v.plays) ? "Play " + (v.modes[this.mode].unlock[1] - v.plays) + " more games to unlock" : "Unlocked!"
+			var stext = (v.modes[this.mode].unlock[1] > v.plays) ? "Play " + (v.modes[this.mode].unlock[1] - v.plays) + " more games to unlock" : ""//"Unlocked!"
 		}
 	}
 	else if (v.modes[this.mode].unlock[0] == "challenge"){
@@ -590,7 +590,7 @@ function modeOption(order, mode){
 			var stext = "Complete 1 more challenge to unlock"
 		}
 		else {
-			var stext = (v.modes[this.mode].unlock[1] > v.completed) ? "Complete " + (v.modes[this.mode].unlock[1] - v.complete) + " more challenges to unlock" : "Unlocked!"
+			var stext = (v.modes[this.mode].unlock[1] > v.completed) ? "Complete " + (v.modes[this.mode].unlock[1] - v.completed) + " more challenges to unlock" : ""//"Unlocked!"
 		}
 	}
 	
