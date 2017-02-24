@@ -21,7 +21,7 @@ theGame.prototype = {
 		render: function(){
 			if (false){
 				game.debug.renderShadow = false
-		    	game.debug.font = '30px Courier bold'
+		    	game.debug.font = '30px Arial bold'
 		    	game.debug.lineHeight = 30
 		    	this.game.debug.start(20, 40, 'red');
 		    	this.game.debug.line("FPS: " + game.time.fps);
