@@ -4,7 +4,6 @@ theGame.prototype = {
 		create: function(){
 			this.game.forceSingleUpdate = true;
 			game.stage.backgroundColor = v.backgroundColour;
-			console.log("start game")
 			
 			this.scoreText = this.game.add.text(0.5 * game.width, 0.4 * game.height, 0, {fill: v.playerColour, font:"bold Arial", fontSize: 300/1280 * game.height})
 			this.scoreText.alpha = 0.1;
