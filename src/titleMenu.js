@@ -5,9 +5,10 @@ titleMenu.prototype = {
 		load()
 		if (v.mobile){
 			AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER)
-			//window.cordova.plugins.firebase.analytics.setEnabled(true)
-			window.FirebasePlugin.logEvent("view_page", {page: "title_menu"});
-			//window.cordova.plugins.firebase.analytics.logEvent("page_view", {page: "title_menu"});
+			window.cordova.plugins.firebase.analytics.setUserId("test1");
+			window.cordova.plugins.firebase.analytics.setEnabled(true)
+			window.cordova.plugins.firebase.analytics.logEvent("page_view", {page: "title_menu"});
+			window.cordova.plugins.firebase.analytics.setCurrentScreen("Title Menu");
 		}
 		resizeScreen(game.scale)
 		this.game.stage.backgroundColor = v.backgroundColour;
@@ -307,24 +308,24 @@ mode.prototype = {
 		
 		backb = new menuButton(0.07 * game.width, 0.04 * game.height, "settings/back", this.goTitle, this)
 		
-		modes = game.add.group()
+		this.modes = game.add.group()
 		
 		order = 0
 		
 		m = new modeOption(order, "classic")
-		modes.add(m)
+		this.modes.add(m)
 		
 		order++
 		m = new modeOption(order, "moving")
-		modes.add(m)
+		this.modes.add(m)
 		
 		order++
 		m = new modeOption(order, "clone")
-		modes.add(m)
+		this.modes.add(m)
 		
 		order++
 		m = new modeOption(order, "patience")
-		modes.add(m)
+		this.modes.add(m)
 		
 		document.addEventListener("backbutton", function(){this.goTitle()}.bind(this));
 	},
@@ -342,8 +343,8 @@ mode.prototype = {
 				this.scrollTween = this.game.add.tween(v).to({ scroll: 0 }, 200, Phaser.Easing.Exponential.out, true);
 				this.scrollTween.onComplete.add(function(){this.scrollTween = null}, this)
 			}
-			if (v.scroll > (0) * 200  && this.scrollTween == null  && v.scroll != 0){
-				this.scrollTween = this.game.add.tween(v).to({ scroll: (0) * 200 }, 200, Phaser.Easing.Exponential.out, true);
+			if (v.scroll > (0.28 * game.width * this.modes.children.length) - (game.height * 0.6)  && this.scrollTween == null  && v.scroll != 0){
+				this.scrollTween = this.game.add.tween(v).to({ scroll: (0.28 * game.width * this.modes.children.length) - (game.height * 0.6) }, 200, Phaser.Easing.Exponential.out, true);
 				this.scrollTween.onComplete.add(function(){this.scrollTween = null}, this)
 			}
 		}
