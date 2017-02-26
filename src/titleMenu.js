@@ -331,6 +331,10 @@ mode.prototype = {
 		m = new modeOption(order, "tilt")
 		this.modes.add(m)
 		
+		order++
+		m = new modeOption(order, "veil")
+		this.modes.add(m)
+		
 		document.addEventListener("backbutton", function(){this.goTitle()}.bind(this));
 	},
 	

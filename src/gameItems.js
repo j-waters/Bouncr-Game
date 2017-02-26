@@ -1,5 +1,5 @@
 function player(){
-	width = 0.07 * game.width
+	width = 0.08 * game.height
 	var circle = game.make.bitmapData(width, width);
 	circle.circle(width/2, width/2, width/2, v.playerColour);
 	
@@ -9,6 +9,28 @@ function player(){
 	var line = game.add.bitmapData(game.width, 0.008 * game.height);
 	line.line(0, 0.004 * game.height, game.width, 0.004 * game.height, v.playerColour, 0.0016 * game.height)
 	game.add.sprite(0, 0.7 * game.height, line)
+	
+	if (v.mode == "veil"){
+		var mask = game.make.bitmapData(game.width * 3, game.height);
+		//mask.rect(0, 0, game.width * 1.2, game.height, v.obstacleColour)
+		//mask.rect((game.width) * 1.8, 0, game.width * 1.2, game.height, v.obstacleColour)
+		mask.rect(0, 0, game.width * 3, game.height, v.obstacleColour)
+		mask.ctx.fillStyle = v.obstacleColour;
+		mask.ctx.fillRect(0, 0, game.width * 3, game.height);
+		
+		mask.ctx.beginPath();
+		mask.ctx.fillStyle = "rgba(0, 0, 0, 1)";
+		mask.ctx.globalCompositeOperation = 'destination-out';
+		mask.ctx.arc(game.width * 1.5, game.height * 0.8, 0.2 * game.width, 0, Math.PI*2);
+		mask.ctx.moveTo(game.width * 1.5, game.height * 0.8)
+		mask.ctx.lineTo(game.width * 1.2, game.height * 0.5)
+		mask.ctx.lineTo(game.width * 1.8, game.height * 0.5)
+		mask.ctx.fill();
+		mask.ctx.globalCompositeOperation = 'source-over';
+		m = game.make.sprite(game.width * 0, 0, mask)
+		m.anchor.set(0.5, 0.8)
+		this.addChild(m)
+	}
 	
 	if (game.state.current == "theGame"){
 		this.direction = 1

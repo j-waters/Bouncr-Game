@@ -9,11 +9,11 @@ var v = {
 	obstacleColour: "#ff0000",
 	distance: 0,
 	score: 0,
-	plays: {"classic": 0, "moving":0, "clone":0, "patience":0, "tilt":0},
+	plays: {"classic": 0, "moving":0, "clone":0, "patience":0, "tilt":0, "veil":0},
 	gameEnd: false,
 	gameEndTarget: null,
 	obstacles: null,
-	highScore: {"classic": 0, "moving":0, "clone":0, "patience":0, "tilt":0},
+	highScore: {"classic": 0, "moving":0, "clone":0, "patience":0, "tilt":0, "veil":0},
 	mobile: true,
 	scroll: 0,
 	mode: "classic",
@@ -28,7 +28,8 @@ var v = {
 			"moving": {unlock: ["challenge", 3]},
 			"clone": {unlock: ["challenge", 6]},
 			"patience": {unlock: ["score", 60], mode: "classic"},
-			"tilt": {unlock: ["score", 80], mode: "classic"}
+			"tilt": {unlock: ["score", 80], mode: "classic"},
+			"veil": {unlock: ["challenge", 10]}
 		},
 	completed: 0,
 	challenges: [{description: "Play 5 games of classic mode", unlock: ["plays", 5], mode: "classic"},
@@ -55,8 +56,7 @@ Raven.config('https://ef18ad107d404aac97eae15efb9e9988@sentry.io/142324').instal
 
 //					  ( width , height , renderer , parent , state , transparent , anti alias , physicsConfig )
 
-game = new Phaser.Game(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio, Phaser.AUTO, "", null, null, true, null);
-
+game = new Phaser.Game(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio, Phaser.CANVAS, "", null, null, true, null);
 game.state.add("Boot", boot);
 game.state.add("Pre_Preload", pre_preload);
 game.state.add("Preload", preload);
