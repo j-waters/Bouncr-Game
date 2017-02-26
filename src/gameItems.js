@@ -1,5 +1,5 @@
 function player(){
-	width = 0.08 * game.height
+	width = 0.07 * game.width
 	var circle = game.make.bitmapData(width, width);
 	circle.circle(width/2, width/2, width/2, v.playerColour);
 	
