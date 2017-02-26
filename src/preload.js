@@ -17,6 +17,7 @@ preload.prototype = {
         game.load.image('mode/moving', 'assets/images/moving.png')
         game.load.image('mode/clone', 'assets/images/clone.png')
         game.load.image('mode/patience', 'assets/images/patience.png')
+        game.load.image('mode/tilt', 'assets/images/tilt.png')
 	},
   	create: function(){
   		game.state.start("titleMenu")

@@ -21,6 +21,16 @@ function player(){
 				}}
 			}, this);
 		}
+		if (v.mode == "tilt"){
+			this.direction = 0
+			// Listen for the deviceorientation event and handle the raw data
+			this.change = 0
+			window.addEventListener('deviceorientation', function(eventData) {
+				var tiltLR = eventData.gamma;
+				this.change = tiltLR
+				console.log(tiltLR)
+			}.bind(this), false);
+		}
 	}
 	
 }
@@ -29,14 +39,14 @@ player.prototype = Object.create(Phaser.Sprite.prototype);
 player.prototype.constructor = player;
 player.prototype.update = function() {
 	if (game.state.current == "theGame"){
-		var change = (v.speed * 1.1) * this.direction * (game.width/720)
+		if (v.mode != "tilt"){this.change = (v.speed * 1.1) * this.direction * (game.width/720)}
 		var side = false
-		if (this.x + change >= game.width - this.width/2){
+		if (this.x + this.change >= game.width - this.width/2){
 			this.direction *= -1;
 			this.x = game.width - this.width/2 - 1
 			side = true
 		}
-		else if (this.x + change <= 0 + this.width/2){
+		else if (this.x + this.change <= 0 + this.width/2){
 			this.direction *= -1;
 			this.x = 0 + this.width/2 + 1
 			side = true
@@ -45,7 +55,20 @@ player.prototype.update = function() {
 			if (v.tempProg > v.challengeProg){v.challengeProg = v.tempProg}
 			v.tempProg = 0
 		}}
-		this.x += change;
+		if (v.mode != "tilt"){
+			this.x += this.change;
+		}
+		else {
+			this.x += (v.speed * 1.1) * Math.sign(this.change) * (game.width/720)
+			if (this.x >= game.width - this.width/2){
+				this.x = game.width - this.width/2 - 1
+				side = true
+			}
+			else if (this.x <= 0 + this.width/2){
+				this.x = 0 + this.width/2 + 1
+				side = true
+			}
+		}
 	}
 }
 

@@ -9,11 +9,11 @@ var v = {
 	obstacleColour: "#ff0000",
 	distance: 0,
 	score: 0,
-	plays: {"classic": 0, "moving":0, "clone":0, "patience":0},
+	plays: {"classic": 0, "moving":0, "clone":0, "patience":0, "tilt":0},
 	gameEnd: false,
 	gameEndTarget: null,
 	obstacles: null,
-	highScore: {"classic": 0, "moving":0, "clone":0, "patience":0},
+	highScore: {"classic": 0, "moving":0, "clone":0, "patience":0, "tilt":0},
 	mobile: true,
 	scroll: 0,
 	mode: "classic",
@@ -27,7 +27,8 @@ var v = {
 	modes: {"classic": {unlock: ["score", 0], mode: "classic"},
 			"moving": {unlock: ["challenge", 3]},
 			"clone": {unlock: ["challenge", 6]},
-			"patience": {unlock: ["score", 60], mode: "classic"}
+			"patience": {unlock: ["score", 60], mode: "classic"},
+			"tilt": {unlock: ["score", 80], mode: "classic"}
 		},
 	completed: 0,
 	challenges: [{description: "Play 5 games of classic mode", unlock: ["plays", 5], mode: "classic"},
