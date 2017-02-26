@@ -320,6 +320,7 @@ function RectCircleColliding(circle, rect){
 }
 
 function TriangleRectColliding(triangle, circle){
+	 //corners
 	 dist = Math.sqrt(Math.pow(triangle.x1 - circle.x, 2) + Math.pow(triangle.y1 - circle.y, 2))
 	 if (dist < circle.r){ return true;}
 	 
@@ -329,7 +330,15 @@ function TriangleRectColliding(triangle, circle){
 	 dist = Math.sqrt(Math.pow(triangle.x3 - circle.x, 2) + Math.pow(triangle.y3 - circle.y, 2))
 	 if (dist < circle.r){ return true;}
 	 
-	 dist = Math.sqrt(Math.pow)
+	 //sides
+	 dist = Math.sqrt(Math.pow((triangle.x1 + triangle.x2)/2 - circle.x, 2) + Math.pow((triangle.y1 + triangle.y2)/2 - circle.y, 2))
+	 if (dist < circle.r){ return true;}
+	 
+	 dist = Math.sqrt(Math.pow((triangle.x2 + triangle.x3)/2 - circle.x, 2) + Math.pow((triangle.y2 + triangle.y3)/2 - circle.y, 2))
+	 if (dist < circle.r){ return true;}
+	 
+	 dist = Math.sqrt(Math.pow((triangle.x3 + triangle.x1)/2 - circle.x, 2) + Math.pow((triangle.y3 + triangle.y1)/2 - circle.y, 2))
+	 if (dist < circle.r){ return true;}
 }
 
 function CircleCircleColliding(circle1, circle2){
