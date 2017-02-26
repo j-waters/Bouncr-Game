@@ -21,6 +21,7 @@ titleMenu.prototype = {
 		
 		titlet = this.game.add.text(0.5 * game.width, 0.27 * game.height, "bouncr", {fill: v.playerColour, font: "bold Arial", fontSize: 0.1 * game.height})
 		titlet.anchor.set(0.5, 0.5)
+		if (v.mode == "veil"){while (titlet.width > 0.4 * game.width){titlet.fontSize--}}
 		
 		hight = this.game.add.text(0.5 * game.width, 0.33 * game.height, "top: " + v.highScore[v.mode], {fill: v.playerColour, fontSize: 0.03 * game.height})
 		hight.anchor.set(0.5, 0.5)

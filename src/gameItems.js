@@ -12,19 +12,19 @@ function player(){
 	
 	if (v.mode == "veil"){
 		var mask = game.make.bitmapData(game.width * 3, game.height);
-		//mask.rect(0, 0, game.width * 1.2, game.height, v.obstacleColour)
-		//mask.rect((game.width) * 1.8, 0, game.width * 1.2, game.height, v.obstacleColour)
-		mask.rect(0, 0, game.width * 3, game.height, v.obstacleColour)
+		mask.rect(0, 0, game.width * 1.3, game.height, v.obstacleColour)
+		mask.rect((game.width) * 1.7, 0, game.width * 1.2, game.height, v.obstacleColour)
+		mask.rect(0, game.height * 0.8, game.width * 3, game.height * 0.2, v.obstacleColour)
+		mask.rect(0, 0, game.width * 3, game.height * 0.25, v.obstacleColour)
+		//mask.rect(0, 0, game.width * 3, game.height, v.obstacleColour)
 		mask.ctx.fillStyle = v.obstacleColour;
-		mask.ctx.fillRect(0, 0, game.width * 3, game.height);
+		//mask.ctx.fillRect(0, 0, game.width * 3, game.height);
 		
 		mask.ctx.beginPath();
 		mask.ctx.fillStyle = "rgba(0, 0, 0, 1)";
 		mask.ctx.globalCompositeOperation = 'destination-out';
 		mask.ctx.arc(game.width * 1.5, game.height * 0.8, 0.2 * game.width, 0, Math.PI*2);
-		mask.ctx.moveTo(game.width * 1.5, game.height * 0.8)
-		mask.ctx.lineTo(game.width * 1.2, game.height * 0.5)
-		mask.ctx.lineTo(game.width * 1.8, game.height * 0.5)
+		mask.ctx.arc(game.width * 1.5, game.height * 0.25, 0.2 * game.width, 0, Math.PI*2);
 		mask.ctx.fill();
 		mask.ctx.globalCompositeOperation = 'source-over';
 		m = game.make.sprite(game.width * 0, 0, mask)
@@ -343,7 +343,6 @@ function save(){
 		storage.setItem("highScore_" + Object.keys(v.highScore)[i], v.highScore[Object.keys(v.highScore)[i]])
 	}
 	for (i=0; i < Object.keys(v.plays).length; i++){
-		console.log(v.plays[Object.keys(v.plays)[i]])
 		storage.setItem("plays_" + Object.keys(v.plays)[i], v.plays[Object.keys(v.plays)[i]])
 	}
 	storage.setItem("theme", v.themeOrder)
