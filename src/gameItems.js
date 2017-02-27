@@ -670,7 +670,7 @@ function modeOption(order, mode){
 	this.events.onInputUp.add(function(){
 		if (Math.abs(this.drag - this.game.input.activePointer.position.y) < 10){
 			v.mode = this.mode
-			game.state.start("mode")
+			game.state.start("titleMenu")
 		}
 	}, this);
 }
