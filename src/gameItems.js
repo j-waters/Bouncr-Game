@@ -487,7 +487,7 @@ themeUnlock.prototype.update = function() {
 
 function hexToRgbA(hex){
     var c;
-    if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)){
+    if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex) || true){
         c= hex.substring(1).split('');
         if(c.length== 3){
             c= [c[0], c[0], c[1], c[1], c[2], c[2]];
@@ -495,7 +495,7 @@ function hexToRgbA(hex){
         c= '0x'+c.join('');
         return [(c>>16)&255, (c>>8)&255, c&255];
     }
-    throw new Error('Bad Hex');
+    throw new Error('Bad Hex ' + hex);
 }
 
 function menuButton(x, y, key, callback, context){
