@@ -388,6 +388,7 @@ function load(){
 	v.playerColour = v.themes[v.themeOrder.toString()].player
 	v.obstacleColour = v.themes[v.themeOrder.toString()]. obstacle
 	v.backgroundColour = v.themes[v.themeOrder.toString()].background
+	v.backgroundEffect = v.themes[v.themeOrder.toString()].effect
 	document.body.style.backgroundColor = v.backgroundColour
 }
 
@@ -466,6 +467,7 @@ function themeUnlock(order){
 			v.playerColour = v.themes[order.toString()].player
 			v.obstacleColour = v.themes[order.toString()]. obstacle
 			v.backgroundColour = v.themes[order.toString()].background
+			v.backgroundEffect = v.themes[v.themeOrder.toString()].effect
 			v.themeOrder = order
 			
 			titlet.fill = v.playerColour
@@ -679,4 +681,83 @@ modeOption.prototype = Object.create(Phaser.Sprite.prototype);
 modeOption.prototype.constructor = modeOption;
 modeOption.prototype.update = function() {
 	this.y = this.startY - v.scroll
+}
+
+function backgroundEffect(){
+	if (v.backgroundEffect){
+		if (v.backgroundEffect == "stars"){
+			this.objects = game.add.group()
+			for (i=0; i < 100; i++){
+				s = new effectObject(randomInt(0, game.width), randomInt(0, game.height), "effect/star" + randomInt(1, 8), randomInt(5, 15)/10, randomInt(1, 10)/10)
+				this.objects.add(s)
+			}
+		}
+		if (v.backgroundEffect == "matrix"){
+			this.objects = game.add.group()
+			for (i=0; i < 300; i++){
+				s = new effectObject(Math.floor(randomInt(0, game.width)/25) * 25, randomInt(0, game.height), "matrix", 1, randomInt(10, 12)/10)
+				this.objects.add(s)
+			}
+		}
+		if (v.backgroundEffect == "bubbles"){
+			this.objects = game.add.group()
+			for (i=0; i < 100; i++){
+				s = new effectObject(randomInt(0, game.width), randomInt(0, game.height), "effect/bubble" + randomInt(1, 1), randomInt(5, 15)/10, randomInt(-5, -1)/10)
+				this.objects.add(s)
+			}
+		}
+		if (v.backgroundEffect == "moon"){
+			this.objects = game.add.group()
+			s = new effectObject(0.8 * game.width, 0.13 * game.height, "effect/moon" + randomInt(1, 1), 0.3, 0)
+			this.objects.add(s)
+		}
+		return this.objects
+	}
+}
+
+function effectObject(x, y, key, w, speed){
+	this.skey = key
+	if (this.skey == "matrix"){
+		image = game.make.bitmapData(0.042 * game.width, 0.042 * game.width)
+		var chinese = "ムタ二コク1234567890シモラキリエスハヌトユABCDEF";
+		chinese = chinese.split("");
+		image.ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+		image.ctx.fillRect(0, 0, 0.042 * game.width, 0.042 * game.width);
+		
+		image.ctx.fillStyle = v.obstacleColour
+		image.ctx.font = 0.014 * game.width + "px arial";
+		var text = chinese[Math.floor(Math.random()*chinese.length)];
+		image.ctx.fillText(text, 0.021 * game.width, 0.021 * game.width);
+	}
+	else{
+		image = key
+	}
+	Phaser.Sprite.call(this, game, x, y, image);
+	this.anchor.set(0.5, 0.5)
+	this.width = this.height = this.width * w * 0.002 * game.width
+	this.speedMod = speed
+}
+
+effectObject.prototype = Object.create(Phaser.Sprite.prototype);
+effectObject.prototype.constructor = effectObject;
+effectObject.prototype.update = function() {
+	this.y += v.speed * (game.height/1280) * this.speedMod;
+	if ((this.y - this.height >= game.height && Math.sign(this.speedMod) == 1) || (this.y + this.height <= 0 && Math.sign(this.speedMod) == -1)){
+		this.y = (Math.sign(this.speedMod) == 1) ? 0 - this.height : game.height + this.height
+		//this.x = randomInt(0, game.width)
+	}
+	if (this.skey == "matrix" && randomInt(1, 20) == 2 && true){
+		this.key.destroy()
+		image = game.make.bitmapData(0.042 * game.width, 0.042 * game.width)
+		var chinese = "ムタ二コク1234567890シモラキリエスハヌトユABCDEF";
+		chinese = chinese.split("");
+		image.ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+		image.ctx.fillRect(0, 0, 0.042 * game.width, 0.042 * game.width);
+		
+		image.ctx.fillStyle = v.obstacleColour
+		image.ctx.font = 0.014 * game.width + "px arial";
+		var text = chinese[Math.floor(Math.random()*chinese.length)];
+		image.ctx.fillText(text, 0.021 * game.width, 0.021 * game.width);
+		this.loadTexture(image)
+	}
 }

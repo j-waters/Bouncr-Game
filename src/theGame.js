@@ -4,6 +4,7 @@ theGame.prototype = {
 		create: function(){
 			this.game.forceSingleUpdate = true;
 			game.stage.backgroundColor = v.backgroundColour;
+			this.backEffect = backgroundEffect()
 			
 			this.scoreText = this.game.add.text(0.5 * game.width, 0.4 * game.height, 0, {fill: v.playerColour, font:"bold Arial", fontSize: 300/1280 * game.height})
 			this.scoreText.alpha = 0.1;
@@ -45,6 +46,7 @@ theGame.prototype = {
 					v.plays[v.mode]++
 					game.stage.backgroundColor = v.obstacleColour;
 					document.body.style.backgroundColor = v.obstacleColour
+					if (v.backgroundEffect){this.backEffect.destroy()}
 					this.scoreText.alpha = 1;
 					this.scoreText.fill = v.backgroundColour
 					this.scoreText.bringToTop()

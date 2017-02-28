@@ -19,6 +19,17 @@ preload.prototype = {
         game.load.image('mode/patience', 'assets/images/patience.png')
         game.load.image('mode/tilt', 'assets/images/tilt.png')
         game.load.image('mode/veil', 'assets/images/veil.png')
+        
+        game.load.image('effect/star1', 'assets/images/effects/star1.png')
+        game.load.image('effect/star2', 'assets/images/effects/star2.png')
+        game.load.image('effect/star3', 'assets/images/effects/star3.png')
+        game.load.image('effect/star4', 'assets/images/effects/star4.png')
+        game.load.image('effect/star5', 'assets/images/effects/star5.png')
+        game.load.image('effect/star6', 'assets/images/effects/star6.png')
+        game.load.image('effect/star7', 'assets/images/effects/star7.png')
+        game.load.image('effect/star8', 'assets/images/effects/star8.png')
+        game.load.image('effect/bubble1', 'assets/images/effects/bubble1.png')
+        game.load.image('effect/moon1', 'assets/images/effects/moon.png')
 	},
   	create: function(){
   		game.state.start("titleMenu")
