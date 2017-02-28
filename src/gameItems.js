@@ -503,17 +503,20 @@ function hexToRgbA(hex){
 function menuButton(x, y, key, callback, context){
 	this.skey = key
 	this.colour(true)
-	Phaser.Button.call(this, game, x, y, this.image, callback, context)
+	Phaser.Sprite.call(this, game, x, y, this.image)
 	
 	this.anchor.set(0.5, 0.5)
 	this.width = 0.06 * game.height
 	this.height = 0.06 * game.height
+	
+	this.inputEnabled = true
 	this.input.priorityID = 1
+	this.events.onInputDown.add(callback, context)
 	
 	game.add.existing(this)
 }
 
-menuButton.prototype = Object.create(Phaser.Button.prototype);
+menuButton.prototype = Object.create(Phaser.Sprite.prototype);
 menuButton.prototype.constructor = menuButton;
 menuButton.prototype.update = function() {
 }
