@@ -407,24 +407,24 @@ CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
 
 
 function themeUnlock(order){
-	var width = 680
-	var height = 200
+	var width = 0.94 * game.width
+	var height = 0.28 * game.width
 	var background = game.make.bitmapData(width, height);
 	background.ctx.fillStyle = (v.themes[order].background != "#ffffff") ? v.themes[order].background : "#eeeeee";
 	background.ctx.roundRect(0, 0, width, height, 20)
 	background.ctx.fill();
-	background.circle(550, 150, 25, v.themes[order].player)
-	background.rect(480, 80, 50, 25, v.themes[order].obstacle)
-	background.rect(560, 40, 60, 25, v.themes[order].obstacle)
+	background.circle(550/720 * game.width, 150/720 * game.width, 25/720 * game.width, v.themes[order].player)
+	background.rect(480/720 * game.width, 80/720 * game.width, 50/720 * game.width, 25/720 * game.width, v.themes[order].obstacle)
+	background.rect(560/720 * game.width, 40/720 * game.width, 60/720 * game.width, 25/720 * game.width, v.themes[order].obstacle)
 	Phaser.Sprite.call(this, game, 0.5 * game.width, (0.22 * game.height) + (0.14 * game.width) + (0.31 * game.width) * order, background);
 	this.anchor.set(0.5, 0.5)
 	
-	this.width = 0.94 * game.width
-	this.height = 0.28 * game.width
+	//this.width = 0.94 * game.width
+	//this.height = 0.28 * game.width
 	
 	this.startY = this.y
 	
-	var name = game.make.text(-300, -25, v.themes[order].name, {fill: v.themes[order].player, font: "bold 80px Arial"})
+	var name = game.make.text(-300/720 * game.width, -25/720 * game.width, v.themes[order].name, {fill: v.themes[order].player, font: "bold Arial", fontSize: 80/720 * game.width})
 	name.anchor.set(0, 0.5)
 	this.addChild(name)
 	
@@ -446,9 +446,9 @@ function themeUnlock(order){
 		this.unlocked = true
 	}
 	
-	var score = game.make.text(-300, 60, stext, {fill: v.themes[order].player, font: "bold 45px Arial", align: 'left', wordWrap: true, wordWrapWidth: 450})
-	score.lineSpacing = -10
-	while(score.height > 80 && score.fontSize > 0){score.fontSize--; score.updateText()}
+	var score = game.make.text(-300/720 * game.width, 60/720 * game.width, stext, {fill: v.themes[order].player, font: "bold Arial", fontSize: 45/720 * game.width, align: 'left', wordWrap: true, wordWrapWidth: 450/720 * game.width})
+	score.lineSpacing = -10/720 * game.width
+	while(score.height > 80/720 * game.width && score.fontSize > 0){score.fontSize--; score.updateText()}
 	score.anchor.set(0, 0.5)
 	this.addChild(score)
 	
