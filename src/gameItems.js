@@ -693,8 +693,21 @@ function backgroundEffect(){
 			}
 		}
 		if (v.backgroundEffect == "matrix"){
+			chinese = "ムタ二コク1234567890シモラキリエスハヌトユABCDEF";
+			chinese = this.chinese.split("");
+			for (i=0; i < chinese.length; i++){
+				image = game.make.bitmapData(0.042 * game.width, 0.042 * game.width)
+				image.ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+				image.ctx.fillRect(0, 0, 0.042 * game.width, 0.042 * game.width);
+				
+				image.ctx.fillStyle = v.obstacleColour
+				image.ctx.font = 0.014 * game.width + "px arial";
+				var text = chinese[i];
+				image.ctx.fillText(text, 0.021 * game.width, 0.021 * game.width);
+				game.cache.addBitmapData("Matrix" + chinese[i], image)
+			}
 			this.objects = game.add.group()
-			for (i=0; i < 300; i++){
+			for (i=0; i < 200; i++){
 				s = new effectObject(Math.floor(randomInt(0, game.width)/25) * 25, randomInt(0, game.height), "matrix", 1, randomInt(10, 12)/10)
 				this.objects.add(s)
 			}
@@ -718,16 +731,9 @@ function backgroundEffect(){
 function effectObject(x, y, key, w, speed){
 	this.skey = key
 	if (this.skey == "matrix"){
-		image = game.make.bitmapData(0.042 * game.width, 0.042 * game.width)
-		var chinese = "ムタ二コク1234567890シモラキリエスハヌトユABCDEF";
-		chinese = chinese.split("");
-		image.ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-		image.ctx.fillRect(0, 0, 0.042 * game.width, 0.042 * game.width);
-		
-		image.ctx.fillStyle = v.obstacleColour
-		image.ctx.font = 0.014 * game.width + "px arial";
-		var text = chinese[Math.floor(Math.random()*chinese.length)];
-		image.ctx.fillText(text, 0.021 * game.width, 0.021 * game.width);
+		this.chinese = "ムタ二コク1234567890シモラキリエスハヌトユABCDEF";
+		this.chinese = this.chinese.split("");
+		image = game.cache.getBitmapData("Matrix" + this.chinese[Math.floor(Math.random()*this.chinese.length)])
 	}
 	else{
 		image = key
@@ -746,18 +752,8 @@ effectObject.prototype.update = function() {
 		this.y = (Math.sign(this.speedMod) == 1) ? 0 - this.height : game.height + this.height
 		//this.x = randomInt(0, game.width)
 	}
-	if (this.skey == "matrix" && randomInt(1, 20) == 2 && true){
-		this.key.destroy()
-		image = game.make.bitmapData(0.042 * game.width, 0.042 * game.width)
-		var chinese = "ムタ二コク1234567890シモラキリエスハヌトユABCDEF";
-		chinese = chinese.split("");
-		image.ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-		image.ctx.fillRect(0, 0, 0.042 * game.width, 0.042 * game.width);
-		
-		image.ctx.fillStyle = v.obstacleColour
-		image.ctx.font = 0.014 * game.width + "px arial";
-		var text = chinese[Math.floor(Math.random()*chinese.length)];
-		image.ctx.fillText(text, 0.021 * game.width, 0.021 * game.width);
-		this.loadTexture(image)
+	if (this.skey == "matrix" && randomInt(1, 30) == 2 && true){
+		image = game.cache.getBitmapData("Matrix" + this.chinese[Math.floor(Math.random()*this.chinese.length)])
+		this.loadTexture(image.generateTexture())
 	}
 }
