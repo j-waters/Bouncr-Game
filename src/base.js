@@ -33,25 +33,63 @@ var v = {
 		},
 	modes: {"classic": {unlock: ["score", 0], mode: "classic"},
 			"moving": {unlock: ["challenge", 3]},
-			"clone": {unlock: ["challenge", 6]},
+			"clone": {unlock: ["challenge", 12]},
 			"patience": {unlock: ["score", 60], mode: "classic"},
 			"tilt": {unlock: ["score", 80], mode: "classic"},
-			"veil": {unlock: ["challenge", 10]}
+			"veil": {unlock: ["challenge", 26]}
 		},
 	completed: 0,
 	challenges: [{description: "Play 5 games of classic mode", unlock: ["plays", 5], mode: "classic"},
 				{description: "Score 20 in classic mode", unlock: ["score", 20], mode: "classic"},
-				{description: "Score a total of 100 in classic mode", unlock: ["total", 100], mode: "classic"},
+				{description: "Score a total of 100 in classic mode", unlock: ["total", 100], mode: "classic"}, //3 -- moving
+				
 				{description: "Score 10 in moving mode", unlock: ["score", 10], mode: "moving"},
+				
 				{description: "Get 20 points without touching the sides in classic mode", unlock: ["sides", 20], mode: "classic"},
 				{description: "Score 3 points without tapping the screen in classic mode", unlock: ["notouch", 3], mode: "classic"},
 				{description: "Play a game using a different theme", unlock: ["theme", 1, "any"], mode: ""},
+				
+				{description: "Play 5 games of moving mode", unlock: ["plays", 5], mode: "moving"},
+				{description: "Score 20 in moving mode", unlock: ["score", 20], mode: "moving"},
+				{description: "Score a total of 100 in moving mode", unlock: ["total", 100], mode: "moving"},
+				{description: "Get 10 points without touching the sides in moving mode", unlock: ["sides", 10], mode: "moving"},
+				{description: "Score 3 points without tapping the screen in moving mode", unlock: ["notouch", 3], mode: "moving"}, //12 -- clone
+				
 				{description: "Play 15 games of classic mode", unlock: ["plays", 15], mode: "classic"},
 				{description: "Score 40 in classic mode", unlock: ["score", 40], mode: "classic"},
-				{description: "Score 20 in moving mode", unlock: ["score", 10], mode: "moving"},
 				{description: "Score a total of 200 in classic mode", unlock: ["total", 200], mode: "classic"},
-				{description: "Get 30 points without touching the sides in classic mode", unlock: ["sides", 30], mode: "classic"},
-				{description: "Score 4 points without tapping the screen in classic mode", unlock: ["notouch", 4], mode: "classic"}
+				{description: "Get 25 points without touching the sides in classic mode", unlock: ["sides", 25], mode: "classic"},
+				{description: "Score 4 points without tapping the screen in classic mode", unlock: ["notouch", 4], mode: "classic"},
+				
+				{description: "Play 5 games of clone mode", unlock: ["plays", 5], mode: "clone"},
+				{description: "Score 20 in clone mode", unlock: ["score", 20], mode: "clone"},
+				{description: "Score a total of 100 in clone mode", unlock: ["total", 100], mode: "clone"},
+				{description: "Get 10 points without touching the sides in clone mode", unlock: ["sides", 10], mode: "clone"},
+				{description: "Score 3 points without tapping the screen in clone mode", unlock: ["notouch", 3], mode: "clone"},
+				
+				{description: "Play 20 games of classic mode", unlock: ["plays", 20], mode: "classic"},
+				{description: "Score 60 in classic mode", unlock: ["score", 60], mode: "classic"}, //patience
+				{description: "Score a total of 300 in classic mode", unlock: ["total", 300], mode: "classic"},
+				{description: "Get 30 points without touching the sides in classic mode", unlock: ["sides", 30], mode: "classic"}, //26 -- veil
+				
+				{description: "Play 5 games of patience mode", unlock: ["plays", 5], mode: "patience"},
+				{description: "Score 20 in patience mode", unlock: ["score", 20], mode: "patience"},
+				{description: "Score a total of 100 in patience mode", unlock: ["total", 100], mode: "patience"},
+				{description: "Get 10 points without touching the sides in patience mode", unlock: ["sides", 10], mode: "patience"},
+				
+				{description: "Play 5 games of veil mode", unlock: ["plays", 5], mode: "veil"},
+				{description: "Score 20 in veil mode", unlock: ["score", 20], mode: "veil"},
+				{description: "Score a total of 100 in veil mode", unlock: ["total", 100], mode: "veil"},
+				{description: "Get 10 points without touching the sides in veil mode", unlock: ["sides", 10], mode: "veil"},
+				
+				{description: "Play 25 games of classic mode", unlock: ["plays", 25], mode: "classic"},
+				{description: "Score 80 in classic mode", unlock: ["score", 80], mode: "classic"}, //tilt
+				{description: "Score a total of 400 in classic mode", unlock: ["total", 400], mode: "classic"},
+				
+				{description: "Play 5 games of tilt mode", unlock: ["plays", 5], mode: "tilt"},
+				{description: "Score 20 in tilt mode", unlock: ["score", 20], mode: "tilt"},
+				{description: "Score a total of 100 in tilt mode", unlock: ["total", 100], mode: "tilt"},
+				{description: "Get 10 points without touching the sides in tilt mode", unlock: ["sides", 10], mode: "tilt"},
 		],
 	challengeProg: 0,
 	tempProg: 0,
