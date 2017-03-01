@@ -29,7 +29,7 @@ var v = {
 			"7": {name: "Moonlight", player: "#fafaff", background: "#000032", obstacle: "#fafad2", unlock: ["score", 25], mode:"veil", effect:"moon"},
 			"8": {name: "Command", player: "#B40000", background: "#000000", obstacle: "#00F000", unlock: ["score", 25], mode:"clone", effect:"matrix"},
 			"9": {name: "Ocean", player: "#fff5ee", background: "#1e90ff", obstacle: "#2e8b57", unlock: ["score", 25], mode:"patience", effect:"bubbles"},
-			"10": {name: "Stars", player: "#eeeeee", background: "#000000", obstacle: "#444444", unlock: ["score", 25], mode:"classic", effect: "stars"},
+			"10": {name: "Stars", player: "#FFD700", background: "#000000", obstacle: "#555555", unlock: ["score", 25], mode:"classic", effect: "stars"},
 		},
 	modes: {"classic": {unlock: ["score", 0], mode: "classic"},
 			"moving": {unlock: ["challenge", 3]},
