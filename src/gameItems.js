@@ -361,6 +361,9 @@ function save(){
 	storage.setItem("ads", v.removedAds)
 		
 	if (v.mobile){
+		window.ga.trackMetric('metric1', v.highScore["classic"])
+		window.ga.trackMetric('metric2', v.completed)
+		window.ga.trackMetric('metric3', v.themeOrder)
 		window.plugins.playGamesServices.isSignedIn(function (result) {
 			if (result.isSignedIn){
 				var data = {

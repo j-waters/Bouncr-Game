@@ -5,10 +5,6 @@ titleMenu.prototype = {
 		load()
 		if (v.mobile){
 			if (v.removedAds == false){AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER)}
-			window.cordova.plugins.firebase.analytics.setUserId("test1");
-			window.cordova.plugins.firebase.analytics.setEnabled(true)
-			window.cordova.plugins.firebase.analytics.logEvent("page_view", {page: "title_menu"});
-			window.cordova.plugins.firebase.analytics.setCurrentScreen("Title Menu");
 		}
 		resizeScreen(game.scale)
 		this.game.stage.backgroundColor = v.backgroundColour;
