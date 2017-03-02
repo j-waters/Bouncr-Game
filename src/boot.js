@@ -25,6 +25,14 @@ boot.prototype = {
     		if (v.playGames) {window.plugins.playGamesServices.auth();}
     		this.androidScale(this.scale)
     		v.mobile = true
+    		if (v.mobile){
+    			store.register({
+    				id: "remove_adverts",
+    			    alias: "remove ads",
+    			    type: store.CONSUMABLE
+    			});
+    			store.refresh()
+    		}
     	}
     	    	
     	game.time.desiredFps = 60

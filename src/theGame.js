@@ -41,7 +41,7 @@ theGame.prototype = {
 			}
 			else {
 				if (this.finished == false){
-					if (v.mobile){AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER)}
+					if (v.mobile && v.removedAds == false){AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER)}
 					this.finished = true;
 					v.plays[v.mode]++
 					game.stage.backgroundColor = v.obstacleColour;

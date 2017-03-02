@@ -358,6 +358,7 @@ function save(){
 	storage.setItem("gameService", v.playGames)
 	storage.setItem("completed", v.completed)
 	storage.setItem("progress", v.challengeProg)
+	storage.setItem("ads", v.removedAds)
 		
 	if (v.mobile){
 		window.plugins.playGamesServices.isSignedIn(function (result) {
@@ -384,6 +385,7 @@ function load(){
 	v.playGames = storage.getItem("gameService") || true;
 	v.completed = parseInt(storage.getItem("completed")) || 0;
 	v.challengeProg = parseInt(storage.getItem("progress")) || 0;
+	v.removedAds = storage.getItem("ads") || false;
 	
 	v.playerColour = v.themes[v.themeOrder.toString()].player
 	v.obstacleColour = v.themes[v.themeOrder.toString()]. obstacle

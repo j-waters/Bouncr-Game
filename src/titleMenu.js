@@ -4,7 +4,7 @@ titleMenu.prototype = {
 	create: function(){
 		load()
 		if (v.mobile){
-			AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER)
+			if (v.removedAds == false){AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER)}
 			window.cordova.plugins.firebase.analytics.setUserId("test1");
 			window.cordova.plugins.firebase.analytics.setEnabled(true)
 			window.cordova.plugins.firebase.analytics.logEvent("page_view", {page: "title_menu"});
@@ -44,8 +44,10 @@ titleMenu.prototype = {
 	},
 	
 	shutdown: function(){
-		game.stage.addChild(v.backEffectGroup)
-		v.backEffectGroup.visible = false
+		if (v.backgroundEffect){
+			game.stage.addChild(v.backEffectGroup)
+			v.backEffectGroup.visible = false
+		}
 	},
 	
 	startGame: function(){
@@ -141,7 +143,15 @@ settings.prototype = {
 	},
 	
 	removeAds: function(){
-		alert("This doesn't do anything yet. Eventually you will be able to pay £1-2 to remove adverts.")
+		store.when("remove ads").approved(function(product){
+		    v.removedAds = true;
+		    product.finish();
+		    save()
+		    alert("Removed Ads!")
+		});
+		
+		store.order("remove ads")
+		//alert("This doesn't do anything yet. Eventually you will be able to pay £1-2 to remove adverts.")
 	},
 	
 	review: function(){

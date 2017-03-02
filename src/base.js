@@ -9,6 +9,7 @@ var v = {
 	obstacleColour: "#ff0000",
 	backgroundEffect: null,
 	backEffectGroup: null,
+	removedAds: false,
 	distance: 0,
 	score: 0,
 	plays: {"classic": 0, "moving":0, "clone":0, "patience":0, "tilt":0, "veil":0},
