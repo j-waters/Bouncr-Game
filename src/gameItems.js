@@ -390,6 +390,7 @@ function load(){
 	v.backgroundColour = v.themes[v.themeOrder.toString()].background
 	v.backgroundEffect = v.themes[v.themeOrder.toString()].effect
 	document.body.style.backgroundColor = v.backgroundColour
+	v.backEffectGroup = null
 }
 
 CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
@@ -473,6 +474,7 @@ function themeUnlock(order){
 			titlet.fill = v.playerColour
 			game.stage.backgroundColor = v.backgroundColour;
 			document.body.style.backgroundColor = v.backgroundColour
+			v.backEffectGroup = null
 			
 			backb.colour()
 			
@@ -688,11 +690,18 @@ modeOption.prototype.update = function() {
 
 function backgroundEffect(){
 	if (v.backgroundEffect){
+		if (v.backEffectGroup != null){
+			v.backEffectGroup.visible = true
+			game.world.addChild(v.backEffectGroup)
+			game.world.sendToBack(v.backEffectGroup)
+			game.stage.removeChild(v.backEffectGroup)
+			return
+		}
+		v.backEffectGroup = game.make.group()
 		if (v.backgroundEffect == "stars"){
-			this.objects = game.add.group()
 			for (i=0; i < 100; i++){
 				s = new effectObject(randomInt(0, game.width), randomInt(0, game.height), "effect/star" + randomInt(1, 8), randomInt(5, 15)/10, randomInt(1, 10)/10)
-				this.objects.add(s)
+				v.backEffectGroup.add(s)
 			}
 		}
 		if (v.backgroundEffect == "matrix"){
@@ -709,25 +718,22 @@ function backgroundEffect(){
 				image.ctx.fillText(text, 0.021 * game.width, 0.021 * game.width);
 				game.cache.addBitmapData("Matrix" + chinese[i], image)
 			}
-			this.objects = game.add.group()
 			for (i=0; i < 200; i++){
 				s = new effectObject(Math.floor(randomInt(0, game.width)/25) * 25, randomInt(0, game.height), "matrix", 1, randomInt(10, 12)/10)
-				this.objects.add(s)
+				v.backEffectGroup.add(s)
 			}
 		}
 		if (v.backgroundEffect == "bubbles"){
-			this.objects = game.add.group()
 			for (i=0; i < 100; i++){
 				s = new effectObject(randomInt(0, game.width), randomInt(0, game.height), "effect/bubble" + randomInt(1, 1), randomInt(5, 15)/10, randomInt(-5, -1)/10)
-				this.objects.add(s)
+				v.backEffectGroup.add(s)
 			}
 		}
 		if (v.backgroundEffect == "moon"){
-			this.objects = game.add.group()
 			s = new effectObject(0.8 * game.width, 0.13 * game.height, "effect/moon" + randomInt(1, 1), 0.3, 0)
-			this.objects.add(s)
+			v.backEffectGroup.add(s)
 		}
-		return this.objects
+		game.world.addChild(v.backEffectGroup)
 	}
 }
 
@@ -750,12 +756,12 @@ function effectObject(x, y, key, w, speed){
 effectObject.prototype = Object.create(Phaser.Sprite.prototype);
 effectObject.prototype.constructor = effectObject;
 effectObject.prototype.update = function() {
-	this.y += v.speed * (game.height/1280) * this.speedMod;
+	if (game.state.current == "theGame"){this.y += v.speed * (game.height/1280) * this.speedMod;}
 	if ((this.y - this.height >= game.height && Math.sign(this.speedMod) == 1) || (this.y + this.height <= 0 && Math.sign(this.speedMod) == -1)){
 		this.y = (Math.sign(this.speedMod) == 1) ? 0 - this.height : game.height + this.height
 		//this.x = randomInt(0, game.width)
 	}
-	if (this.skey == "matrix" && randomInt(1, 30) == 2 && true){
+	if (this.skey == "matrix" && randomInt(1, 30) == 2 && game.state.current == "theGame"){
 		image = game.cache.getBitmapData("Matrix" + this.chinese[Math.floor(Math.random()*this.chinese.length)])
 		this.loadTexture(image.generateTexture())
 	}

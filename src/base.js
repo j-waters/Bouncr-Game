@@ -8,6 +8,7 @@ var v = {
 	playerColour: "#000000",
 	obstacleColour: "#ff0000",
 	backgroundEffect: null,
+	backEffectGroup: null,
 	distance: 0,
 	score: 0,
 	plays: {"classic": 0, "moving":0, "clone":0, "patience":0, "tilt":0, "veil":0},

@@ -12,6 +12,7 @@ titleMenu.prototype = {
 		}
 		resizeScreen(game.scale)
 		this.game.stage.backgroundColor = v.backgroundColour;
+		backgroundEffect()
 		p = new player();
 		game.add.existing(p)
 		
@@ -40,6 +41,11 @@ titleMenu.prototype = {
 	},
 	
 	render: function(){
+	},
+	
+	shutdown: function(){
+		game.stage.addChild(v.backEffectGroup)
+		v.backEffectGroup.visible = false
 	},
 	
 	startGame: function(){
