@@ -367,9 +367,15 @@ function save(){
 		window.plugins.playGamesServices.isSignedIn(function (result) {
 			if (result.isSignedIn){
 				var data = {
-				    score: v.score,
-				    leaderboardId: "CgkIy72U_e4TEAIQBg"
+				    score: v.score[v.mode],
 				};
+				if (v.mode == "classic"){board = "CgkIy72U_e4TEAIQBg"}
+				if (v.mode == "moving"){board = "CgkIy72U_e4TEAIQBw"}
+				if (v.mode == "clone"){board = "CgkIy72U_e4TEAIQCA"}
+				if (v.mode == "patience"){board = "CgkIy72U_e4TEAIQCQ"}
+				if (v.mode == "tilt"){board = "CgkIy72U_e4TEAIQCg"}
+				if (v.mode == "veil"){board = "CgkIy72U_e4TEAIQCw"}
+				data["leaderboardId"] = board
 				window.plugins.playGamesServices.submitScore(data);
 			}
 		})
