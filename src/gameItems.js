@@ -81,7 +81,7 @@ player.prototype.update = function() {
 			this.x += this.change;
 		}
 		else {
-			this.x += (v.speed * 1.1) * Math.sign(this.change) * (game.width/720)
+			this.x += (v.speed * 1.1) * sign(this.change) * (game.width/720)
 			if (this.x >= game.width - this.width/2){
 				this.x = game.width - this.width/2 - 1
 				side = true
@@ -762,8 +762,8 @@ effectObject.prototype = Object.create(Phaser.Sprite.prototype);
 effectObject.prototype.constructor = effectObject;
 effectObject.prototype.update = function() {
 	if (game.state.current == "theGame"){this.y += v.speed * (game.height/1280) * this.speedMod;}
-	if ((this.y - this.height >= game.height && Math.sign(this.speedMod) == 1) || (this.y + this.height <= 0 && Math.sign(this.speedMod) == -1)){
-		this.y = (Math.sign(this.speedMod) == 1) ? 0 - this.height : game.height + this.height
+	if ((this.y - this.height >= game.height && sign(this.speedMod) == 1) || (this.y + this.height <= 0 && sign(this.speedMod) == -1)){
+		this.y = (sign(this.speedMod) == 1) ? 0 - this.height : game.height + this.height
 		//this.x = randomInt(0, game.width)
 	}
 	if (this.skey == "matrix" && randomInt(1, 30) == 2 && game.state.current == "theGame"){
@@ -771,3 +771,5 @@ effectObject.prototype.update = function() {
 		this.loadTexture(image.generateTexture())
 	}
 }
+
+function sign(x){return x>0?1:x<0?-1:x;}
