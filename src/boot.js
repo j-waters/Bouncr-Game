@@ -27,7 +27,7 @@ boot.prototype = {
     		v.mobile = true
     		if (v.mobile){
     			window.ga.startTrackerWithId('UA-92975224-1', 30)
-    			window.ga.setAppVersion('v.version')
+    			window.ga.setAppVersion(v.version)
     			window.ga.trackView('Start Game')
     			store.register({
     				id: "remove_adverts",

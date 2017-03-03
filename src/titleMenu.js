@@ -60,24 +60,29 @@ titleMenu.prototype = {
 	goSettings: function(){
 		v.scroll = 0;
 		this.game.state.start("settings")
+		window.ga.trackView('Settings Screen')
 	},
 	
 	goSkins: function(){
 		v.scroll = 0;
 		this.game.state.start("skins")
+		window.ga.trackView('Themes Screen')
 	},
 	
 	leaderboard: function(){
 		window.plugins.playGamesServices.showAllLeaderboards(null, function(){window.plugins.playGamesServices.auth();});
+		window.ga.trackView('Leaderboard Screen')
 	},
 	
 	challenge: function(){
 		this.game.state.start("challenges")
+		window.ga.trackView('Challenges Screen')
 	},
 	
 	mode: function(){
 		v.scroll = 0;
 		this.game.state.start("mode")
+		window.ga.trackView('Mode Screen')
 	}
 }
 
