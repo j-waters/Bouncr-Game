@@ -173,6 +173,7 @@ skins.prototype = {
 		
 		backb = new menuButton(0.07 * game.width, 0.04 * game.height, "settings/back", this.goTitle, this)
 		
+		v.unlockedThemes = 0
 		this.skins = game.add.group()
 		
 		for (i=0; i < Object.keys(v.themes).length; i++){
@@ -270,12 +271,18 @@ challenges.prototype = {
 		
 		backb = new menuButton(0.07 * game.width, 0.04 * game.height, "settings/back", this.goTitle, this)
 		
+		achieveb = new menuButton(0.5 * game.width, 0.88 * game.height, "settings/achieve", this.achieves, this, 2)
+		
 		document.addEventListener("backbutton", function(){this.goTitle()}.bind(this));
 	},
 	
 	goTitle: function(){
 		save()
 		this.game.state.start("titleMenu")
+	},
+	
+	achieves: function(){
+		window.plugins.playGamesServices.showAchievements();
 	}
 }
 
@@ -327,7 +334,8 @@ mode.prototype = {
 		titlet.anchor.set(0.5, 0.5)
 		
 		backb = new menuButton(0.07 * game.width, 0.04 * game.height, "settings/back", this.goTitle, this)
-		
+
+		v.unlockedModes = 0
 		this.modes = game.add.group()
 		
 		order = 0

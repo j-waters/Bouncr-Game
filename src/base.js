@@ -33,6 +33,7 @@ var v = {
 			"9": {name: "Ocean", player: "#fff5ee", background: "#1e90ff", obstacle: "#2e8b57", unlock: ["score", 25], mode:"patience", effect:"bubbles"},
 			"10": {name: "Stars", player: "#FFD700", background: "#000000", obstacle: "#555555", unlock: ["score", 25], mode:"classic", effect: "stars"},
 		},
+	unlockedThemes: 0,
 	modes: {"classic": {unlock: ["score", 0], mode: "classic"},
 			"moving": {unlock: ["challenge", 3]},
 			"clone": {unlock: ["challenge", 12]},
@@ -40,6 +41,7 @@ var v = {
 			"tilt": {unlock: ["score", 80], mode: "classic"},
 			"veil": {unlock: ["challenge", 26]}
 		},
+	unlockedModes: 0,
 	completed: 0,
 	challenges: [{description: "Play 5 games of classic mode", unlock: ["plays", 5], mode: "classic"},
 				{description: "Score 20 in classic mode", unlock: ["score", 20], mode: "classic"},

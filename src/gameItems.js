@@ -377,6 +377,18 @@ function save(){
 				if (v.mode == "veil"){board = "CgkIy72U_e4TEAIQCw"}
 				data["leaderboardId"] = board
 				window.plugins.playGamesServices.submitScore(data);
+				
+				var data = {}
+				if (v.score >= 10){data["achievementId"] = "CgkIy72U_e4TEAIQAQ"}
+				if (v.score >= 25){data["achievementId"] = "CgkIy72U_e4TEAIQAg"}
+				if (v.score >= 50){data["achievementId"] = "CgkIy72U_e4TEAIQAw"}
+				if (v.score >= 100){data["achievementId"] = "CgkIy72U_e4TEAIQBQ"}
+				if (v.completed >= 30){data["achievementId"] = "CgkIy72U_e4TEAIQDA"}
+				if (v.completed >= v.challenges.length){data["achievementId"] = "CgkIy72U_e4TEAIQDQ"}
+				if (v.unlockedThemes >= Object.keys(v.themes).length){data["achievementId"] = "CgkIy72U_e4TEAIQDg"}
+				if (v.unlockedModes >= v.modes.length){data["achievementId"] = "CgkIy72U_e4TEAIQDw"}
+
+				window.plugins.playGamesServices.unlockAchievement(data);
 			}
 		})
 	}
@@ -456,6 +468,7 @@ function themeUnlock(order){
 	
 	if (stext == "Unlocked!") {
 		this.unlocked = true
+		v.unlockedThemes++
 	}
 	
 	var score = game.make.text(-300/720 * game.width, 60/720 * game.width, stext, {fill: v.themes[order].player, font: "bold Arial", fontSize: 45/720 * game.width, align: 'left', wordWrap: true, wordWrapWidth: 450/720 * game.width})
@@ -513,14 +526,14 @@ function hexToRgbA(hex){
     throw new Error('Bad Hex ' + hex);
 }
 
-function menuButton(x, y, key, callback, context){
+function menuButton(x, y, key, callback, context, wm){
 	this.skey = key
 	this.colour(true)
 	Phaser.Sprite.call(this, game, x, y, this.image)
 	
 	this.anchor.set(0.5, 0.5)
-	this.width = 0.06 * game.height
-	this.height = 0.06 * game.height
+	this.width = 0.06 * game.height * (wm || 1)
+	this.height = 0.06 * game.height * (wm || 1)
 	
 	this.inputEnabled = true
 	this.input.priorityID = 1
@@ -666,8 +679,9 @@ function modeOption(order, mode){
 	}
 	
 	this.unlocked = false
-	if (stext == "Unlocked!") {
+	if (stext == "") {
 		this.unlocked = true
+		v.unlockedModes++
 	}
 	
 	var score = game.make.text(-0.415 * game.width, 0.12* game.width, stext, {fill: v.backgroundColour, font: "bold Arial", fontSize: 0.031 * game.height})
@@ -686,7 +700,7 @@ function modeOption(order, mode){
 	this.drag = this.game.input.activePointer.position.y
 	this.events.onInputDown.add(function(){this.drag = this.game.input.activePointer.position.y}, this)
 	this.events.onInputUp.add(function(){
-		if (Math.abs(this.drag - this.game.input.activePointer.position.y) < 10){
+		if (Math.abs(this.drag - this.game.input.activePointer.position.y) < 10 && this.unlocked){
 			v.mode = this.mode
 			game.state.start("titleMenu")
 		}
