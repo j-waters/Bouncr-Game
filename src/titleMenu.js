@@ -151,6 +151,8 @@ settings.prototype = {
 		    alert("Removed Ads!")
 		});
 		
+		store.refresh();
+		
 		store.order("remove ads")
 		//alert("This doesn't do anything yet. Eventually you will be able to pay £1-2 to remove adverts.")
 	},
