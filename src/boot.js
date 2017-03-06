@@ -8,7 +8,7 @@ boot.prototype = {
     
     create: function(){
     	load()
-    	if (this.game.device.desktop && true){game.add.plugin(Phaser.Plugin.Debug);}
+    	if (this.game.device.desktop && false){game.add.plugin(Phaser.Plugin.Debug);}
     	if (this.game.device.desktop || this.game.device.iPhone){
     		this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
     		this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
@@ -21,13 +21,12 @@ boot.prototype = {
     		v.mobile = false
     	}
     	else {
-    		cordova.getAppVersion.getVersionNumber(function(version){v.version = version + "-beta"})
+    		cordova.getAppVersion.getVersionNumber(function(version){v.version = version + "-beta"; window.ga.setAppVersion(v.version)})
     		if (v.playGames) {window.plugins.playGamesServices.auth();}
     		this.androidScale(this.scale)
     		v.mobile = true
     		if (v.mobile){
     			window.ga.startTrackerWithId('UA-92975224-1', 30)
-    			window.ga.setAppVersion(v.version)
     			window.ga.trackView('Start Game')
     			store.register({
     				id: "remove_adverts",

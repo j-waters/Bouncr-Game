@@ -359,15 +359,21 @@ function save(){
 	storage.setItem("completed", v.completed)
 	storage.setItem("progress", v.challengeProg)
 	storage.setItem("ads", v.removedAds)
+	
+	v.totalPlays = 0
+	for (var k in v.plays){
+		v.totalPlays += v.plays[k]
+	}
 		
 	if (v.mobile){
 		window.ga.trackMetric('metric1', v.highScore["classic"])
 		window.ga.trackMetric('metric2', v.completed)
 		window.ga.trackMetric('metric3', v.themeOrder)
+		window.ga.trackMetric('metric4', v.totalPlays)
 		window.plugins.playGamesServices.isSignedIn(function (result) {
 			if (result.isSignedIn){
 				var data = {
-				    score: v.score[v.mode],
+				    score: v.score,
 				};
 				if (v.mode == "classic"){board = "CgkIy72U_e4TEAIQBg"}
 				if (v.mode == "moving"){board = "CgkIy72U_e4TEAIQBw"}
@@ -387,8 +393,9 @@ function save(){
 				if (v.completed >= v.challenges.length){data["achievementId"] = "CgkIy72U_e4TEAIQDQ"}
 				if (v.unlockedThemes >= Object.keys(v.themes).length){data["achievementId"] = "CgkIy72U_e4TEAIQDg"}
 				if (v.unlockedModes >= v.modes.length){data["achievementId"] = "CgkIy72U_e4TEAIQDw"}
-
-				window.plugins.playGamesServices.unlockAchievement(data);
+				if (v.unlockedModes >= v.modes.length && v.unlockedThemes >= Object.keys(v.themes).length && v.completed >= v.challenges.length){data["achievementId"] = "CgkIy72U_e4TEAIQEA"}
+				
+				if (Object.keys(data).length > 0){window.plugins.playGamesServices.unlockAchievement(data);}
 			}
 		})
 	}
