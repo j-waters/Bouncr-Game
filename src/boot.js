@@ -21,11 +21,11 @@ boot.prototype = {
     		v.mobile = false
     	}
     	else {
-    		cordova.getAppVersion.getVersionNumber(function(version){v.version = version + "-beta"})
-    		if (v.playGames) {window.plugins.playGamesServices.auth();}
     		this.androidScale(this.scale)
     		v.mobile = true
     		if (v.mobile){
+    			if (v.playGames) {window.plugins.playGamesServices.auth();}
+    			cordova.getAppVersion.getVersionNumber(function(version){v.version = version + "-beta"})
     			store.register({
     				id: "remove_adverts",
     			    alias: "remove ads",
@@ -58,12 +58,13 @@ boot.prototype = {
 }
 
 function resizeScreen(manager){
-    var userRatio = 1;
+    var userRatio = 1; //0.8 limit
     if (this.game.device.pixelRatio > 1){
     	userRatio = this.game.device.pixelRatio * 1;
     }
-    if(manager.width !== window.innerWidth*userRatio || manager.height !== window.innerHeight*userRatio){
+    if (manager.width !== window.innerWidth*userRatio || manager.height !== window.innerHeight*userRatio){
     	manager.setGameSize(window.innerWidth*userRatio,window.innerHeight*userRatio);
     	manager.setUserScale(1/userRatio, 1/userRatio);
     }
+    console.log(userRatio)
 }

@@ -58,29 +58,29 @@ titleMenu.prototype = {
 	},
 	
 	goSettings: function(){
-		window.FirebasePlugin.logEvent("select_content", {content_type: "page_view", item_id: "settings"});
+		if (v.mobile){window.FirebasePlugin.logEvent("select_content", {content_type: "page_view", item_id: "settings"});}
 		v.scroll = 0;
 		this.game.state.start("settings")
 	},
 	
 	goSkins: function(){
-		window.FirebasePlugin.logEvent("select_content", {content_type: "page_view", item_id: "themes"});
+		if (v.mobile){window.FirebasePlugin.logEvent("select_content", {content_type: "page_view", item_id: "themes"});}
 		v.scroll = 0;
 		this.game.state.start("skins")
 	},
 	
 	leaderboard: function(){
-		window.FirebasePlugin.logEvent("select_content", {content_type: "page_view", item_id: "leaderboard"});
+		if (v.mobile){window.FirebasePlugin.logEvent("select_content", {content_type: "page_view", item_id: "leaderboard"});}
 		window.plugins.playGamesServices.showAllLeaderboards(null, function(){window.plugins.playGamesServices.auth();});
 	},
 	
 	challenge: function(){
-		window.FirebasePlugin.logEvent("select_content", {content_type: "page_view", item_id: "challenges"});
+		if (v.mobile){window.FirebasePlugin.logEvent("select_content", {content_type: "page_view", item_id: "challenges"});}
 		this.game.state.start("challenges")
 	},
 	
 	mode: function(){
-		window.FirebasePlugin.logEvent("select_content", {content_type: "page_view", item_id: "mode"});
+		if (v.mobile){window.FirebasePlugin.logEvent("select_content", {content_type: "page_view", item_id: "mode"});}
 		v.scroll = 0;
 		this.game.state.start("mode")
 	}
