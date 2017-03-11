@@ -41,6 +41,9 @@ theGame.prototype = {
 			}
 			else {
 				if (this.finished == false){
+					if (v.mobile){
+						window.FirebasePlugin.logEvent("game_end", {mode: v.mode, score: v.score});
+					}
 					if (v.mobile && v.removedAds == false){AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER)}
 					this.finished = true;
 					v.plays[v.mode]++
