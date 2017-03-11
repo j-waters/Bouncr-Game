@@ -16,6 +16,8 @@ theGame.prototype = {
 			v.obstacles = game.add.group();
 						
 			this.finished = false;
+			
+			v.startTime = new Date();
 		},
 		
 		render: function(){
@@ -38,11 +40,12 @@ theGame.prototype = {
 					v.distance += 1;
 					v.speed += 0.002
 				}
+				v.stats.fps.list.push(game.time.fps)
 			}
 			else {
 				if (this.finished == false){
 					if (v.mobile){
-						window.FirebasePlugin.logEvent("game_end", {mode: v.mode, score: v.score});
+						window.FirebasePlugin.logEvent("game_end", {mode: v.mode, score: v.score, theme: v.themes[v.themeOrder].name});
 					}
 					if (v.mobile && v.removedAds == false){AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER)}
 					this.finished = true;
@@ -97,6 +100,8 @@ theGame.prototype = {
 							}
 						}
 					}
+					
+					stats()
 					
 					save()
 

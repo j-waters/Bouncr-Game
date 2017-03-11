@@ -202,7 +202,7 @@ function movingObstacle(mode){
 	this.direction *= 0.9
 	
 	if (Math.floor(v.distance) / 60 == v.highScore[v.mode]){
-		hs = new hsLine(this.y)
+		hs = new hsLine(this.y - 0.1 * width)
 		v.obstacles.add(hs)
 		v.obstacles.sendToBack(hs)
 	}
@@ -346,6 +346,31 @@ function CircleCircleColliding(circle1, circle2){
 	if (dist < circle1.r + circle2.r){ return true;}
 }
 
+
+Array.prototype.max = function() {
+	 return Math.max.apply(null, this);
+};
+
+Array.prototype.min = function() {
+	 return Math.min.apply(null, this);
+};
+
+
+function stats(){
+	v.stats.fps.list = v.stats.fps.list.slice(120, -1)
+	var sum = 0
+	for(i=0; i < v.stats.fps.list.length; i++){
+	    sum += parseInt(v.stats.fps.list[i], 10);
+	}
+	v.stats.fps.average = Math.round(sum/v.stats.fps.list.length)
+	v.stats.fps.min = v.stats.fps.list.min()
+	v.stats.fps.max = v.stats.fps.list.max()
+	
+	endTime = new Date();
+	v.stats.time[v.mode].list.push(endTime - v.startTime)
+	v.stats.time[v.mode].total += endTime - v.startTime
+}
+
 function save(){
 	var storage = window.localStorage;
 	for (i=0; i < Object.keys(v.highScore).length; i++){
@@ -359,6 +384,7 @@ function save(){
 	storage.setItem("completed", v.completed)
 	storage.setItem("progress", v.challengeProg)
 	storage.setItem("ads", v.removedAds)
+	storage.setItem("stats", JSON.stringify(v.stats))
 	
 	v.totalPlays = 0
 	for (var k in v.plays){
@@ -388,6 +414,7 @@ function save(){
 				if (v.score >= 10){data["achievementId"] = "CgkIy72U_e4TEAIQAQ"}
 				if (v.score >= 25){data["achievementId"] = "CgkIy72U_e4TEAIQAg"}
 				if (v.score >= 50){data["achievementId"] = "CgkIy72U_e4TEAIQAw"}
+				if (v.score >= 75){data["achievementId"] = "CgkIy72U_e4TEAIQBA"}
 				if (v.score >= 100){data["achievementId"] = "CgkIy72U_e4TEAIQBQ"}
 				if (v.completed >= 30){data["achievementId"] = "CgkIy72U_e4TEAIQDA"}
 				if (v.completed >= v.challenges.length){data["achievementId"] = "CgkIy72U_e4TEAIQDQ"}
@@ -414,6 +441,8 @@ function load(){
 	v.completed = parseInt(storage.getItem("completed")) || 0;
 	v.challengeProg = parseInt(storage.getItem("progress")) || 0;
 	v.removedAds = storage.getItem("ads") || false;
+	v.stats = storage.getItem("stats") || v.stats;
+	if (typeof v.stats == "string"){v.stats = JSON.parse(v.stats)}
 	
 	v.playerColour = v.themes[v.themeOrder.toString()].player
 	v.obstacleColour = v.themes[v.themeOrder.toString()]. obstacle
