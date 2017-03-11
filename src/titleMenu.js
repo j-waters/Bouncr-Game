@@ -58,31 +58,31 @@ titleMenu.prototype = {
 	},
 	
 	goSettings: function(){
+		window.FirebasePlugin.logEvent("select_content", {content_type: "page_view", item_id: "settings"});
 		v.scroll = 0;
 		this.game.state.start("settings")
-		window.ga.trackView('Settings Screen')
 	},
 	
 	goSkins: function(){
+		window.FirebasePlugin.logEvent("select_content", {content_type: "page_view", item_id: "themes"});
 		v.scroll = 0;
 		this.game.state.start("skins")
-		window.ga.trackView('Themes Screen')
 	},
 	
 	leaderboard: function(){
+		window.FirebasePlugin.logEvent("select_content", {content_type: "page_view", item_id: "leaderboard"});
 		window.plugins.playGamesServices.showAllLeaderboards(null, function(){window.plugins.playGamesServices.auth();});
-		window.ga.trackView('Leaderboard Screen')
 	},
 	
 	challenge: function(){
+		window.FirebasePlugin.logEvent("select_content", {content_type: "page_view", item_id: "challenges"});
 		this.game.state.start("challenges")
-		window.ga.trackView('Challenges Screen')
 	},
 	
 	mode: function(){
+		window.FirebasePlugin.logEvent("select_content", {content_type: "page_view", item_id: "mode"});
 		v.scroll = 0;
 		this.game.state.start("mode")
-		window.ga.trackView('Mode Screen')
 	}
 }
 
