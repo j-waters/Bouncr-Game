@@ -111,10 +111,6 @@ settings.prototype = {
 		titlet.anchor.set(0.5, 0.5)
 		
 		if (v.mobile){
-			cordova.getAppVersion.getVersionNumber(function (version) {
-		    v.version = version + "-alpha";
-			});
-		
 			version = this.game.add.text(0.5 * game.width, 0.24 * game.height, "version: " + v.version, {fill: v.playerColour, font: "bold Arial", fontSize: 0.02 * game.height})
 			version.anchor.set(0.5, 0.5)
 		}
