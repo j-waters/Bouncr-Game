@@ -35,8 +35,10 @@ function player(){
 	if (game.state.current == "theGame"){
 		this.direction = 1
 		if (v.mode != "patience"){
+			if (v.mode == "chance"){this.direction = 0}
 			game.input.onDown.add(function(){
-				this.direction *= -1
+				if (v.mode != "chance"){this.direction *= -1}
+				if (v.mode == "chance" && v.gameEnd == false){this.x = randomInt(this.width/2, game.width - this.width/2)}
 				if(v.gameEnd == false){if (v.challenges[v.completed].unlock[0] == "notouch" && (v.challenges[v.completed].mode == v.mode || v.challenges[v.completed].mode == "")){
 					if (v.tempProg > v.challengeProg){v.challengeProg = v.tempProg}
 					v.tempProg = 0
@@ -365,6 +367,7 @@ function stats(){
 	v.stats.fps.max = v.stats.fps.list.max()
 	
 	endTime = new Date();
+	if (!(v.mode in v.stats.time)){v.stats.time[v.mode] = {list:[], total:0}}
 	v.stats.time[v.mode].list.push(endTime - v.startTime)
 	v.stats.time[v.mode].total += endTime - v.startTime
 }
@@ -700,7 +703,7 @@ function modeOption(order, mode){
 			var stext = "Play 1 more game to unlock"
 		}
 		else {
-			var stext = (v.modes[this.mode].unlock[1] > v.plays) ? "Play " + (v.modes[this.mode].unlock[1] - v.plays) + " more games to unlock" : ""//"Unlocked!"
+			var stext = (v.modes[this.mode].unlock[1] > v.plays[v.modes[this.mode].mode]) ? "Play " + (v.modes[this.mode].unlock[1] - v.plays[v.modes[this.mode].mode]) + " more games to unlock" : ""//"Unlocked!"
 		}
 	}
 	else if (v.modes[this.mode].unlock[0] == "challenge"){

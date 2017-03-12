@@ -20,6 +20,7 @@ preload.prototype = {
         game.load.image('mode/patience', 'assets/images/patience.png')
         game.load.image('mode/tilt', 'assets/images/tilt.png')
         game.load.image('mode/veil', 'assets/images/veil.png')
+        game.load.image('mode/chance', 'assets/images/chance.png')
         
         game.load.image('effect/star1', 'assets/images/effects/star1.png')
         game.load.image('effect/star2', 'assets/images/effects/star2.png')

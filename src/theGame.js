@@ -146,10 +146,11 @@ theGame.prototype = {
 				}
 			}
 			this.scoreText.text = v.score
-			if (Math.floor(v.distance) % 60 == 0){
+			var mod = (v.mode != "chance") ? 0 : 20
+			if (Math.floor(v.distance) % (60 + mod) == 0){
 				if (v.mode == "classic") {e = new obstacle();}
 				if (v.mode == "moving" || v.mode == "clone") {e = new movingObstacle(v.mode);}
-				if (v.mode == "patience" || v.mode == "tilt" || v.mode == "veil"){
+				if (v.mode == "patience" || v.mode == "tilt" || v.mode == "veil"|| v.mode == "chance"){
 					switch (randomInt(1, 3)) {
 						case 1:
 						case 2:
