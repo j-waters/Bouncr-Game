@@ -408,6 +408,7 @@ function save(){
 				if (v.mode == "patience"){board = "CgkIy72U_e4TEAIQCQ"}
 				if (v.mode == "tilt"){board = "CgkIy72U_e4TEAIQCg"}
 				if (v.mode == "veil"){board = "CgkIy72U_e4TEAIQCw"}
+				if (v.mode == "chance"){board = "CgkIy72U_e4TEAIQEg"}
 				data["leaderboardId"] = board
 				window.plugins.playGamesServices.submitScore(data);
 				
