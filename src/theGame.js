@@ -10,6 +10,8 @@ theGame.prototype = {
 			this.scoreText.alpha = 0.1;
 			this.scoreText.anchor.set(0.5, 0.5);
 			
+			game.input.maxPointers = 1
+			
 			p = new player();
 			game.add.existing(p)
 			
