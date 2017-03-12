@@ -1,6 +1,28 @@
 var theGame = function(game){}
 
 theGame.prototype = {
+		preload: function(){
+			var width = 0.5 * game.width
+			var height = 0.047 * game.height
+
+			var rectangle = game.make.bitmapData(width, height);
+			rectangle.rect(0, 0, width, height, v.obstacleColour);
+			game.cache.addBitmapData('obst_rectangle', rectangle);
+			
+			width = 0.08 * game.height
+			
+			var circle = game.make.bitmapData(width, width);
+			circle.circle(width/2, width/2, width/2, v.obstacleColour);
+			game.cache.addBitmapData('obst_circle', rectangle);
+			
+			var triangle = game.make.graphics(0, 0);
+			triangle.beginFill(parseInt(v.obstacleColour.replace(/^#/, ''), 16));
+			triangle.drawPolygon([0, 0, width/2, Math.sqrt(0.75) * width, width, 0, 0, 0])
+			triangle.endFill();
+			triangle = triangle.generateTexture()
+			game.cache.addRenderTexture('obst_triangle', triangle);
+		},
+
 		create: function(){
 			this.game.forceSingleUpdate = true;
 			game.stage.backgroundColor = v.backgroundColour;
@@ -46,8 +68,13 @@ theGame.prototype = {
 			}
 			else {
 				if (this.finished == false){
+					stats()
 					if (v.mobile){
 						window.FirebasePlugin.logEvent("game_end", {mode: v.mode, score: v.score, theme: v.themes[v.themeOrder].name});
+						window.ga.addCustomDimension(1, v.mode)
+						window.ga.addCustomDimension(2, v.themes[v.themeOrder].name)
+						window.ga.trackMetric(1, v.score)
+						window.ga.trackMetric(2, v.stats.fps.average)
 					}
 					if (v.mobile && v.removedAds == false){AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER)}
 					this.finished = true;
@@ -102,8 +129,6 @@ theGame.prototype = {
 							}
 						}
 					}
-					
-					stats()
 					
 					save()
 

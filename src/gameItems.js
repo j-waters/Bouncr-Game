@@ -123,9 +123,10 @@ function obstacle(x, width, height, points){
 		this.points = points;
 	}
 	
-	var rectangle = game.make.bitmapData(width, height);
-	rectangle.rect(0, 0, width, height, v.obstacleColour);
+	rectangle = game.cache.getBitmapData('obst_rectangle')
 	Phaser.Sprite.call(this, game, x, -height/2, rectangle);
+	this.width = width
+	this.height = height
 	
 	this.anchor.set(0.5, 0.5)
 	
@@ -146,6 +147,7 @@ obstacle.prototype.update = function() {
 		v.gameEndTarget = this
     	v.speed = 0;
     	this.key.fill(hexToRgbA(v.backgroundColour)[0], hexToRgbA(v.backgroundColour)[1], hexToRgbA(v.backgroundColour)[2])
+    	game.stage.backgroundColor = v.obstacleColour;
     }
 	
 	if (v.mode != "patience" || (v.mode == "patience" && game.input.activePointer.isDown)){
@@ -171,16 +173,11 @@ function movingObstacle(mode){
 	this.mode = mode
 	width = 0.08 * game.height
 	if (this.mode == "moving"){
-		var rend = game.make.graphics(0, 0);
-		rend.beginFill(parseInt(v.obstacleColour.replace(/^#/, ''), 16));
-		rend.drawPolygon([0, 0, width/2, Math.sqrt(0.75) * width, width, 0, 0, 0])
-		rend.endFill();
-		rend = rend.generateTexture()
+		rend = game.cache.getRenderTexture('obst_triangle').texture
 	}
 	
 	if (this.mode == "clone"){
-		var rend = game.make.bitmapData(width, width);
-		rend.circle(width/2, width/2, width/2, v.obstacleColour);
+		rend = game.cache.getBitmapData('obst_circle')
 	}
 	
 	var x = randomInt(0 + width/2, game.width - width/2);
@@ -230,6 +227,7 @@ movingObstacle.prototype.update = function() {
 			v.gameEnd = true;
 			v.gameEndTarget = this
 	    	v.speed = 0;
+			game.stage.backgroundColor = v.obstacleColour;
 			
 			if (this.mode == "moving"){
 				var rend = game.make.graphics(0, 0);

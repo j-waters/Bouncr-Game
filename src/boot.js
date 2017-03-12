@@ -8,7 +8,7 @@ boot.prototype = {
     
     create: function(){
     	load()
-    	if (this.game.device.desktop && false){game.add.plugin(Phaser.Plugin.Debug);}
+    	if (this.game.device.desktop && true){game.add.plugin(Phaser.Plugin.Debug);}
     	if (this.game.device.desktop || this.game.device.iPhone){
     		this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
     		this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
@@ -24,8 +24,11 @@ boot.prototype = {
     		this.androidScale(this.scale)
     		v.mobile = true
     		if (v.mobile){
+    			window.ga.startTrackerWithId('UA-92975224-3')
+    			window.ga.trackView('Launch App', '', true)
+    			window.ga.enableUncaughtExceptionReporting(true)
     			if (v.playGames) {window.plugins.playGamesServices.auth();}
-    			cordova.getAppVersion.getVersionNumber(function(version){v.version = version + "-beta"})
+    			cordova.getAppVersion.getVersionNumber(function(version){v.version = version + "-beta"; window.ga.setAppVersion(v.version)})
     			store.register({
     				id: "remove_adverts",
     			    alias: "remove ads",

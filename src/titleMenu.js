@@ -58,29 +58,44 @@ titleMenu.prototype = {
 	},
 	
 	goSettings: function(){
-		if (v.mobile){window.FirebasePlugin.logEvent("select_content", {content_type: "page_view", item_id: "settings"});}
+		if (v.mobile){
+			window.FirebasePlugin.logEvent("select_content", {content_type: "page_view", item_id: "settings"});
+			window.ga.trackView('Settings')
+		}
 		v.scroll = 0;
 		this.game.state.start("settings")
 	},
 	
 	goSkins: function(){
-		if (v.mobile){window.FirebasePlugin.logEvent("select_content", {content_type: "page_view", item_id: "themes"});}
+		if (v.mobile){
+			window.FirebasePlugin.logEvent("select_content", {content_type: "page_view", item_id: "themes"});
+			window.ga.trackView('Themes')
+		}
 		v.scroll = 0;
 		this.game.state.start("skins")
 	},
 	
 	leaderboard: function(){
-		if (v.mobile){window.FirebasePlugin.logEvent("select_content", {content_type: "page_view", item_id: "leaderboard"});}
+		if (v.mobile){
+			window.FirebasePlugin.logEvent("select_content", {content_type: "page_view", item_id: "leaderboard"});
+			window.ga.trackView('Leaderboard')
+		}
 		window.plugins.playGamesServices.showAllLeaderboards(null, function(){window.plugins.playGamesServices.auth();});
 	},
 	
 	challenge: function(){
-		if (v.mobile){window.FirebasePlugin.logEvent("select_content", {content_type: "page_view", item_id: "challenges"});}
+		if (v.mobile){
+			window.FirebasePlugin.logEvent("select_content", {content_type: "page_view", item_id: "challenges"});
+			window.ga.trackView('Challenges')
+		}
 		this.game.state.start("challenges")
 	},
 	
 	mode: function(){
-		if (v.mobile){window.FirebasePlugin.logEvent("select_content", {content_type: "page_view", item_id: "mode"});}
+		if (v.mobile){
+			window.FirebasePlugin.logEvent("select_content", {content_type: "page_view", item_id: "mode"});
+			window.ga.trackView('Mode')
+		}
 		v.scroll = 0;
 		this.game.state.start("mode")
 	}
