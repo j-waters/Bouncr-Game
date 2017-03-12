@@ -86,15 +86,6 @@ theGame.prototype = {
 					this.scoreText.fill = v.backgroundColour
 					this.scoreText.bringToTop()
 					
-					while (v.obstacles.children.length != 1){
-			    		if (v.obstacles.children[1] != v.gameEndTarget){
-			    			v.obstacles.children[1].destroy()
-			    		}
-			    		else {
-			    			v.obstacles.children.push(v.obstacles.children.shift());
-			    		}
-			    	}
-					
 					v.score = Math.ceil(v.score)
 					
 					if (v.score > v.highScore[v.mode]){

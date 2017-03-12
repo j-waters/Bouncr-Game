@@ -149,7 +149,7 @@ obstacle.prototype.update = function() {
 		v.gameEndTarget = this
     	v.speed = 0;
     	this.key.fill(hexToRgbA(v.backgroundColour)[0], hexToRgbA(v.backgroundColour)[1], hexToRgbA(v.backgroundColour)[2])
-    	game.stage.backgroundColor = v.obstacleColour;
+    	obstacleGameEnd()
     }
 	
 	if (v.mode != "patience" || (v.mode == "patience" && game.input.activePointer.isDown)){
@@ -169,7 +169,17 @@ obstacle.prototype.update = function() {
 	}
 }
 
-
+function obstacleGameEnd(){
+	game.stage.backgroundColor = v.obstacleColour;
+	while (v.obstacles.children.length != 1){
+		if (v.obstacles.children[1] != v.gameEndTarget){
+			v.obstacles.children[1].destroy()
+		}
+		else {
+			v.obstacles.children.push(v.obstacles.children.shift());
+		}
+	}
+}
 
 function movingObstacle(mode){
 	this.mode = mode
@@ -229,7 +239,6 @@ movingObstacle.prototype.update = function() {
 			v.gameEnd = true;
 			v.gameEndTarget = this
 	    	v.speed = 0;
-			game.stage.backgroundColor = v.obstacleColour;
 			
 			if (this.mode == "moving"){
 				var rend = game.make.graphics(0, 0);
@@ -245,6 +254,8 @@ movingObstacle.prototype.update = function() {
 			}
 			
 			this.loadTexture(rend)
+			
+			obstacleGameEnd()
 		}
 		var change = v.speed * this.direction * (game.width/720) * this.speedMod
 		if (this.x + change >= game.width - this.width/2){
