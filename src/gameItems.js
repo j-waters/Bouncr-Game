@@ -148,8 +148,6 @@ obstacle.prototype.update = function() {
 		v.gameEnd = true;
 		v.gameEndTarget = this
     	v.speed = 0;
-    	this.key.fill(hexToRgbA(v.backgroundColour)[0], hexToRgbA(v.backgroundColour)[1], hexToRgbA(v.backgroundColour)[2])
-    	obstacleGameEnd()
     }
 	
 	if (v.mode != "patience" || (v.mode == "patience" && game.input.activePointer.isDown)){
@@ -169,18 +167,8 @@ obstacle.prototype.update = function() {
 	}
 }
 
-function obstacleGameEnd(){
-	game.stage.backgroundColor = v.obstacleColour;
-	while (v.obstacles.children.length != 1){
-		if (v.obstacles.children[1] != v.gameEndTarget){
-			v.obstacles.children[1].destroy()
-		}
-		else {
-			v.obstacles.children.push(v.obstacles.children.shift());
-		}
-	}
-	
-	if (v.backgroundEffect){v.backEffectGroup.destroy()}
+obstacle.prototype.die = function(){
+	this.key.fill(hexToRgbA(v.backgroundColour)[0], hexToRgbA(v.backgroundColour)[1], hexToRgbA(v.backgroundColour)[2])
 }
 
 function movingObstacle(mode){
@@ -241,23 +229,6 @@ movingObstacle.prototype.update = function() {
 			v.gameEnd = true;
 			v.gameEndTarget = this
 	    	v.speed = 0;
-			
-			if (this.mode == "moving"){
-				var rend = game.make.graphics(0, 0);
-				rend.beginFill(parseInt(v.backgroundColour.replace(/^#/, ''), 16));
-				rend.drawPolygon([0, 0, this.width/2, Math.sqrt(0.75) * this.width, this.width, 0, 0, 0])
-				rend.endFill();
-				rend = rend.generateTexture()
-			}
-			
-			if (this.mode == "clone"){
-				var rend = game.make.bitmapData(this.width, this.width);
-				rend.circle(this.width/2, this.width/2, this.width/2, v.backgroundColour);
-			}
-			
-			this.loadTexture(rend)
-			
-			obstacleGameEnd()
 		}
 		var change = v.speed * this.direction * (game.width/720) * this.speedMod
 		if (this.x + change >= game.width - this.width/2){
@@ -290,6 +261,23 @@ movingObstacle.prototype.update = function() {
 				if (v.tempProg > v.challengeProg){v.challengeProg = v.tempProg}
 			}
 		}
+}
+
+movingObstacle.prototype.die = function(){
+	if (this.mode == "moving"){
+		var rend = game.make.graphics(0, 0);
+		rend.beginFill(parseInt(v.backgroundColour.replace(/^#/, ''), 16));
+		rend.drawPolygon([0, 0, this.width/2, Math.sqrt(0.75) * this.width, this.width, 0, 0, 0])
+		rend.endFill();
+		rend = rend.generateTexture()
+	}
+	
+	if (this.mode == "clone"){
+		var rend = game.make.bitmapData(this.width, this.width);
+		rend.circle(this.width/2, this.width/2, this.width/2, v.backgroundColour);
+	}
+	
+	this.loadTexture(rend)
 }
 
 function hsLine(y){

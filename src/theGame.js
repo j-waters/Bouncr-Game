@@ -79,6 +79,20 @@ theGame.prototype = {
 					if (v.mobile && v.removedAds == false){AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER)}
 					this.finished = true;
 					v.plays[v.mode]++
+					
+					game.stage.backgroundColor = v.obstacleColour;
+					while (v.obstacles.children.length != 1){
+						if (v.obstacles.children[1] != v.gameEndTarget){
+							v.obstacles.children[1].destroy()
+						}
+						else {
+							v.obstacles.children.push(v.obstacles.children.shift());
+						}
+					}
+					v.gameEndTarget.die()
+					
+					if (v.backgroundEffect){v.backEffectGroup.destroy()}
+					
 					this.scoreText.alpha = 1;
 					this.scoreText.fill = v.backgroundColour
 					this.scoreText.bringToTop()
