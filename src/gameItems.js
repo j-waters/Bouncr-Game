@@ -179,6 +179,8 @@ function obstacleGameEnd(){
 			v.obstacles.children.push(v.obstacles.children.shift());
 		}
 	}
+	
+	if (v.backgroundEffect){v.backEffectGroup.destroy()}
 }
 
 function movingObstacle(mode){

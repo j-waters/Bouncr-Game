@@ -79,9 +79,6 @@ theGame.prototype = {
 					if (v.mobile && v.removedAds == false){AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER)}
 					this.finished = true;
 					v.plays[v.mode]++
-					game.stage.backgroundColor = v.obstacleColour;
-					document.body.style.backgroundColor = v.obstacleColour
-					if (v.backgroundEffect){v.backEffectGroup.destroy()}
 					this.scoreText.alpha = 1;
 					this.scoreText.fill = v.backgroundColour
 					this.scoreText.bringToTop()
