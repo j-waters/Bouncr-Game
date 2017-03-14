@@ -443,7 +443,7 @@ function load(){
 	v.playGames = storage.getItem("gameService") || true;
 	v.completed = parseInt(storage.getItem("completed")) || 0;
 	v.challengeProg = parseInt(storage.getItem("progress")) || 0;
-	v.removedAds = storage.getItem("ads") || false;
+	v.removedAds = storage.getItem("ads") == "true" || false;
 	v.stats = storage.getItem("stats") || v.stats;
 	if (typeof v.stats == "string"){v.stats = JSON.parse(v.stats)}
 	
