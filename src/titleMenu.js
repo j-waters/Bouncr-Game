@@ -6,6 +6,7 @@ titleMenu.prototype = {
 		if (v.mobile){
 			if (v.removedAds == false){AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER)}
 		}
+		window.ga.trackView('Main Menu')
 		resizeScreen(game.scale)
 		this.game.stage.backgroundColor = v.backgroundColour;
 		backgroundEffect()

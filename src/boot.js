@@ -24,7 +24,7 @@ boot.prototype = {
     		this.androidScale(this.scale)
     		v.mobile = true
     		if (v.mobile){
-    			window.ga.startTrackerWithId('UA-92975224-3')
+    			window.ga.startTrackerWithId('UA-92975224-3', 30)
     			window.ga.trackView('Launch App', '', true)
     			window.ga.enableUncaughtExceptionReporting(true)
     			if (v.playGames) {window.plugins.playGamesServices.auth();}
@@ -49,8 +49,7 @@ boot.prototype = {
     	scale.fullScreenScaleMode = Phaser.ScaleManager.USER_SCALE;
     	scale.windowConstraints.bottom = "visual";
     	scale.windowConstraints.right = "layout";
-    	window.addEventListener('resize', function(){resizeScreen(game.scale); game.state.start(game.state.current); console.log("OTHER RESIZE")})
-    	//this.game.scale.setResizeCallback(this.resizeCallback, this);
+    	window.addEventListener('resize', function(){resizeScreen(game.scale); game.state.start(game.state.current)})
     	resizeScreen(scale)
     	scale.pageAlignHorizontally = true;
     	scale.pageAlignVertically = true;
@@ -69,5 +68,4 @@ function resizeScreen(manager){
     	manager.setGameSize(window.innerWidth*userRatio,window.innerHeight*userRatio);
     	manager.setUserScale(1/userRatio, 1/userRatio);
     }
-    console.log(userRatio)
 }
