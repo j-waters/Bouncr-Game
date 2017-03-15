@@ -79,7 +79,8 @@ theGame.prototype = {
 							window.ga.addCustomDimension(2, v.themes[v.themeOrder].name, function(){
 								window.ga.trackMetric(1, v.score, function(){
 									window.ga.trackMetric(2, v.stats.fps.average, function(){
-										window.ga.trackEvent('Game', 'End')
+										window.ga.trackView('End Game')
+										window.ga.trackEvent('Game', 'End', "", v.score)
 									}, function(e){console.log("Metric2 Error: " + e)})
 								}, function(e){console.log("Metric1 Error: " + e)})
 							}, function(e){console.log("Dimension2 Error: " + e)})
