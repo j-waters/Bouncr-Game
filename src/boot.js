@@ -28,6 +28,10 @@ boot.prototype = {
     			window.ga.trackView('Launch App', '', true)
     			window.ga.enableUncaughtExceptionReporting(true)
     			if (v.playGames) {window.plugins.playGamesServices.auth();}
+    			
+    			document.addEventListener("pause", function(){game.paused = true}, false);
+    			document.addEventListener("resume", function(){game.paused = false}, false);
+    			
     			cordova.getAppVersion.getVersionNumber(function(version){v.version = version; window.ga.setAppVersion(v.version)})
     			store.register({
     				id: "remove_adverts",
