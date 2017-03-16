@@ -4,9 +4,10 @@ titleMenu.prototype = {
 	create: function(){
 		load()
 		if (v.mobile){
-			if (v.removedAds == false){AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER)}
+			if (v.removedAds == false){AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER)};
+			window.ga.trackView('Main Menu')
 		}
-		window.ga.trackView('Main Menu')
+		
 		resizeScreen(game.scale)
 		this.game.stage.backgroundColor = v.backgroundColour;
 		backgroundEffect()
@@ -24,7 +25,7 @@ titleMenu.prototype = {
 		hight = this.game.add.text(0.5 * game.width, 0.33 * game.height, "top: " + v.highScore[v.mode], {fill: v.playerColour, fontSize: 0.03 * game.height})
 		hight.anchor.set(0.5, 0.5)
 		
-		game.input.onDown.add(this.startGame, this);
+		game.input.onTap.add(this.startGame, this);
 		
 		settingsb = new menuButton(0.14 * game.width, 0.5 * game.height, "settings/cog", this.goSettings, this)
 		

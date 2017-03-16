@@ -22,7 +22,7 @@ theGame.prototype = {
 			triangle = triangle.generateTexture()
 			game.cache.addRenderTexture('obst_triangle', triangle);
 			
-			window.ga.trackView('Start Game')
+			if (v.mobile){window.ga.trackView('Start Game')}
 		},
 
 		create: function(){

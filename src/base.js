@@ -20,7 +20,7 @@ var v = {
 	gameEndTarget: null,
 	obstacles: null,
 	highScore: {"classic": 0, "moving":0, "clone":0, "patience":0, "tilt":0, "veil":0, "chance":0},
-	mobile: true,
+	mobile: false,
 	scroll: 0,
 	mode: "classic",
 	themeOrder: 0,
@@ -160,6 +160,7 @@ Raven.config('https://ef18ad107d404aac97eae15efb9e9988@sentry.io/142324').instal
 //					  ( width , height , renderer , parent , state , transparent , anti alias , physicsConfig )
 
 game = new Phaser.Game(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio, Phaser.AUTO, "", null, null, true, null);
+
 game.state.add("Boot", boot);
 game.state.add("Pre_Preload", pre_preload);
 game.state.add("Preload", preload);
