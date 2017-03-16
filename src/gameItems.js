@@ -581,6 +581,11 @@ function menuButton(x, y, key, callback, context, wm){
 	this.input.priorityID = 1
 	this.events.onInputDown.add(callback, context)
 	
+	h = game.make.sprite(0, 0)
+	h.width = s.height = game.height * 0.4
+	h.anchor.set(0.5, 0.5)
+	this.addChild(h)
+	
 	game.add.existing(this)
 }
 
