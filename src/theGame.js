@@ -74,18 +74,13 @@ theGame.prototype = {
 					if (v.mobile){
 						window.FirebasePlugin.logEvent("game_end", {mode: v.mode, score: v.score, theme: v.themes[v.themeOrder].name});
 						console.log("END", v.mode, v.themes[v.themeOrder].name, v.score, v.stats.fps.average)
-						
-						window.ga.addCustomDimension(1, v.mode, function(){
-							window.ga.addCustomDimension(2, v.themes[v.themeOrder].name, function(){
-								window.ga.trackMetric(1, v.score, function(){
-									window.ga.trackMetric(2, v.stats.fps.average, function(){
-										window.ga.trackView('End Game')
-										window.ga.trackEvent('Game', 'End', "", v.score)
-									}, function(e){console.log("Metric2 Error: " + e)})
-								}, function(e){console.log("Metric1 Error: " + e)})
-							}, function(e){console.log("Dimension2 Error: " + e)})
-						}, function(e){console.log("Dimension1 Error: " + e)})
-						
+
+						window.ga.trackMetric(1, v.score, function(){
+							window.ga.trackMetric(2, v.stats.fps.average, function(){
+								window.ga.trackView('End Game')
+								window.ga.trackEvent('Game', 'End', "", v.score)
+							}, function(e){console.log("Metric2 Error: " + e)})
+						}, function(e){console.log("Metric1 Error: " + e)})
 					}
 					if (v.mobile && v.removedAds == false){AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER)}
 					this.finished = true;

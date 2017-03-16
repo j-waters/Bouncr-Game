@@ -394,10 +394,8 @@ function save(){
 	}
 		
 	if (v.mobile){
-		window.ga.trackMetric('metric1', v.highScore["classic"])
-		window.ga.trackMetric('metric2', v.completed)
-		window.ga.trackMetric('metric3', v.themeOrder)
-		window.ga.trackMetric('metric4', v.totalPlays)
+		window.ga.addCustomDimension(1, v.mode)
+		window.ga.addCustomDimension(2, v.themes[v.themeOrder].name)
 		window.plugins.playGamesServices.isSignedIn(function (result) {
 			if (result.isSignedIn){
 				var data = {
@@ -453,6 +451,11 @@ function load(){
 	v.backgroundEffect = v.themes[v.themeOrder.toString()].effect
 	document.body.style.backgroundColor = v.backgroundColour
 	v.backEffectGroup = null
+	
+	if (v.mobile){
+		window.ga.addCustomDimension(1, v.mode)
+		window.ga.addCustomDimension(2, v.themes[v.themeOrder].name)
+	}
 }
 
 CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
