@@ -444,9 +444,9 @@ function save(){
 				if (v.score >= 100){data["achievementId"] = "CgkIy72U_e4TEAIQBQ"}
 				if (v.completed >= 30){data["achievementId"] = "CgkIy72U_e4TEAIQDA"}
 				if (v.completed >= v.challenges.length){data["achievementId"] = "CgkIy72U_e4TEAIQDQ"}
-				if (v.unlockedThemes >= Object.keys(v.themes).length){data["achievementId"] = "CgkIy72U_e4TEAIQDg"}
+				if (v.unlockedThemes >= v.themes.length){data["achievementId"] = "CgkIy72U_e4TEAIQDg"}
 				if (v.unlockedModes >= v.modes.length){data["achievementId"] = "CgkIy72U_e4TEAIQDw"}
-				if (v.unlockedModes >= v.modes.length && v.unlockedThemes >= Object.keys(v.themes).length && v.completed >= v.challenges.length){data["achievementId"] = "CgkIy72U_e4TEAIQEA"}
+				if (v.unlockedModes >= v.modes.length && v.unlockedThemes >= v.themes.length && v.completed >= v.challenges.length){data["achievementId"] = "CgkIy72U_e4TEAIQEA"}
 				
 				if (Object.keys(data).length > 0){window.plugins.playGamesServices.unlockAchievement(data);}
 			}
@@ -470,10 +470,10 @@ function load(){
 	v.stats = storage.getItem("stats") || v.stats;
 	if (typeof v.stats == "string"){v.stats = JSON.parse(v.stats)}
 	
-	v.playerColour = v.themes[v.themeOrder.toString()].player
-	v.obstacleColour = v.themes[v.themeOrder.toString()]. obstacle
-	v.backgroundColour = v.themes[v.themeOrder.toString()].background
-	v.backgroundEffect = v.themes[v.themeOrder.toString()].effect
+	v.playerColour = v.themes[v.themeOrder].player
+	v.obstacleColour = v.themes[v.themeOrder]. obstacle
+	v.backgroundColour = v.themes[v.themeOrder].background
+	v.backgroundEffect = v.themes[v.themeOrder].effect
 	document.body.style.backgroundColor = v.backgroundColour
 	v.backEffectGroup = null
 	
@@ -559,10 +559,10 @@ function themeUnlock(order){
 	this.events.onInputDown.add(function(){this.drag = this.game.input.activePointer.position.y}, this)
 	this.events.onInputUp.add(function(){
 		if (Math.abs(this.drag - this.game.input.activePointer.position.y) < 10 && this.unlocked){
-			v.playerColour = v.themes[order.toString()].player
-			v.obstacleColour = v.themes[order.toString()]. obstacle
-			v.backgroundColour = v.themes[order.toString()].background
-			v.backgroundEffect = v.themes[v.themeOrder.toString()].effect
+			v.playerColour = v.themes[order].player
+			v.obstacleColour = v.themes[order]. obstacle
+			v.backgroundColour = v.themes[order].background
+			v.backgroundEffect = v.themes[v.themeOrder].effect
 			v.themeOrder = order
 			
 			titlet.fill = v.playerColour

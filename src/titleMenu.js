@@ -189,7 +189,7 @@ skins.prototype = {
 		v.unlockedThemes = 0
 		this.skins = game.add.group()
 		
-		for (i=0; i < Object.keys(v.themes).length; i++){
+		for (i=0; i < v.themes.length; i++){
 			sk = new themeUnlock(i)
 			this.skins.add(sk)
 		}
