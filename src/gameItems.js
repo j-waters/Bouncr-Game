@@ -510,7 +510,7 @@ function themeUnlock(order){
 	var background = game.make.bitmapData(width, height);
 	background.ctx.fillStyle = v.themes[order].background
 	background.ctx.lineWidth = 0.0043 * game.width
-	background.ctx.strokeStyle="#FFEE00";
+	background.ctx.strokeStyle=v.themes[order].player;
 	background.ctx.roundRect(0, 0, width, height, 20)
 	background.ctx.fill();
 	if (v.themeOrder == order){background.ctx.stroke()}
