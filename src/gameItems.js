@@ -349,11 +349,15 @@ function CircleCircleColliding(circle1, circle2){
 
 
 Array.prototype.max = function() {
-	 return Math.max.apply(null, this);
+	var max = Number.MIN_VALUE
+	for(var i = 0; i < this.length; i++ ) if (this[i] > max) max = this[i];
+	return max
 };
 
 Array.prototype.min = function() {
-	 return Math.min.apply(null, this);
+	var min = Number.MAX_VALUE
+	for(var i = 0; i < this.length; i++ ) if (this[i] < min) min = this[i];
+	return min
 };
 
 
@@ -582,7 +586,7 @@ function menuButton(x, y, key, callback, context, wm){
 	this.events.onInputDown.add(callback, context)
 	
 	h = game.make.sprite(0, 0)
-	h.width = s.height = game.height * 0.4
+	h.width = h.height = game.height * 0.4
 	h.anchor.set(0.5, 0.5)
 	this.addChild(h)
 	
