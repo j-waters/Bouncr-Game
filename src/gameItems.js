@@ -148,6 +148,7 @@ obstacle.prototype.update = function() {
 		v.gameEnd = true;
 		v.gameEndTarget = this
     	v.speed = 0;
+		gameEnd()
     }
 	
 	if (v.mode != "patience" || (v.mode == "patience" && game.input.activePointer.isDown)){
@@ -171,6 +172,25 @@ obstacle.prototype.die = function(){
 	this.key.fill(hexToRgbA(v.backgroundColour)[0], hexToRgbA(v.backgroundColour)[1], hexToRgbA(v.backgroundColour)[2])
 }
 
+function gameEnd(){
+	game.stage.backgroundColor = v.obstacleColour;
+	while (v.obstacles.children.length != 1){
+		if (v.obstacles.children[1] != v.gameEndTarget){
+			//v.obstacles.children[1].kill()
+			//v.deadObstacles.push(v.obstacles.children[1])
+			v.obstacles.remove(v.obstacles.children[1], true)
+		}
+		else {
+			v.obstacles.children.push(v.obstacles.children.shift());
+		}
+	}
+	v.gameEndTarget.die()
+	game.state.states["theGame"].scoreText.alpha = 1;
+	game.state.states["theGame"].scoreText.fill = v.backgroundColour
+	game.state.states["theGame"].scoreText.bringToTop()
+	
+	if (v.backgroundEffect){v.backEffectGroup.destroy()}
+}
 function movingObstacle(mode){
 	this.mode = mode
 	width = 0.08 * game.height
@@ -229,6 +249,7 @@ movingObstacle.prototype.update = function() {
 			v.gameEnd = true;
 			v.gameEndTarget = this
 	    	v.speed = 0;
+			gameEnd()
 		}
 		var change = v.speed * this.direction * (game.width/720) * this.speedMod
 		if (this.x + change >= game.width - this.width/2){

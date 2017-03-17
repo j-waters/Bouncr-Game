@@ -86,23 +86,6 @@ theGame.prototype = {
 					this.finished = true;
 					v.plays[v.mode]++
 					
-					game.stage.backgroundColor = v.obstacleColour;
-					while (v.obstacles.children.length != 1){
-						if (v.obstacles.children[1] != v.gameEndTarget){
-							v.obstacles.children[1].destroy()
-						}
-						else {
-							v.obstacles.children.push(v.obstacles.children.shift());
-						}
-					}
-					v.gameEndTarget.die()
-					
-					if (v.backgroundEffect){v.backEffectGroup.destroy()}
-					
-					this.scoreText.alpha = 1;
-					this.scoreText.fill = v.backgroundColour
-					this.scoreText.bringToTop()
-					
 					v.score = Math.ceil(v.score)
 					
 					if (v.score > v.highScore[v.mode]){
