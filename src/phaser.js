@@ -15674,6 +15674,8 @@ PIXI.Sprite.prototype._renderCanvas = function(renderSession, matrix)
     {
         var cx = this.texture.crop.x;
         var cy = this.texture.crop.y;
+        cw = Math.floor(cw)
+        ch = Math.floor(ch)
 
         renderSession.context.drawImage(this.texture.baseTexture.source, cx, cy, cw, ch, dx, dy, cw / resolution, ch / resolution);
     }
@@ -32216,6 +32218,8 @@ Phaser.Group.prototype.update = function () {
 
     while (i--)
     {
+    	if (i >= this.children.length){i = this.children.length - 1}
+    	console.log(this.children, i, this.children.length)
         this.children[i].update();
     }
 
