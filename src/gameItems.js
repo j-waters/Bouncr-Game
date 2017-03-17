@@ -501,9 +501,12 @@ function themeUnlock(order){
 	var width = 0.94 * game.width
 	var height = 0.28 * game.width
 	var background = game.make.bitmapData(width, height);
-	background.ctx.fillStyle = (v.themes[order].background != "#ffffff") ? v.themes[order].background : "#eeeeee";
+	background.ctx.fillStyle = v.themes[order].background
+	background.ctx.lineWidth = 0.0043 * game.width
+	background.ctx.strokeStyle="#FFEE00";
 	background.ctx.roundRect(0, 0, width, height, 20)
 	background.ctx.fill();
+	if (v.themeOrder == order){background.ctx.stroke()}
 	background.circle(550/720 * game.width, 150/720 * game.width, 25/720 * game.width, v.themes[order].player)
 	background.rect(480/720 * game.width, 80/720 * game.width, 50/720 * game.width, 25/720 * game.width, v.themes[order].obstacle)
 	background.rect(560/720 * game.width, 40/720 * game.width, 60/720 * game.width, 25/720 * game.width, v.themes[order].obstacle)
