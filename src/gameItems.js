@@ -189,6 +189,13 @@ function gameEnd(){
 	game.state.states["theGame"].scoreText.fill = v.backgroundColour
 	game.state.states["theGame"].scoreText.bringToTop()
 	
+	hight = this.game.add.text(0.5 * game.width, 0.29 * game.height, "top: " + v.highScore[v.mode], {fill: v.backgroundColour, boundsAlignH: "center", fontSize: 0.03 * game.height})
+	hight.anchor.set(0.5, 0.5)
+					
+	playt = this.game.add.text(0.5 * game.width, 0.5 * game.height, "tap to play again", {fill: v.backgroundColour, boundsAlignH: "center", fontSize: 0.03 * game.height})
+	playt.anchor.set(0.5, 0.5)
+	this.game.add.tween(playt).to({ alpha: 0.5 }, 1500, null, null, null, null, true).start();
+	
 	if (v.backgroundEffect){v.backEffectGroup.destroy()}
 }
 function movingObstacle(mode){
