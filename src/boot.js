@@ -10,9 +10,9 @@ boot.prototype = {
     	load()
     	if (this.game.device.desktop && false){game.add.plugin(Phaser.Plugin.Debug);}
     	if (this.game.device.desktop || this.game.device.iPhone){
+    		this.game.scale.setGameSize(window.innerHeight * 0.5625, window.innerHeight);
     		this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
     		this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-    		this.game.scale.windowConstraints.bottom = "visual";
     		this.scale.pageAlignHorizontally = true;
     		this.scale.pageAlignVertically = true;
     		this.scale.windowConstraints.bottom = "visual";
@@ -70,6 +70,7 @@ function resizeScreen(manager){
     }
     if (manager.width !== window.innerWidth*userRatio || manager.height !== window.innerHeight*userRatio){
     	manager.setGameSize(window.innerWidth*userRatio,window.innerHeight*userRatio);
+    	if (this.game.device.desktop){this.game.scale.setGameSize(window.innerHeight * 0.5625 *userRatio, window.innerHeight*userRatio);}
     	manager.setUserScale(1/userRatio, 1/userRatio);
     }
 }
