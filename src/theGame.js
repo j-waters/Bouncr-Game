@@ -130,6 +130,7 @@ theGame.prototype = {
 			}
 			this.scoreText.text = v.score
 			var mod = (v.mode != "chance") ? 0 : 20
+			var distMod = (v.mode != "chance") ? 0.24 : 0.35
 			if (Math.floor(v.distance) % (60 + mod) == 0){
 				if (v.mode == "classic") {e = new obstacle();}
 				if (v.mode == "moving" || v.mode == "clone") {e = new movingObstacle(v.mode);}
@@ -145,7 +146,9 @@ theGame.prototype = {
 					}
 				}
 				v.obstacles.add(e)
-				v.distance++
+				//v.distance++
+				v.distance += 1 + Math.floor(distMod * v.score)
+				console.log(1 + Math.floor(distMod * v.score))
 			}
 		},
 		
