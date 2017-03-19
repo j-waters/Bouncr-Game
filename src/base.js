@@ -153,6 +153,9 @@ var v = {
 				{description: "Play 40 games of classic mode", unlock: ["plays", 40], mode: "classic"},
 				{description: "Score 90 in classic mode", unlock: ["score", 90], mode: "classic"},
 				{description: "Score a total of 800 in classic mode", unlock: ["total", 800], mode: "classic"},
+				
+				{description: "Play 50 games of classic mode", unlock: ["plays", 50], mode: "classic"},
+				{description: "Score a total of 1000 in classic mode", unlock: ["total", 1000], mode: "classic"},
 		],
 	challengeProg: 0,
 	tempProg: 0,
