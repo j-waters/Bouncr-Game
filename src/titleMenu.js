@@ -25,6 +25,9 @@ titleMenu.prototype = {
 		hight = this.game.add.text(0.5 * game.width, 0.33 * game.height, "top: " + v.highScore[v.mode], {fill: v.playerColour, fontSize: 0.03 * game.height})
 		hight.anchor.set(0.5, 0.5)
 		
+		statst = this.game.add.text(0.5 * game.width, 0.355 * game.height, "plays: " + v.plays[v.mode], {fill: v.playerColour, fontSize: 0.015 * game.height})
+		statst.anchor.set(0.5, 0.5)
+		
 		game.input.onTap.add(this.startGame, this);
 		
 		settingsb = new menuButton(0.14 * game.width, 0.5 * game.height, "settings/cog", this.goSettings, this)
@@ -35,7 +38,7 @@ titleMenu.prototype = {
 		
 		challengeb = new menuButton(0.86 * game.width, 0.6 * game.height, "settings/trophy", this.challenge, this)
 		
-		modeb = new menuButton(0.5 * game.width, 0.4 * game.height, "settings/mode", this.mode, this)
+		modeb = new menuButton(0.5 * game.width, 0.42 * game.height, "settings/mode", this.mode, this)
 	},
 	
 	render: function(){
