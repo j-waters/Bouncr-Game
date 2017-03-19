@@ -13,7 +13,7 @@ theGame.prototype = {
 			
 			var circle = game.make.bitmapData(width, width);
 			circle.circle(width/2, width/2, width/2, v.obstacleColour);
-			game.cache.addBitmapData('obst_circle', rectangle);
+			game.cache.addBitmapData('obst_circle', circle);
 			
 			var triangle = game.make.graphics(0, 0);
 			triangle.beginFill(parseInt(v.obstacleColour.replace(/^#/, ''), 16));
