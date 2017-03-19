@@ -32,7 +32,7 @@ boot.prototype = {
     			document.addEventListener("pause", function(){game.paused = true}, false);
     			document.addEventListener("resume", function(){game.paused = false}, false);
     			
-    			cordova.getAppVersion.getVersionNumber(function(version){v.version = version; window.ga.setAppVersion(v.version)})
+    			cordova.getAppVersion.getVersionNumber(function(version){v.version = version; window.ga.setAppVersion(v.version); Raven.setRelease(version)})
     			store.register({
     				id: "remove_adverts",
     			    alias: "remove ads",
