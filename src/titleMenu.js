@@ -39,6 +39,9 @@ titleMenu.prototype = {
 		challengeb = new menuButton(0.86 * game.width, 0.6 * game.height, "settings/trophy", this.challenge, this)
 		
 		modeb = new menuButton(0.5 * game.width, 0.42 * game.height, "settings/mode", this.mode, this)
+		
+		gen_themes()
+		gen_challenge()
 	},
 	
 	render: function(){
@@ -172,7 +175,6 @@ settings.prototype = {
 		store.refresh();
 		
 		store.order("remove ads")
-		//alert("This doesn't do anything yet. Eventually you will be able to pay £1-2 to remove adverts.")
 	},
 	
 	review: function(){
@@ -182,7 +184,7 @@ settings.prototype = {
 
 var skins = function(game){}
 
-skins.prototype = {
+skins.prototype = {	
 	create: function(){
 		load()
 		
@@ -250,24 +252,7 @@ challenges.prototype = {
 		challengeno = this.game.add.text(0.5 * game.width, 0.32 * game.height, v.completed + " / " + v.challenges.length, {fill: v.playerColour, font: "bold Arial", fontSize: 0.038 * game.height})
 		challengeno.anchor.set(0.5, 0)
 		
-		cb = this.game.make.bitmapData(0.9 * game.width, 0.4 * game.height)
-		cb.ctx.fillStyle = v.playerColour
-		cb.ctx.strokeStyle = v.backgroundColour
-		cb.ctx.roundRect(0, 0, 0.9 * game.width, 0.4 * game.height, 20)
-		cb.ctx.fill();
-		if (v.completed < v.challenges.length){
-			var percentage = v.challengeProg / v.challenges[v.completed].unlock[1]
-			cb.ctx.strokeStyle = v.obstacleColour
-			cb.ctx.beginPath();
-			cb.ctx.lineWidth = 0.03 * game.height;
-			cb.ctx.arc(0.45 * game.width, 0.27 * game.height, 0.09 * game.height, 0, 2*Math.PI);
-			cb.ctx.stroke();
-			
-			cb.ctx.strokeStyle = v.backgroundColour
-			cb.ctx.beginPath();
-			cb.ctx.arc(0.45 * game.width, 0.27 * game.height, 0.09 * game.height, -0.5*Math.PI, 2*Math.PI * percentage -0.5*Math.PI);
-			cb.ctx.stroke();
-		}
+		cb = game.cache.getBitmapData("challenge")
 		
 		challenge = this.game.add.sprite(0.5 * game.width, 0.38 * game.height, cb)
 		challenge.anchor.set(0.5, 0)

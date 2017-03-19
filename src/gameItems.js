@@ -503,10 +503,15 @@ CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
 	return this;
 }
 
-
-function themeUnlock(order){
+function gen_themes(){
 	var width = 0.94 * game.width
 	var height = 0.28 * game.width
+	for (i=0; i<v.themes.length; i++){
+		generate_theme(i, width, height)
+	}
+}
+
+function generate_theme(order, width, height){
 	var background = game.make.bitmapData(width, height);
 	background.ctx.fillStyle = v.themes[order].background
 	background.ctx.lineWidth = 0.0043 * game.width
@@ -517,6 +522,34 @@ function themeUnlock(order){
 	background.circle(550/720 * game.width, 150/720 * game.width, 25/720 * game.width, v.themes[order].player)
 	background.rect(480/720 * game.width, 80/720 * game.width, 50/720 * game.width, 25/720 * game.width, v.themes[order].obstacle)
 	background.rect(560/720 * game.width, 40/720 * game.width, 60/720 * game.width, 25/720 * game.width, v.themes[order].obstacle)
+	game.cache.addBitmapData('theme_' + order, background);
+}
+
+function gen_challenge(){
+	cb = this.game.make.bitmapData(0.9 * game.width, 0.4 * game.height)
+	cb.ctx.fillStyle = v.playerColour
+	cb.ctx.strokeStyle = v.backgroundColour
+	cb.ctx.roundRect(0, 0, 0.9 * game.width, 0.4 * game.height, 20)
+	cb.ctx.fill();
+	if (v.completed < v.challenges.length){
+		var percentage = v.challengeProg / v.challenges[v.completed].unlock[1]
+		cb.ctx.strokeStyle = v.obstacleColour
+		cb.ctx.beginPath();
+		cb.ctx.lineWidth = 0.03 * game.height;
+		cb.ctx.arc(0.45 * game.width, 0.27 * game.height, 0.09 * game.height, 0, 2*Math.PI);
+		cb.ctx.stroke();
+		
+		cb.ctx.strokeStyle = v.backgroundColour
+		cb.ctx.beginPath();
+		cb.ctx.arc(0.45 * game.width, 0.27 * game.height, 0.09 * game.height, -0.5*Math.PI, 2*Math.PI * percentage -0.5*Math.PI);
+		cb.ctx.stroke();
+	}
+	game.cache.addBitmapData('challenge', cb);
+}
+
+function themeUnlock(order){
+	background = game.cache.getBitmapData('theme_' + order)
+	
 	Phaser.Sprite.call(this, game, 0.5 * game.width, (0.22 * game.height) + (0.14 * game.width) + (0.31 * game.width) * order, background);
 	this.anchor.set(0.5, 0.5)
 	
@@ -580,6 +613,7 @@ function themeUnlock(order){
 			backb.colour()
 			
 			save()
+			game.state.start("titleMenu")
 		}
 	}, this);
 }
