@@ -148,7 +148,6 @@ theGame.prototype = {
 				v.obstacles.add(e)
 				//v.distance++
 				v.distance += 1 + Math.floor(distMod * v.score)
-				console.log(1 + Math.floor(distMod * v.score))
 			}
 		},
 		
