@@ -70,6 +70,7 @@ titleMenu.prototype = {
 	
 	goSkins: function(){
 		if (v.mobile){
+			AdMob.hideBanner()
 			window.FirebasePlugin.logEvent("select_content", {content_type: "page_view", item_id: "themes"});
 			window.ga.trackView('Themes')
 		}
@@ -87,6 +88,7 @@ titleMenu.prototype = {
 	
 	challenge: function(){
 		if (v.mobile){
+			AdMob.hideBanner()
 			window.FirebasePlugin.logEvent("select_content", {content_type: "page_view", item_id: "challenges"});
 			window.ga.trackView('Challenges')
 		}
@@ -212,8 +214,8 @@ skins.prototype = {
 				this.scrollTween = this.game.add.tween(v).to({ scroll: 0 }, 200, Phaser.Easing.Exponential.out, true);
 				this.scrollTween.onComplete.add(function(){this.scrollTween = null}, this)
 			}
-			if (v.scroll > (0.28 * game.width * this.skins.children.length) - (game.height * 0.6) && this.scrollTween == null && v.scroll != 0){
-				this.scrollTween = this.game.add.tween(v).to({ scroll: (0.28 * game.width * this.skins.children.length) - (game.height * 0.6) }, 200, Phaser.Easing.Exponential.out, true);
+			if (v.scroll > (0.28 * game.width * this.skins.children.length) - (game.height * 0.5) && this.scrollTween == null && v.scroll != 0){
+				this.scrollTween = this.game.add.tween(v).to({ scroll: (0.28 * game.width * this.skins.children.length) - (game.height * 0.5) }, 200, Phaser.Easing.Exponential.out, true);
 				this.scrollTween.onComplete.add(function(){this.scrollTween = null}, this)
 			}
 		}
