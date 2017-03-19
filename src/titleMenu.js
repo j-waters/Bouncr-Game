@@ -51,7 +51,7 @@ titleMenu.prototype = {
 	startGame: function(){
 		if (game.input.position.x > 0.2 * game.width && game.input.position.x < 0.8 * game.width){
 			if (v.mobile){AdMob.hideBanner()}
-			v.distance = 0;
+			v.distance = 50;
 			v.score = 0;
 			v.gameEnd = false;
 			v.speed = 5;
