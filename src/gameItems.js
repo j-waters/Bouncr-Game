@@ -125,6 +125,8 @@ function obstacle(x, width, height, points){
 		this.points = points;
 	}
 	
+	this.otype = "rectangle";
+	
 	rectangle = game.cache.getBitmapData('obst_rectangle')
 	Phaser.Sprite.call(this, game, x, -height/2, rectangle);
 	this.width = width
@@ -196,6 +198,9 @@ function gameEnd(){
 	playt.anchor.set(0.5, 0.5)
 	this.game.add.tween(playt).to({ alpha: 0.5 }, 1500, null, null, null, null, true).start();
 	
+	sb = new shareButton()
+	this.game.add.existing(sb)
+	
 	if (v.backgroundEffect){v.backEffectGroup.destroy()}
 }
 function movingObstacle(mode){
@@ -203,10 +208,12 @@ function movingObstacle(mode){
 	width = 0.08 * game.height
 	if (this.mode == "moving"){
 		rend = game.cache.getRenderTexture('obst_triangle').texture
+		this.otype = "triangle"
 	}
 	
 	if (this.mode == "clone"){
 		rend = game.cache.getBitmapData('obst_circle')
+		this.otype = "circle"
 	}
 	
 	var x = randomInt(0 + width/2, game.width - width/2);
@@ -909,3 +916,83 @@ effectObject.prototype.update = function() {
 }
 
 function sign(x){return x>0?1:x<0?-1:x;}
+
+function shareButton(){
+	var width = 0.4 * game.width
+	var height = 0.1 * game.width
+	var background = game.make.bitmapData(width, height);
+	background.ctx.fillStyle =  v.backgroundColour
+	background.ctx.roundRect(0, 0, width, height, 20)
+	background.ctx.fill();
+	Phaser.Sprite.call(this, game, 0.5 * game.width, 0.55 * game.height, background);
+	this.anchor.set(0.5, 0.5)
+			
+	var text = game.make.text(0, 0, "share", {fill: v.playerColour, font: "bold Arial", fontSize: 0.04 * game.height})
+	text.anchor.set(0.5, 0.5)
+	while(text.width > 600 && text.fontSize > 0){text.fontSize--; text.updateText()}
+	this.addChild(text)
+	
+	this.inputEnabled = true
+	this.events.onInputUp.add(function(){		
+		var options = {
+			message: "I just scored " + v.score + " on Bouncr!", // not supported on some apps (Facebook, Instagram)
+			subject: 'Bouncr', // fi. for email
+			files: [v.link], // an array of filenames either locally or remotely
+			url: 'https://goo.gl/X31wIb',
+			chooserTitle: 'Pick an app' // Android only, you can override the default share sheet title
+		}
+
+		var onSuccess = function(result) {
+		  console.log("Share completed? " + result.completed); // On Android apps mostly return false even while it's true
+		  console.log("Shared to app: " + result.app); // On Android result.app is currently empty. On iOS it's empty when sharing is cancelled (result.completed=false)
+		}
+
+		var onError = function(msg) {
+		  console.log("Sharing failed with message: " + msg);
+		}
+
+		if (v.mobile){window.plugins.socialsharing.shareWithOptions(options, onSuccess, onError);}
+	})
+}
+
+shareButton.prototype = Object.create(Phaser.Sprite.prototype);
+shareButton.prototype.constructor = shareButton;
+shareButton.prototype.update = function() {
+}
+
+function saveCanvas() {
+	image = game.make.bitmapData(game.width, game.height)
+	
+	image.fill(hexToRgbA(v.backgroundColour)[0], hexToRgbA(v.backgroundColour)[1], hexToRgbA(v.backgroundColour)[2])
+	
+	image.ctx.font = "bold " + 300/1280 * game.height + "px Arial";
+	image.ctx.fillStyle = v.playerColour;
+	image.ctx.textAlign = "center";
+	image.ctx.textBaseline = "middle"; 
+	image.ctx.fillText(v.score, game.width * 0.5, game.height * 0.5);
+	
+	image.ctx.font = "bold " + 0.1 * game.height + "px Arial";
+	image.ctx.fillText("bouncr", game.width * 0.5, game.height * 0.2);
+	
+	image.ctx.font = "bold " + 0.03 * game.height + "px Arial";
+	image.ctx.fillText(v.mode + " mode", game.width * 0.5, game.height * 0.38);
+	
+	image.ctx.fillText("top: " + v.highScore[v.mode], game.width * 0.5, game.height * 0.26);
+	image.ctx.fillText("plays: " + v.plays[v.mode], game.width * 0.5, game.height * 0.3);
+	image.ctx.fillText("complete: " + Math.round((v.completed / v.challenges.length)*100) + "%", game.width * 0.5, game.height * 0.34);
+	
+	image.line(0, 0.7 * game.height, game.width, 0.7 * game.height, v.playerColour, 0.0016 * game.height)
+	
+	image.ctx.drawImage(p.key.ctx.canvas, 0, 0, p.key.ctx.canvas.width, p.key.ctx.canvas.height, p.x - p.width/2, p.y - p.height/2, p.width, p.height)
+	
+	if (v.gameEndTarget.otype == "rectangle"){
+		var src = game.make.bitmapData(v.gameEndTarget.width, v.gameEndTarget.height);
+		src.rect(0, 0, v.gameEndTarget.width, v.gameEndTarget.height, v.obstacleColour);
+		src = src.ctx.canvas}
+	if (v.gameEndTarget.otype == "circle"){var src = game.cache.getBitmapData('obst_circle').ctx.canvas}
+	if (v.gameEndTarget.otype == "triangle"){var src = game.cache.getRenderTexture('obst_triangle').texture.baseTexture.source}
+	image.ctx.drawImage(src, 0, 0, src.width, src.height, v.gameEndTarget.x - v.gameEndTarget.width/2, v.gameEndTarget.y - v.gameEndTarget.height/2, v.gameEndTarget.width, v.gameEndTarget.height)
+	image.ctx.fill()
+	
+	v.link = image.ctx.canvas.toDataURL();
+};

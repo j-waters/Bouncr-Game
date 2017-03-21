@@ -159,6 +159,7 @@ var v = {
 		],
 	challengeProg: 0,
 	tempProg: 0,
+	link: null,
 };
 
 FastClick.attach(document.body);

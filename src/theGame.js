@@ -88,6 +88,8 @@ theGame.prototype = {
 					
 					v.score = Math.ceil(v.score)
 					
+					saveCanvas()
+					
 					if (v.score > v.highScore[v.mode]){
 						v.highScore[v.mode] = v.score
 					}
