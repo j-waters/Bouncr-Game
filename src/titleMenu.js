@@ -40,6 +40,13 @@ titleMenu.prototype = {
 		
 		modeb = new menuButton(0.5 * game.width, 0.42 * game.height, "settings/mode", this.mode, this)
 		
+		if (v.oldVersion != v.version || v.alert.showing){
+			console.log("alert")
+			alertb = new menuButton(0.9 * game.width, 0.1 * game.height, "settings/alert", this.alert, this)
+			this.game.add.tween(alertb).to({ alpha: 0.5 }, 1500, null, null, null, null, true).start()
+			v.alert.showing = true
+		}
+		
 		gen_themes()
 		gen_challenge()
 	},
@@ -55,6 +62,11 @@ titleMenu.prototype = {
 	},
 	
 	startGame: function(){
+		console.log(this.alert)
+		if ((this.alertw != undefined && this.alertw.alive == true) && game.input.position.y > 0.12 * game.height && game.input.position.x < 0.8 * game.width){
+			this.alertw.destroy()
+			return
+		}
 		if (game.input.position.x > 0.2 * game.width && game.input.position.x < 0.8 * game.width){
 			if (v.mobile){AdMob.hideBanner()}
 			v.distance = 50;
@@ -108,6 +120,15 @@ titleMenu.prototype = {
 		}
 		v.scroll = 0;
 		this.game.state.start("mode")
+	},
+	
+	alert: function(){
+		if (v.mobile){
+			window.FirebasePlugin.logEvent("select_content", {content_type: "page_view", item_id: "alert"});
+			window.ga.trackView('Alert')
+		}
+		this.alertw = new alert()
+		game.add.existing(this.alertw)
 	}
 }
 

@@ -13,6 +13,7 @@ preload.prototype = {
         game.load.image('settings/trophy', 'assets/images/trophy.png')
         game.load.image('settings/mode', 'assets/images/mode.png')
         game.load.image('settings/achieve', 'assets/images/achievements.png')
+        game.load.image('settings/alert', 'assets/images/alert.png')
         
         game.load.image('mode/classic', 'assets/images/classic.png')
         game.load.image('mode/moving', 'assets/images/moving.png')

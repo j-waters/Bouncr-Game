@@ -426,6 +426,7 @@ function save(){
 	storage.setItem("progress", v.challengeProg)
 	storage.setItem("ads", v.removedAds)
 	storage.setItem("stats", JSON.stringify(v.stats))
+	storage.setItem("version", v.version)
 	
 	v.totalPlays = 0
 	for (var k in v.plays){
@@ -483,6 +484,8 @@ function load(){
 	v.removedAds = storage.getItem("ads") == "true" || false;
 	v.stats = storage.getItem("stats") || v.stats;
 	if (typeof v.stats == "string"){v.stats = JSON.parse(v.stats)}
+	
+	v.oldVersion = storage.getItem("version") || "";
 	
 	v.playerColour = v.themes[v.themeOrder].player
 	v.obstacleColour = v.themes[v.themeOrder]. obstacle
@@ -943,7 +946,7 @@ function shareButton(){
 		}
 
 		var onSuccess = function(result) {
-			window.ga.trackEvent('Share', 'End')
+			window.ga.trackView('Share')
 		}
 
 		var onError = function(msg) {
@@ -995,3 +998,48 @@ function saveCanvas() {
 	
 	v.link = image.ctx.canvas.toDataURL();
 };
+
+function alert(){
+	var background = game.make.bitmapData(game.width * 0.8, game.height * 0.5);
+	background.ctx.fillStyle = v.playerColour
+	background.ctx.roundRect(0, 0, game.width * 0.8, game.height * 0.5, 20)
+	background.ctx.fill();
+	background.ctx.font = "bold " + 80/1280 * game.height + "px Arial";
+	background.ctx.textAlign = "center";
+	background.ctx.textBaseline = "top";
+	background.ctx.fillStyle = v.backgroundColour
+	background.ctx.fillText(v.alert.title, game.width * 0.4, game.height * 0.01);
+	
+	background.ctx.textAlign = "center";
+	background.ctx.font = "bold " + 40/1280 * game.height * v.alert.size + "px Arial";
+	wrapText(background.ctx, v.alert.content, 0.4 * game.width, game.height * 0.08, game.width * 0.7, game.height * 0.04 * v.alert.size)
+
+	Phaser.Sprite.call(this, game, 0.5 * game.width, 0.5 * game.height, background);
+	this.anchor.set(0.5, 0.5)
+	
+}
+
+alert.prototype = Object.create(Phaser.Sprite.prototype);
+alert.prototype.constructor = alert;
+alert.prototype.update = function() {
+}
+
+function wrapText(context, text, x, y, maxWidth, lineHeight) {
+    var words = text.split(' ');
+    var line = '';
+
+    for(var n = 0; n < words.length; n++) {
+      var testLine = line + words[n] + ' ';
+      var metrics = context.measureText(testLine);
+      var testWidth = metrics.width;
+      if ((testWidth > maxWidth && n > 0) || words[n] == "¦") {
+        context.fillText(line, x, y);
+        line = (words[n] != "¦") ? words[n] + ' ' : '';
+        y += lineHeight;
+      }
+      else {
+        line = testLine;
+      }
+    }
+    context.fillText(line, x, y);
+  }

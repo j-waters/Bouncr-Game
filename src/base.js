@@ -1,5 +1,6 @@
 var v = {
-	version: "oops. I don't know.",
+	version: "???",
+	oldVersion: "",
 	speed: 5,
 	gameWidth: 720,
 	gameHeight: 1280,
@@ -21,6 +22,7 @@ var v = {
 	obstacles: null,
 	highScore: {"classic": 0, "moving":0, "clone":0, "patience":0, "tilt":0, "veil":0, "chance":0},
 	mobile: false,
+	alert: {title: "Update!", showing: false, size: 0.8, content: "23/03/2017 ¦ •Added this changelog/alert button ¦ •Added a share button  ¦ •Minor performance fixes ¦ ¦ Thank you everyone who is testing this app, I really appreciate it. If you have any ideas for themes/modes/features, feel free to share them."}, //•
 	scroll: 0,
 	mode: "classic",
 	themeOrder: 0,
