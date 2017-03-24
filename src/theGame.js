@@ -47,7 +47,7 @@ theGame.prototype = {
 		},
 		
 		render: function(){
-			if (false){
+			if (true){
 				game.debug.renderShadow = false
 		    	game.debug.font = '30px Arial bold'
 		    	game.debug.lineHeight = 30
@@ -59,7 +59,7 @@ theGame.prototype = {
 		},
 		
 		update: function(){
-			if (v.distance == 110){
+			if (v.distance == 140){
 				if (game.time.fps < 45){
 					game.time.desiredFps = 30
 					v.fpsMod = 2
