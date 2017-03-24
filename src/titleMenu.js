@@ -62,7 +62,6 @@ titleMenu.prototype = {
 	},
 	
 	startGame: function(){
-		console.log(this.alert)
 		if ((this.alertw != undefined && this.alertw.alive == true) && game.input.position.y > 0.12 * game.height && game.input.position.x < 0.8 * game.width){
 			this.alertw.destroy()
 			return
