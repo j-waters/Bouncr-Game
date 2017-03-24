@@ -47,7 +47,7 @@ theGame.prototype = {
 		},
 		
 		render: function(){
-			if (true){
+			if (false){
 				game.debug.renderShadow = false
 		    	game.debug.font = '30px Arial bold'
 		    	game.debug.lineHeight = 30
