@@ -63,7 +63,7 @@ player.prototype = Object.create(Phaser.Sprite.prototype);
 player.prototype.constructor = player;
 player.prototype.update = function() {
 	if (game.state.current == "theGame"){
-		if (v.mode != "tilt"){this.change = (v.speed * 1.1) * this.direction * (game.width/720)}
+		if (v.mode != "tilt"){this.change = (v.speed * 1.1) * this.direction * (game.width/720) * v.fpsMod}
 		var side = false
 		if (this.x + this.change >= game.width - this.width/2){
 			this.direction *= -1;
@@ -154,7 +154,7 @@ obstacle.prototype.update = function() {
     }
 	
 	if (v.mode != "patience" || (v.mode == "patience" && game.input.activePointer.isDown)){
-		this.y += v.speed * (game.height/1280);
+		this.y += v.speed * (game.height/1280) * v.fpsMod;
 	}
 	
 	if (this.y - this.height >= game.height){
@@ -251,21 +251,21 @@ function movingObstacle(mode){
 movingObstacle.prototype = Object.create(Phaser.Sprite.prototype);
 movingObstacle.prototype.constructor = movingObstacle;
 movingObstacle.prototype.update = function() {
-		x1 = this.x - this.width/2
-		y1 = this.y - this.width/2
-		x2 = this.x +this.width/2
-		y2 = this.y - this.width/2
-		x3 = this.x
-		y3 = this.y + this.width/2
-		trc = TriangleRectColliding({x1: x1, y1: y1, x2: x2, y2: y2, x3: x3, y3: y3}, {x: p.x, y:p.y, r:p.width/2})
-		ccc = CircleCircleColliding({x: this.x, y: this.y, r: this.width/2}, {x: p.x, y:p.y, r:p.width/2})
+		var x1 = this.x - this.width/2
+		var y1 = this.y - this.width/2
+		var x2 = this.x +this.width/2
+		var y2 = this.y - this.width/2
+		var x3 = this.x
+		var y3 = this.y + this.width/2
+		var trc = TriangleRectColliding({x1: x1, y1: y1, x2: x2, y2: y2, x3: x3, y3: y3}, {x: p.x, y:p.y, r:p.width/2})
+		var ccc = CircleCircleColliding({x: this.x, y: this.y, r: this.width/2}, {x: p.x, y:p.y, r:p.width/2})
 		if ((this.mode == "moving" && trc) || (this.mode == "clone" && ccc)){
 			v.gameEnd = true;
 			v.gameEndTarget = this
 	    	v.speed = 0;
 			gameEnd()
 		}
-		var change = v.speed * this.direction * (game.width/720) * this.speedMod
+		var change = v.speed * this.direction * (game.width/720) * this.speedMod * v.fpsMod
 		if (this.x + change >= game.width - this.width/2){
 			this.direction *= -1;
 			this.x = game.width - this.width/2 - 1
@@ -280,7 +280,7 @@ movingObstacle.prototype.update = function() {
 		this.x += change;
 		
 		if (v.mode != "patience" || (v.mode == "patience" && game.input.activePointer.isDown)){
-			this.y += v.speed * (game.height/1280);
+			this.y += v.speed * (game.height/1280) * v.fpsMod;
 		}
 		
 		this.l.y = this.y -0.1 * this.width
@@ -327,7 +327,7 @@ hsLine.prototype = Object.create(Phaser.Sprite.prototype);
 hsLine.prototype.constructor = hsLine;
 hsLine.prototype.update = function() {
 	if (v.mode != "patience" || (v.mode == "patience" && game.input.activePointer.isDown)){
-		this.y += v.speed * (game.height/1280);
+		this.y += v.speed * (game.height/1280) * v.fpsMod;
 	}
 	if (this.y - 10 >= game.height){
 		this.destroy()

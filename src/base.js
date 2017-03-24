@@ -2,6 +2,7 @@ var v = {
 	version: "???",
 	oldVersion: "",
 	speed: 5,
+	fpsMod: 1,
 	gameWidth: 720,
 	gameHeight: 1280,
 	playGames: true,

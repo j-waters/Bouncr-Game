@@ -53,14 +53,18 @@ theGame.prototype = {
 		    	game.debug.lineHeight = 30
 		    	this.game.debug.start(20, 40, 'red');
 		    	this.game.debug.line("FPS: " + game.time.fps);
-		    	this.game.debug.line("Gyro: " + p.change);
-		    	this.game.debug.line("X: " + p.x);
-		    	this.game.debug.line("actual change: " + p.test);
+		    	this.game.debug.line("FPS Mod: " + v.fpsMod);
 		    	this.game.debug.stop();
 			}
 		},
 		
 		update: function(){
+			if (v.distance == 110){
+				if (game.time.fps < 45){
+					game.time.desiredFps = 30
+					v.fpsMod = 2
+				}
+			}
 			if (v.gameEnd == false){
 				if (v.mode != "patience" || (v.mode == "patience" && game.input.activePointer.isDown)){
 					v.distance += 1;

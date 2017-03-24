@@ -41,9 +41,9 @@ boot.prototype = {
     			store.refresh()
     		}
     	}
-    	    	
-    	game.time.desiredFps = 60
+    	
     	game.time.advancedTiming = true
+    	game.time.desiredFps = 60
     	
         this.game.state.start("Pre_Preload");
     },
