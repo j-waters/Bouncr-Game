@@ -72,6 +72,8 @@ titleMenu.prototype = {
 			v.score = 0;
 			v.gameEnd = false;
 			v.speed = 5;
+			game.time.desiredFps = 60
+			v.fpsMod = 1
 			this.game.state.start("theGame");
 		}
 	},
