@@ -156,6 +156,10 @@ settings.prototype = {
 		s = new settingsOption(order, "Remove Ads", this.removeAds)
 		settings.add(s)
 		
+		order++
+		s = new settingsOption(order, "Privacy policy", this.privacyPolicy)
+		settings.add(s)
+		
 		document.addEventListener("backbutton", function(){this.goTitle()}.bind(this));
 	},
 	
@@ -185,6 +189,7 @@ settings.prototype = {
 	},
 	
 	removeAds: function(){
+		if (v.mobile){window.ga.trackView('Remove Ads')}
 		store.when("remove ads").approved(function(product){
 		    v.removedAds = true;
 		    product.finish();
@@ -198,7 +203,13 @@ settings.prototype = {
 	},
 	
 	review: function(){
+		if (v.mobile){window.ga.trackView('Review')}
 		LaunchReview.launch("com.lightopa.bouncr");
+	},
+	
+	privacyPolicy: function(){
+		if (v.mobile){window.ga.trackView('Privacy')}
+		cordova.InAppBrowser.open('https://docs.google.com/document/d/1v1CSPisyIsqT8ggFtsACeZnbuzbu8_f2VEoJ5y9lM_0/edit', '_system', 'location=yes');
 	}
 }
 
