@@ -62,10 +62,10 @@ boot.prototype = {
     },
 }
 
-function resizeScreen(manager){
-    var userRatio = 1; //0.8 limit
+function resizeScreen(manager, base, mult){
+    var userRatio = base || 1; //0.8 limit
     if (this.game.device.pixelRatio > 1){
-    	userRatio = this.game.device.pixelRatio * 1;
+    	userRatio = this.game.device.pixelRatio * (mult || 1);
     }
     if (manager.width !== window.innerWidth*userRatio || manager.height !== window.innerHeight*userRatio){
     	manager.setGameSize(window.innerWidth*userRatio,window.innerHeight*userRatio);

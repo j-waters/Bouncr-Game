@@ -8,7 +8,8 @@ titleMenu.prototype = {
 			window.ga.trackView('Main Menu')
 		}
 		
-		resizeScreen(game.scale)
+		if (v.backEffectGroup == null){resizeScreen(game.scale)}
+		else {resizeScreen(game.scale, 0.9, 0.8)}
 		this.game.stage.backgroundColor = v.backgroundColour;
 		backgroundEffect()
 		p = new player();
