@@ -944,6 +944,7 @@ function shareButton(){
 
 		var onSuccess = function(result) {
 			window.ga.trackView('Share')
+			window.ga.trackMetric(3, 1)
 		}
 
 		var onError = function(msg) {

@@ -333,6 +333,7 @@ var newChallenge = function(game){}
 
 newChallenge.prototype = {
 	create: function(){
+		window.ga.trackMetric(4, 1)
 		this.game.stage.backgroundColor = v.backgroundColour;
 		p = new player();
 		game.add.existing(p)
