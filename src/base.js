@@ -23,7 +23,7 @@ var v = {
 	obstacles: null,
 	highScore: {"classic": 0, "moving":0, "clone":0, "patience":0, "tilt":0, "veil":0, "chance":0},
 	mobile: false,
-	alert: {title: "Update 0.10.2", showing: false, size: 0.8, content: "25/03/2017 ¦ •Lowered the game's graphics quality and fps when using a resource intensive theme ¦ •Added a link to the privacy policy in settings ¦ ¦ Thank you everyone who is testing this app, I really appreciate it. If you have any ideas for themes/modes/features, feel free to share them."}, //•
+	alert: {title: "Release!", showing: false, size: 1.5, content: "App released! ¦ Have fun, and make sure to share it with your friends!"}, //•
 	scroll: 0,
 	mode: "classic",
 	themeOrder: 0,
