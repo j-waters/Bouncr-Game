@@ -8,7 +8,7 @@ titleMenu.prototype = {
 			window.ga.trackView('Main Menu')
 		}
 		
-		if (v.backEffectGroup == null){resizeScreen(game.scale)}
+		if (v.backgroundEffect == null || v.backgroundEffect == "moon"){resizeScreen(game.scale)}
 		else {resizeScreen(game.scale, 0.9, 0.8)}
 		this.game.stage.backgroundColor = v.backgroundColour;
 		backgroundEffect()
@@ -73,8 +73,14 @@ titleMenu.prototype = {
 			v.score = 0;
 			v.gameEnd = false;
 			v.speed = 5;
-			game.time.desiredFps = 60
-			v.fpsMod = 1
+			if (v.backgroundEffect == null || v.backgroundEffect == "moon"){
+				game.time.desiredFps = 60
+				v.fpsMod = 1
+			}
+			else {
+				game.time.desiredFps = 50
+				v.fpsMod = 1.2
+			}
 			this.game.state.start("theGame");
 		}
 	},
