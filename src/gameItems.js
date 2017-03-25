@@ -47,12 +47,10 @@ function player(){
 		}
 		if (v.mode == "tilt"){
 			this.direction = 0
-			// Listen for the deviceorientation event and handle the raw data
 			this.change = 0
 			window.addEventListener('deviceorientation', function(eventData) {
 				var tiltLR = eventData.gamma;
 				this.change = tiltLR
-				console.log(tiltLR)
 			}.bind(this), false);
 		}
 	}

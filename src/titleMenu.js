@@ -42,7 +42,6 @@ titleMenu.prototype = {
 		modeb = new menuButton(0.5 * game.width, 0.42 * game.height, "settings/mode", this.mode, this)
 		
 		if (v.oldVersion != v.version || v.alert.showing){
-			console.log("alert")
 			alertb = new menuButton(0.9 * game.width, 0.1 * game.height, "settings/alert", this.alert, this)
 			this.game.add.tween(alertb).to({ alpha: 0.5 }, 1500, null, null, null, null, true).start()
 			v.alert.showing = true

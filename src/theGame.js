@@ -77,7 +77,6 @@ theGame.prototype = {
 					stats()
 					if (v.mobile){
 						window.FirebasePlugin.logEvent("game_end", {mode: v.mode, score: v.score, theme: v.themes[v.themeOrder].name});
-						console.log("END", v.mode, v.themes[v.themeOrder].name, v.score, v.stats.fps.average)
 
 						window.ga.trackMetric(1, v.score, function(){
 							window.ga.trackMetric(2, v.stats.fps.average, function(){
