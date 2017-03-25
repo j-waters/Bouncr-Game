@@ -23,7 +23,7 @@ boot.prototype = {
     		this.androidScale(this.scale)
     		v.mobile = true
     		if (v.mobile){
-    			window.ga.startTrackerWithId('UA-92975224-3', 30)
+    			window.ga.startTrackerWithId('UA-92975224-4', 30)
     			window.ga.trackView('Launch App', '', true)
     			window.ga.enableUncaughtExceptionReporting(true)
     			if (v.playGames) {window.plugins.playGamesServices.auth();}
