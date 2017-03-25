@@ -8,7 +8,6 @@ boot.prototype = {
     
     create: function(){
     	load()
-    	if (this.game.device.desktop && false){game.add.plugin(Phaser.Plugin.Debug);}
     	if (this.game.device.desktop || this.game.device.iPhone){
     		this.game.scale.setGameSize(window.innerHeight * 0.5625, window.innerHeight);
     		this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
