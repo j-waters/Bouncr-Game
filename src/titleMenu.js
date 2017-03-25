@@ -123,6 +123,7 @@ titleMenu.prototype = {
 	
 	mode: function(){
 		if (v.mobile){
+			AdMob.hideBanner()
 			window.FirebasePlugin.logEvent("select_content", {content_type: "page_view", item_id: "mode"});
 			window.ga.trackView('Mode')
 		}
