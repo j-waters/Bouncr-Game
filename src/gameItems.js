@@ -850,7 +850,7 @@ function backgroundEffect(){
 		}
 		v.backEffectGroup = game.make.group()
 		if (v.backgroundEffect == "stars"){
-			for (i=0; i < 100; i++){
+			for (i=0; i < 80; i++){
 				s = new effectObject(randomInt(0, game.width), randomInt(0, game.height), "effect/star" + randomInt(1, 8), randomInt(5, 15)/10, randomInt(1, 10)/10)
 				v.backEffectGroup.add(s)
 			}
@@ -869,13 +869,13 @@ function backgroundEffect(){
 				image.ctx.fillText(text, 0.021 * game.width, 0.021 * game.width);
 				game.cache.addBitmapData("Matrix" + chinese[i], image)
 			}
-			for (i=0; i < 200; i++){
+			for (i=0; i < 150; i++){
 				s = new effectObject(Math.floor(randomInt(0, game.width)/25) * 25, randomInt(0, game.height), "matrix", 1, randomInt(10, 12)/10)
 				v.backEffectGroup.add(s)
 			}
 		}
 		if (v.backgroundEffect == "bubbles"){
-			for (i=0; i < 100; i++){
+			for (i=0; i < 80; i++){
 				s = new effectObject(randomInt(0, game.width), randomInt(0, game.height), "effect/bubble" + randomInt(1, 1), randomInt(5, 15)/10, randomInt(-5, -1)/10)
 				v.backEffectGroup.add(s)
 			}
@@ -910,7 +910,6 @@ effectObject.prototype.update = function() {
 	if (game.state.current == "theGame"){this.y += v.speed * (game.height/1280) * this.speedMod;}
 	if ((this.y - this.height >= game.height && sign(this.speedMod) == 1) || (this.y + this.height <= 0 && sign(this.speedMod) == -1)){
 		this.y = (sign(this.speedMod) == 1) ? 0 - this.height : game.height + this.height
-		//this.x = randomInt(0, game.width)
 	}
 	if (this.skey == "matrix" && randomInt(1, 30) == 2 && game.state.current == "theGame"){
 		image = game.cache.getBitmapData("Matrix" + this.chinese[Math.floor(Math.random()*this.chinese.length)])
