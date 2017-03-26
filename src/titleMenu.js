@@ -9,7 +9,7 @@ titleMenu.prototype = {
 		}
 		
 		if (v.backgroundEffect == null || v.backgroundEffect == "moon"){resizeScreen(game.scale)}
-		else {resizeScreen(game.scale, 0.9, 0.8)}
+		else {resizeScreen(game.scale, 0.9, 0.6)}
 		this.game.stage.backgroundColor = v.backgroundColour;
 		backgroundEffect()
 		p = new player();
@@ -333,7 +333,7 @@ var newChallenge = function(game){}
 
 newChallenge.prototype = {
 	create: function(){
-		window.ga.trackMetric(4, 1)
+		if (v.mobile){window.ga.trackMetric(4, 1)}
 		this.game.stage.backgroundColor = v.backgroundColour;
 		p = new player();
 		game.add.existing(p)

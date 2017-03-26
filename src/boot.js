@@ -62,14 +62,15 @@ boot.prototype = {
     },
 }
 
-function resizeScreen(manager, base, mult){
-    var userRatio = base || 1; //0.8 limit
+function resizeScreen(manager, base, mult, change){
+    var userRatio = base || 1;
     if (this.game.device.pixelRatio > 1){
-    	userRatio = this.game.device.pixelRatio * (mult || 1);
+    	userRatio = this.game.device.pixelRatio * (mult || 0.75);
     }
-    if (manager.width !== window.innerWidth*userRatio || manager.height !== window.innerHeight*userRatio){
+    if (manager.width !== window.innerWidth*userRatio || manager.height !== window.innerHeight*userRatio || change){
     	manager.setGameSize(window.innerWidth*userRatio,window.innerHeight*userRatio);
     	if (this.game.device.desktop){this.game.scale.setGameSize(window.innerHeight * 0.5625 *userRatio, window.innerHeight*userRatio);}
     	manager.setUserScale(1/userRatio, 1/userRatio);
     }
+    //console.log(game.width, game.height, userRatio, "||", base, mult)
 }
