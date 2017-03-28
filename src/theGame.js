@@ -83,8 +83,10 @@ theGame.prototype = {
 						window.ga.trackMetric(1, v.score, function(){
 							window.ga.trackMetric(2, v.stats.fps.average, function(){
 								window.ga.trackMetric(5, game.time.desiredFps, function(){
-									window.ga.trackView('End Game')
-									window.ga.trackEvent('Game', 'End', "", v.score)
+									window.ga.trackMetric(6, 1, function(){
+										window.ga.trackView('End Game')
+										window.ga.trackEvent('Game', 'End', "", v.score)
+									}, function(e){console.log("Metric6 Error: " + e)})
 								}, function(e){console.log("Metric5 Error: " + e)})
 							}, function(e){console.log("Metric2 Error: " + e)})
 						}, function(e){console.log("Metric1 Error: " + e)})
