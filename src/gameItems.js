@@ -16,9 +16,7 @@ function player(){
 		mask.rect((game.width) * 1.7, 0, game.width * 1.2, game.height, v.obstacleColour)
 		mask.rect(0, game.height * 0.7, game.width * 3, game.height * 0.3, v.obstacleColour)
 		mask.rect(0, 0, game.width * 3, game.height * 0.15, v.obstacleColour)
-		//mask.rect(0, 0, game.width * 3, game.height, v.obstacleColour)
 		mask.ctx.fillStyle = v.obstacleColour;
-		//mask.ctx.fillRect(0, 0, game.width * 3, game.height);
 		
 		mask.ctx.beginPath();
 		mask.ctx.fillStyle = "rgba(0, 0, 0, 1)";
@@ -109,7 +107,7 @@ function obstacle(x, width, height, points){
 				if (randomInt(1, 2) == 1) {var x = 0 + width/2} else {var x = game.width - width/2}
 				this.points = 1;
 				break;
-			case 3:
+			case 3: // Both Sides
 				var width = randomInt(0.17 * game.width, 0.42 * game.width);
 				var height = 0.043 * game.height;
 				var x = 0 + width/2
@@ -410,7 +408,7 @@ function stats(){
 	v.stats.fps.max = v.stats.fps.list.max()
 	v.stats.fps.list = []
 	
-	game.time.desiredFps = Math.floor(v.stats.fps.min * 0.9) //(v.stats.fps.average + v.stats.fps.min) / 2
+	game.time.desiredFps = Math.floor(v.stats.fps.min * 0.9)
 	
 	endTime = new Date();
 	if (!(v.mode in v.stats.time)){v.stats.time[v.mode] = {list:[], total:0}}

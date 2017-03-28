@@ -71,5 +71,4 @@ function resizeScreen(manager, base, mult, change){
     	if (this.game.device.desktop){this.game.scale.setGameSize(window.innerHeight * 0.5625 *userRatio, window.innerHeight*userRatio);}
     	manager.setUserScale(1/userRatio, 1/userRatio);
     }
-    //console.log(game.width, game.height, userRatio, "||", base, mult)
 }

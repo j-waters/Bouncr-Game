@@ -61,12 +61,6 @@ theGame.prototype = {
 		},
 		
 		update: function(){
-			/*if (v.distance == 140){
-				if (game.time.fps < 45){
-					game.time.desiredFps = 30
-					v.fpsMod = 2
-				}
-			}*/
 			if (v.gameEnd == false){
 				if (v.mode != "patience" || (v.mode == "patience" && game.input.activePointer.isDown)){
 					v.distance += 1;
@@ -154,7 +148,6 @@ theGame.prototype = {
 					}
 				}
 				v.obstacles.add(e)
-				//v.distance++
 				v.distance += 1 + Math.floor((distMod * v.score)/v.fpsMod)
 			}
 		},
