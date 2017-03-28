@@ -417,8 +417,7 @@ function stats(){
 	v.stats.time[v.mode].list.push(endTime - v.startTime)
 	v.stats.time[v.mode].total += endTime - v.startTime
 	
-	v.stats.plays = v.plays["classic"] + v.plays["moving"] + v.plays["clone"] + v.plays["patience"] + v.plays["tilt"] + v.plays["veil"] + v.plays["chance"]
-	console.log(v.stats.plays)
+	v.stats.plays = parseInt(v.plays["classic"]) + parseInt(v.plays["moving"]) + parseInt(v.plays["clone"]) + parseInt(v.plays["patience"]) + parseInt(v.plays["tilt"]) + parseInt(v.plays["veil"]) + parseInt(v.plays["chance"])
 }
 
 function save(){
