@@ -35,6 +35,7 @@ preload.prototype = {
         game.load.image('effect/moon1', 'assets/images/effects/moon.png')
 	},
   	create: function(){
+  		if (v.mobile){window.ga.trackTiming('Load Times', Date.now() - timerStart, 'Boot')}
   		game.state.start("titleMenu")
 	},
 }

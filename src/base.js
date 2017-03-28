@@ -17,7 +17,8 @@ var v = {
 	startTime: null,
 	plays: {"classic": 0, "moving":0, "clone":0, "patience":0, "tilt":0, "veil":0, "chance":0},
 	stats: {fps: {list:[], average:null, max:null, min:null}, 
-			time: {"classic": {list:[], total:0}, "moving":{list:[], total:0}, "clone":{list:[], total:0}, "patience":{list:[], total:0}, "tilt":{list:[], total:0}, "veil":{list:[], total:0}, "chance":{list:[], total:0}}},
+			time: {"classic": {list:[], total:0}, "moving":{list:[], total:0}, "clone":{list:[], total:0}, "patience":{list:[], total:0}, "tilt":{list:[], total:0}, "veil":{list:[], total:0}, "chance":{list:[], total:0}},
+			plays: 0},
 	gameEnd: false,
 	gameEndTarget: null,
 	obstacles: null,
@@ -164,6 +165,8 @@ var v = {
 	tempProg: 0,
 	link: null,
 };
+
+var timerStart = Date.now();
 
 FastClick.attach(document.body);
 
