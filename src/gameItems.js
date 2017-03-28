@@ -173,6 +173,11 @@ obstacle.prototype.die = function(){
 }
 
 function gameEnd(){
+	v.plays[v.mode]++
+	v.score = Math.ceil(v.score)
+	if (v.score > v.highScore[v.mode]){
+		v.highScore[v.mode] = v.score
+	}
 	game.stage.backgroundColor = v.obstacleColour;
 	while (v.obstacles.children.length != 1){
 		if (v.obstacles.children[1] != v.gameEndTarget){
@@ -411,6 +416,9 @@ function stats(){
 	if (!(v.mode in v.stats.time)){v.stats.time[v.mode] = {list:[], total:0}}
 	v.stats.time[v.mode].list.push(endTime - v.startTime)
 	v.stats.time[v.mode].total += endTime - v.startTime
+	
+	v.stats.plays = v.plays["classic"] + v.plays["moving"] + v.plays["clone"] + v.plays["patience"] + v.plays["tilt"] + v.plays["veil"] + v.plays["chance"]
+	console.log(v.stats.plays)
 }
 
 function save(){
@@ -1002,7 +1010,7 @@ function saveCanvas() {
 	v.link = image.ctx.canvas.toDataURL();
 };
 
-function alert(){
+function alert(text){
 	var background = game.make.bitmapData(game.width * 0.8, game.height * 0.5);
 	background.ctx.fillStyle = v.playerColour
 	background.ctx.roundRect(0, 0, game.width * 0.8, game.height * 0.5, 20)
@@ -1011,11 +1019,11 @@ function alert(){
 	background.ctx.textAlign = "center";
 	background.ctx.textBaseline = "top";
 	background.ctx.fillStyle = v.backgroundColour
-	background.ctx.fillText(v.alert.title, game.width * 0.4, game.height * 0.01);
+	background.ctx.fillText(text.title, game.width * 0.4, game.height * 0.01);
 	
 	background.ctx.textAlign = "center";
-	background.ctx.font = "bold " + 40/1280 * game.height * v.alert.size + "px Arial";
-	wrapText(background.ctx, v.alert.content, 0.4 * game.width, game.height * 0.08, game.width * 0.7, game.height * 0.04 * v.alert.size)
+	background.ctx.font = "bold " + 40/1280 * game.height * text.size + "px Arial";
+	wrapText(background.ctx, text.content, 0.4 * game.width, game.height * 0.08, game.width * 0.7, game.height * 0.04 * text.size)
 
 	Phaser.Sprite.call(this, game, 0.5 * game.width, 0.5 * game.height, background);
 	this.anchor.set(0.5, 0.5)

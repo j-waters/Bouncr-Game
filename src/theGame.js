@@ -91,14 +91,11 @@ theGame.prototype = {
 					}
 					if (v.mobile && v.removedAds == false){AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER)}
 					this.finished = true;
-					v.plays[v.mode]++
-					
-					v.score = Math.ceil(v.score)
 					
 					saveCanvas()
 					
-					if (v.score > v.highScore[v.mode]){
-						v.highScore[v.mode] = v.score
+					if (v.stats.plays == 1 && game.time.desiredFps < 45){
+						v.fpsAlert = true
 					}
 					
 					var newch = false
