@@ -46,7 +46,7 @@ titleMenu.prototype = {
 			this.game.add.tween(alertb).to({ alpha: 0.5 }, 1500, null, null, null, null, true).start()
 			v.alert.showing = true
 		}
-		if (v.fpsAlert || true){
+		if (v.fpsAlert){
 			this.alertw = new alert({title: "Oops!", size: 1.25, content: "Sorry if that was a bit jumpy. Now we know how fast your phone is, we can make sure you have as smooth a playing experience as possible!"})
 			game.add.existing(this.alertw)
 		}		

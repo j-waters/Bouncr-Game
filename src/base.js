@@ -23,7 +23,7 @@ var v = {
 	obstacles: null,
 	highScore: {"classic": 0, "moving":0, "clone":0, "patience":0, "tilt":0, "veil":0, "chance":0},
 	mobile: false,
-	alert: {title: "Update 1.0.1", showing: false, size: 1.5, content: "26/03/17 ¦ The resolution of the game has been lowered, to try and reduce some of the crippling lag people have been experiencing"}, //•
+	alert: {title: "Update 1.0.2", showing: false, size: 1.4, content: "28/03/17 ¦ Changed the way a desired FPS is calculated, to make the game far smoother!"}, //•
 	scroll: 0,
 	mode: "classic",
 	themeOrder: 0,
