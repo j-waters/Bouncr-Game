@@ -47,24 +47,26 @@ theGame.prototype = {
 		},
 		
 		render: function(){
-			if (false){
+			if (true){
 				game.debug.renderShadow = false
 		    	game.debug.font = '30px Arial bold'
 		    	game.debug.lineHeight = 30
 		    	this.game.debug.start(20, 40, 'red');
 		    	this.game.debug.line("FPS: " + game.time.fps);
+		    	this.game.debug.line("Desired FPS: " + game.time.desiredFps);
+		    	this.game.debug.line("Suggested FPS: " + game.time.suggestedFps);
 		    	this.game.debug.line("FPS Mod: " + v.fpsMod);
 		    	this.game.debug.stop();
 			}
 		},
 		
 		update: function(){
-			if (v.distance == 140){
+			/*if (v.distance == 140){
 				if (game.time.fps < 45){
 					game.time.desiredFps = 30
 					v.fpsMod = 2
 				}
-			}
+			}*/
 			if (v.gameEnd == false){
 				if (v.mode != "patience" || (v.mode == "patience" && game.input.activePointer.isDown)){
 					v.distance += 1;
@@ -80,8 +82,10 @@ theGame.prototype = {
 
 						window.ga.trackMetric(1, v.score, function(){
 							window.ga.trackMetric(2, v.stats.fps.average, function(){
-								window.ga.trackView('End Game')
-								window.ga.trackEvent('Game', 'End', "", v.score)
+								window.ga.trackMetric(5, game.time.desiredFps, function(){
+									window.ga.trackView('End Game')
+									window.ga.trackEvent('Game', 'End', "", v.score)
+								}, function(e){console.log("Metric5 Error: " + e)})
 							}, function(e){console.log("Metric2 Error: " + e)})
 						}, function(e){console.log("Metric1 Error: " + e)})
 					}
@@ -136,7 +140,7 @@ theGame.prototype = {
 			this.scoreText.text = v.score
 			var mod = (v.mode != "chance") ? 0 : 20
 			var distMod = (v.mode != "chance") ? 0.24 : 0.35
-			if (Math.floor(v.distance) % ((60 + mod)/ v.fpsMod) == 0){
+			if (Math.floor(v.distance) % Math.floor((60 + mod)/ v.fpsMod) == 0){
 				if (v.mode == "classic") {e = new obstacle();}
 				if (v.mode == "moving" || v.mode == "clone") {e = new movingObstacle(v.mode);}
 				if (v.mode == "patience" || v.mode == "tilt" || v.mode == "veil"|| v.mode == "chance"){

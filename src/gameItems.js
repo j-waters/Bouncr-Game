@@ -403,6 +403,9 @@ function stats(){
 	v.stats.fps.average = Math.round(sum/v.stats.fps.list.length)
 	v.stats.fps.min = v.stats.fps.list.min()
 	v.stats.fps.max = v.stats.fps.list.max()
+	v.stats.fps.list = []
+	
+	game.time.desiredFps = Math.floor(v.stats.fps.min * 0.9) //(v.stats.fps.average + v.stats.fps.min) / 2
 	
 	endTime = new Date();
 	if (!(v.mode in v.stats.time)){v.stats.time[v.mode] = {list:[], total:0}}
@@ -425,6 +428,7 @@ function save(){
 	storage.setItem("ads", v.removedAds)
 	storage.setItem("stats", JSON.stringify(v.stats))
 	storage.setItem("version", v.version)
+	storage.setItem("fps", game.time.desiredFps)
 	
 	v.totalPlays = 0
 	for (var k in v.plays){
@@ -484,6 +488,7 @@ function load(){
 	if (typeof v.stats == "string"){v.stats = JSON.parse(v.stats)}
 	
 	v.oldVersion = storage.getItem("version") || "";
+	game.time.desiredFps = storage.getItem("fps") || 50;
 	
 	v.playerColour = v.themes[v.themeOrder].player
 	v.obstacleColour = v.themes[v.themeOrder]. obstacle
