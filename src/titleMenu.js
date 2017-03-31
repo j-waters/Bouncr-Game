@@ -75,14 +75,9 @@ titleMenu.prototype = {
 			v.score = 0;
 			v.gameEnd = false;
 			v.speed = 5;
-			/*if (v.backgroundEffect == null || v.backgroundEffect == "moon"){
-				game.time.desiredFps = 60
-				v.fpsMod = 1
-			}
-			else {
-				game.time.desiredFps = 50
-				v.fpsMod = 1.2
-			}*/
+			game.time.desiredFps = Math.floor(game.time.desiredFps)
+			if (game.time.desiredFps > 60) {game.time.desiredFps = 60}
+			if (game.time.desiredFps < 15) {game.time.desiredFps = 15}
 			v.fpsMod = 60 / game.time.desiredFps
 			this.game.state.start("theGame");
 		}
