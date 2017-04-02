@@ -24,7 +24,7 @@ var v = {
 	obstacles: null,
 	highScore: {"classic": 0, "moving":0, "clone":0, "patience":0, "tilt":0, "veil":0, "chance":0},
 	mobile: false,
-	alert: {title: "Update 1.0.4", showing: false, size: 1.3, content: "29/03/17 ¦ Changed the way a desired FPS is calculated, to make the game far smoother! ¦ Also fixed a fatal crash."}, //•
+	alert: {title: "Update 1.0.5", showing: false, size: 1.3, content: "02/04/17 ¦ •Fixed the glitchiness when the app is booting up ¦ •Fixed a rare issue that made no obstacles appear"}, //•
 	scroll: 0,
 	mode: "classic",
 	themeOrder: 0,
