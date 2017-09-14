@@ -19,6 +19,9 @@ boot.prototype = {
     		this.scale.refresh();
     		v.mobile = false
     	}
+        else if (typeof cordova == 'undefined'){
+            this.androidScale(this.scale);
+        }
     	else {
     		this.androidScale(this.scale)
     		v.mobile = true
