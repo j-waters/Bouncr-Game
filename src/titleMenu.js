@@ -7,6 +7,9 @@ titleMenu.prototype = {
 			if (v.removedAds == false){AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER)};
 			window.ga.trackView('Main Menu')
 		}
+        else {
+            ga('send', 'pageview', 'Main Menu');
+        }
 		
 		if (v.backgroundEffect == null || v.backgroundEffect == "moon"){resizeScreen(game.scale)}
 		else {resizeScreen(game.scale, 0.9, 0.6)}
@@ -88,6 +91,9 @@ titleMenu.prototype = {
 			window.FirebasePlugin.logEvent("select_content", {content_type: "page_view", item_id: "settings"});
 			window.ga.trackView('Settings')
 		}
+        else {
+            ga('send', 'pageview', 'Settings');
+        }
 		v.scroll = 0;
 		this.game.state.start("settings")
 	},
@@ -98,6 +104,9 @@ titleMenu.prototype = {
 			window.FirebasePlugin.logEvent("select_content", {content_type: "page_view", item_id: "themes"});
 			window.ga.trackView('Themes')
 		}
+        else {
+            ga('send', 'pageview', 'Themes');
+        }
 		v.scroll = 0;
 		this.game.state.start("skins")
 	},
@@ -107,6 +116,9 @@ titleMenu.prototype = {
 			window.FirebasePlugin.logEvent("select_content", {content_type: "page_view", item_id: "leaderboard"});
 			window.ga.trackView('Leaderboard')
 		}
+        else {
+            ga('send', 'pageview', 'Leaderboard');
+        }
 		window.plugins.playGamesServices.showAllLeaderboards(null, function(){window.plugins.playGamesServices.auth();});
 	},
 	
@@ -116,6 +128,9 @@ titleMenu.prototype = {
 			window.FirebasePlugin.logEvent("select_content", {content_type: "page_view", item_id: "challenges"});
 			window.ga.trackView('Challenges')
 		}
+        else {
+            ga('send', 'pageview', 'Challenges');
+        }
 		this.game.state.start("challenges")
 	},
 	
@@ -125,6 +140,9 @@ titleMenu.prototype = {
 			window.FirebasePlugin.logEvent("select_content", {content_type: "page_view", item_id: "mode"});
 			window.ga.trackView('Mode')
 		}
+        else {
+            ga('send', 'pageview', 'Mode');
+        }
 		v.scroll = 0;
 		this.game.state.start("mode")
 	},
@@ -134,6 +152,9 @@ titleMenu.prototype = {
 			window.FirebasePlugin.logEvent("select_content", {content_type: "page_view", item_id: "alert"});
 			window.ga.trackView('Alert')
 		}
+        else {
+            ga('send', 'pageview', 'Alert');
+        }
 		this.alertw = new alert(v.alert)
 		game.add.existing(this.alertw)
 	}
@@ -333,6 +354,7 @@ var newChallenge = function(game){}
 newChallenge.prototype = {
 	create: function(){
 		if (v.mobile){window.ga.trackMetric(4, 1)}
+        else{ga('set', 'metric4', 1);}
 		this.game.stage.backgroundColor = v.backgroundColour;
 		p = new player();
 		game.add.existing(p)

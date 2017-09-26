@@ -474,6 +474,10 @@ function save(){
 			}
 		})
 	}
+    else {
+        ga('set', 'dimension1', v.mode);
+        ga('set', 'dimension2', v.themes[v.themeOrder].name);
+    }
 }
 
 function load(){
@@ -508,6 +512,10 @@ function load(){
 		window.ga.addCustomDimension(1, v.mode)
 		window.ga.addCustomDimension(2, v.themes[v.themeOrder].name)
 	}
+    else {
+        ga('set', 'dimension1', v.mode);
+        ga('set', 'dimension2', v.themes[v.themeOrder].name);
+    }
 }
 
 CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
@@ -958,6 +966,10 @@ function shareButton(){
 			window.ga.trackView('Share')
 			window.ga.trackMetric(3, 1)
 		}
+        else {
+            ga('set', 'metric3', 1);
+            ga('send', 'pageview', 'Share');
+        }
 
 		var onError = function(msg) {
 		  console.log("Sharing failed with message: " + msg);

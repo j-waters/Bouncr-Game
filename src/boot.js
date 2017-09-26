@@ -18,9 +18,13 @@ boot.prototype = {
     		this.scale.updateLayout();
     		this.scale.refresh();
     		v.mobile = false
+            ga('create', 'UA-92975224-4', 'auto');
+            ga('send', 'pageview', 'Launch App');
     	}
         else if (typeof cordova == 'undefined'){
             this.androidScale(this.scale);
+            ga('create', 'UA-92975224-4', 'auto');
+            ga('send', 'pageview', 'Launch App');
         }
     	else {
     		this.androidScale(this.scale)

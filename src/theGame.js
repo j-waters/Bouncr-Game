@@ -23,6 +23,7 @@ theGame.prototype = {
 			game.cache.addRenderTexture('obst_triangle', triangle);
 			
 			if (v.mobile){window.ga.trackView('Start Game')}
+            else {ga('send', 'pageview', 'Start Game');}
 		},
 
 		create: function(){
@@ -85,6 +86,15 @@ theGame.prototype = {
 							}, function(e){console.log("Metric2 Error: " + e)})
 						}, function(e){console.log("Metric1 Error: " + e)})
 					}
+                else {
+                    ga('set', 'metric1', v.score);
+                    ga('set', 'metric2', v.stats.fps.average);
+                    ga('set', 'metric5', game.time.desiredFps);
+                    ga('set', 'metric6', 1);
+
+                    ga('send', 'event', 'Game', 'End', "", v.score)
+                    ga('send', 'pageview', 'End Game');
+                }
 					if (v.mobile && v.removedAds == false){AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER)}
 					this.finished = true;
 					
