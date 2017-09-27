@@ -966,10 +966,6 @@ function shareButton(){
 			window.ga.trackView('Share')
 			window.ga.trackMetric(3, 1)
 		}
-        else {
-            ga('set', 'metric3', 1);
-            ga('send', 'pageview', 'Share');
-        }
 
 		var onError = function(msg) {
 		  console.log("Sharing failed with message: " + msg);
